@@ -1,4 +1,4 @@
-package pl.nadwey.arenamanager.windows.teleport;
+package pl.nadwey.nadarenas.gui.teleport;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

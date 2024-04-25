@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ArenaManager.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ArenaManager.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/NadArenas.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pl.nadwey.NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pl.nadwey.NadArenas.main.iml" />
     </modules>
   </component>
 </project>

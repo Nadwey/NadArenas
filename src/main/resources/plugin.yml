@@ -1,19 +1,30 @@
-name: ArenaManager
+name: NadArenas
 version: '${version}'
-main: pl.nadwey.arenamanager.ArenaManager
+main: pl.nadwey.nadarenas.NadArenas
 api-version: '1.20'
-softdepend: [BlueSlimeCore]
 
 permissions:
-  arenamanager.command.arenas:
+  nadarenas.command.arenas:
     description: "Access to the '/arenas' command."
     default: true
-  arenamanager.command.arena:
-    description: "Access to the '/arena' command."
+  nadarenas.command.nadarenas:
+    description: "Access to the '/nadarenas' command."
     default: op
-  arenamanager.command.arena.create:
-    description: "Access to the '/arena create' command."
+  nadarenas.command.nadarenas.arena.create:
+    description: "Access to the '/nadarenas create arena' command."
     default: op
-  arenamanager.command.arena.displayName:
-    description: "Access to the '/arena displayName' command."
+  nadarenas.command.nadarenas.arena.list:
+      description: "Access to the '/nadarenas arena list' command."
+      default: op
+  nadarenas.command.nadarenas.arena.displayname:
+    description: "Access to the '/nadarenas arena displayName' command."
+    default: op
+  nadarenas.command.nadarenas.arena.remove:
+    description: "Access to the '/nadarenas arena remove' command."
+    default: op
+  nadarenas.command.nadarenas.arena.description:
+    description: "Access to the '/nadarenas arena description' command."
+    default: op
+  nadarenas.command.nadarenas.arena.item:
+    description: "Access to the '/nadarenas arena item' command."
     default: op
