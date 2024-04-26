@@ -70,4 +70,12 @@ public class CommandHandler implements Reloadable {
     public static TextComponent errorMessage(String message) {
         return errorMessage(Component.text(message));
     }
+
+    public static TextComponent normalMessage(TextComponent message) {
+        return getMessagePrefix().append(message);
+    }
+
+    public static TextComponent normalMessage(String message) {
+        return normalMessage(Component.text(message));
+    }
 }

@@ -42,7 +42,7 @@ public class CommandArenas {
         for (int i = 0; i < arenas.size(); i++) {
             Arena arena = arenas.get(i);
 
-            gui.setItem(i, 1, new TeleportItem(arena.item(), arena.displayName() != null ? arena.displayName() : arena.name(), arena.description(), 1));
+            gui.setItem(i, 1, new TeleportItem(arena, 1));
         }
 
 
