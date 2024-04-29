@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS arenas
+CREATE TABLE IF NOT EXISTS nadarenas_arenas
 (
     id           INTEGER NOT NULL,
     name         TEXT    NOT NULL UNIQUE,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS arenas
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS spawns
+CREATE TABLE IF NOT EXISTS nadarenas_spawns
 (
     id       INTEGER NOT NULL,
     arena_id INTEGER NOT NULL,

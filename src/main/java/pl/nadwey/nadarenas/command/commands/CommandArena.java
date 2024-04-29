@@ -7,26 +7,23 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.command.CommandHandler;
-import pl.nadwey.nadarenas.command.types.ArenaArgument;
-import pl.nadwey.nadarenas.database.queries.ArenaManager;
-import pl.nadwey.nadarenas.database.types.Arena;
+import pl.nadwey.nadarenas.command.arguments.MaterialArgument;
+import pl.nadwey.nadarenas.model.arena.Arena;
+import pl.nadwey.nadarenas.utility.AdventureUtils;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @Command(name = "nadarenas", aliases = { "na", "nda" })
 @Permission("nadarenas.command.arena")
-public class CommandArena {
-    private final NadArenas plugin;
-
+public class CommandArena extends CommandBase{
     public CommandArena(NadArenas plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Execute
@@ -37,27 +34,27 @@ public class CommandArena {
     @Execute(name = "arena create")
     @Permission("nadarenas.command.nadarenas.arena.create")
     public void arenaCreate(@Context Player sender, @Arg("name") String name) throws SQLException {
-        if (ArenaManager.arenaExists(name)) {
+        if (this.getPlugin().getArenaManager().arenaExists(name)) {
             sender.sendMessage(CommandHandler.errorMessage("Arena " + name + " already exists"));
             return;
         }
 
-        ArenaManager.createArena(name, sender.getWorld());
+        this.getPlugin().getArenaManager().createArena(new Arena(name, sender.getWorld()));
         sender.sendMessage(CommandHandler.infoMessage("Created " + name + " in world " + sender.getWorld().getName()));
     }
 
     @Execute(name = "arena list")
     @Permission("nadarenas.command.nadarenas.arena.list")
     public void arenaList(@Context Player sender) throws SQLException {
-        List<Arena> arenas = ArenaManager.listArenas();
+        List<Arena> arenas = this.getPlugin().getArenaManager().getArenas();
 
         MiniMessage mm = MiniMessage.miniMessage();
         Component textComponent = CommandHandler.infoMessage("Arenas:\n");
         for (Arena arena : arenas) {
-            textComponent = textComponent.append(Component.text(arena.name()));
+            textComponent = textComponent.append(Component.text(arena.getName()));
 
-            if (arena.displayName() != null) {
-                textComponent = textComponent.append(Component.text(": ")).append(mm.deserialize(arena.displayName()));
+            if (arena.getDisplayName() != null) {
+                textComponent = textComponent.append(Component.text(": ")).append(mm.deserialize(arena.getDisplayName()));
             }
 
             textComponent = textComponent.appendNewline();
@@ -68,41 +65,37 @@ public class CommandArena {
     @Execute(name = "arena displayName")
     @Permission("nadarenas.command.nadarenas.arena.displayname")
     public void arenaSetDisplayName(@Context Player sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) throws SQLException {
-        ArenaManager.setArenaDisplayName(arena.name(), displayName);
+        this.getPlugin().getArenaManager().setArenaDisplayName(arena.getName(), displayName);
 
-        MiniMessage mm = MiniMessage.miniMessage();
-        sender.sendMessage(CommandHandler.infoMessage(Component.text("Set " + arena.name() + "'s display name to ").append(mm.deserialize(displayName))));
+        sender.sendMessage(CommandHandler.infoMessage(
+                Component.text("Set " + arena.getName() + "'s display name to ")
+                        .append(AdventureUtils.quickDeserialize(displayName))));
     }
 
     @Execute(name = "arena remove")
     @Permission("nadarenas.command.nadarenas.arena.remove")
     public void arenaRemove(@Context Player sender, @Arg("arena") Arena arena) throws SQLException {
-        ArenaManager.removeArena(arena.name());
+        this.getPlugin().getArenaManager().removeArena(arena.getName());
 
-        sender.sendMessage(CommandHandler.warnMessage(Component.text("Removed " + arena.name())));
+        sender.sendMessage(CommandHandler.warnMessage(Component.text("Removed " + arena.getName())));
     }
 
     @Execute(name = "arena description")
     @Permission("nadarenas.command.nadarenas.arena.description")
     public void arenaSetDescription(@Context Player sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
-        ArenaManager.setArenaDescription(arena.name(), description);
+        this.getPlugin().getArenaManager().setArenaDescription(arena.getName(), description);
 
-        MiniMessage mm = MiniMessage.miniMessage();
-        sender.sendMessage(CommandHandler.infoMessage(Component.text("Set " + arena.name() + "'s description to ").append(mm.deserialize(description))));
+        sender.sendMessage(CommandHandler.infoMessage(
+                Component.text("Set " + arena.getName() + "'s description to ")
+                        .append(AdventureUtils.quickDeserialize(description))));
     }
 
     @Execute(name = "arena item")
     @Permission("nadarenas.command.nadarenas.arena.item")
-    public void arenaSetItem(@Context Player sender, @Arg("arena") Arena arena, @Join("item") String item) throws SQLException {
-        Material material = Material.getMaterial(item);
-        if (material == null) {
-            sender.sendMessage(CommandHandler.errorMessage("Item " + item + " is not a valid material"));
-            return;
-        }
+    public void arenaSetItem(@Context Player sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
+        this.getPlugin().getArenaManager().setArenaItem(arena.getName(), material);
 
-        ArenaManager.setArenaItem(arena.name(), material);
-
-        sender.sendMessage(CommandHandler.infoMessage("Set " + arena.name() + "'s item to " + item));
+        sender.sendMessage(CommandHandler.infoMessage("Set " + arena.getName() + "'s item to " + material));
     }
 //
 //    @Execute(name = "create spawn")

@@ -20,12 +20,11 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-    implementation("xyz.xenondevs.invui:invui:1.29")
+    implementation("xyz.xenondevs.invui:invui:1.30")
     implementation("dev.rollczi:litecommands-bukkit:3.4.1")
 
-    implementation("org.xerial:sqlite-jdbc:3.45.3.0")
-
-    implementation("org.flywaydb:flyway-core:10.11.1")
+    implementation("org.springframework:spring-jdbc:6.1.6")
+    implementation("org.flywaydb:flyway-core:10.12.0")
 }
 
 val targetJavaVersion = 17

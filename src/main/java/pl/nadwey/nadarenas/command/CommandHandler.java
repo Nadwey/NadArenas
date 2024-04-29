@@ -11,8 +11,8 @@ import pl.nadwey.nadarenas.command.commands.CommandArena;
 import pl.nadwey.nadarenas.command.commands.CommandArenas;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import pl.nadwey.nadarenas.command.types.ArenaArgument;
-import pl.nadwey.nadarenas.database.types.Arena;
+import pl.nadwey.nadarenas.command.arguments.ArenaArgument;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 public class CommandHandler implements Reloadable {
     private final NadArenas plugin;
@@ -31,10 +31,10 @@ public class CommandHandler implements Reloadable {
     public void onEnable() {
         this.liteCommands = LiteBukkitFactory.builder("nadarenas", plugin)
                 .commands(
-                        new CommandArenas(),
+                        new CommandArenas(plugin),
                         new CommandArena(plugin)
                 )
-                .argument(Arena.class, new ArenaArgument())
+                .argument(Arena.class, new ArenaArgument(plugin))
                 .build();
     }
 

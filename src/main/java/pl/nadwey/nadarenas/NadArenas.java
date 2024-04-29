@@ -2,15 +2,16 @@ package pl.nadwey.nadarenas;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.command.CommandHandler;
-import pl.nadwey.nadarenas.database.DatabaseHandler;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+import pl.nadwey.nadarenas.model.arena.ArenaManager;
+import pl.nadwey.nadarenas.storage.Storage;
+import pl.nadwey.nadarenas.storage.StorageFactory;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;
     private CommandHandler commandHandler;
-    private DatabaseHandler databaseHandler;
+    private Storage storage;
+
+    private ArenaManager arenaManager;
 
     public static NadArenas getInstance() {
         return instance;
@@ -22,25 +23,33 @@ public final class NadArenas extends JavaPlugin {
         getDataFolder().mkdir();
 
         commandHandler = new CommandHandler(this);
-        databaseHandler = new DatabaseHandler(this);
 
-        databaseHandler.onLoad();
         commandHandler.onLoad();
     }
 
     @Override
     public void onEnable() {
-        databaseHandler.onEnable();
+        StorageFactory storageFactory = new StorageFactory(this);
+        this.storage = storageFactory.getInstance();
+
+        arenaManager = new ArenaManager(this);
+
         commandHandler.onEnable();
     }
 
     @Override
     public void onDisable() {
         commandHandler.onDisable();
-        databaseHandler.onDisable();
+
+        getLogger().info("Closing storage...");
+        this.storage.shutdown();
     }
 
-    public DatabaseHandler getDatabaseHandler() {
-        return databaseHandler;
+    public Storage getStorage() {
+        return this.storage;
+    }
+
+    public ArenaManager getArenaManager() {
+        return this.arenaManager;
     }
 }
