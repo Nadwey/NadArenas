@@ -3,7 +3,7 @@ plugins {
     idea
 
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.flywaydb.flyway") version "10.11.1"
+    id("org.flywaydb.flyway") version "10.12.0"
 }
 
 group = "pl.nadwey"
@@ -16,6 +16,7 @@ repositories {
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://repo.xenondevs.xyz/releases")
     maven("https://repo.panda-lang.org/releases")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
@@ -25,6 +26,8 @@ dependencies {
 
     implementation("org.springframework:spring-jdbc:6.1.6")
     implementation("org.flywaydb:flyway-core:10.12.0")
+
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.0")
 }
 
 val targetJavaVersion = 17
