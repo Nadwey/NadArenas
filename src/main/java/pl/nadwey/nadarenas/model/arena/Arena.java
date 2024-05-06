@@ -3,33 +3,37 @@ package pl.nadwey.nadarenas.model.arena;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
-import pl.nadwey.nadarenas.utility.AdventureUtils;
-import xyz.xenondevs.inventoryaccess.component.AdventureComponentWrapper;
-import xyz.xenondevs.inventoryaccess.component.ComponentWrapper;
-
-import java.awt.*;
+import pl.nadwey.nadarenas.model.Position;
 
 public class Arena {
+    public static final String ARENA_NAME_REGEX = "^[a-zA-z0-9-_]+$";
+
     private @NotNull final String name;
+
     private @NotNull final String world;
+    private @NotNull final Position minPosition;
+    private @NotNull final Position maxPosition;
+
     private String displayName;
     private String description;
     private Material item;
 
-    public Arena(@NotNull String name, @NotNull String world) {
+    public Arena(@NotNull String name, @NotNull String world, @NotNull Position minPosition, @NotNull Position maxPosition) {
         this.name = name;
         this.world = world;
+        this.minPosition = minPosition;
+        this.maxPosition = maxPosition;
     }
 
-    public Arena(@NotNull String name, @NotNull String world, String displayName, String description, Material item) {
-        this(name, world);
+    public Arena(@NotNull String name, @NotNull String world, @NotNull Position minPosition, @NotNull Position maxPosition, String displayName, String description, Material item) {
+        this(name, world, minPosition, maxPosition);
         this.displayName = displayName;
         this.description = description;
         this.item = item;
     }
 
-    public Arena(@NotNull String name, @NotNull World world) {
-        this(name, world.getUID().toString());
+    public Arena(@NotNull String name, @NotNull World world, @NotNull Position minPosition, @NotNull Position maxPosition) {
+        this(name, world.getUID().toString(), minPosition, maxPosition);
     }
 
     public @NotNull String getName() {
@@ -38,6 +42,14 @@ public class Arena {
 
     public @NotNull String getWorld() {
         return world;
+    }
+
+    public @NotNull Position getMinPosition() {
+        return minPosition;
+    }
+
+    public @NotNull Position getMaxPosition() {
+        return maxPosition;
     }
 
     public String getDisplayName() {

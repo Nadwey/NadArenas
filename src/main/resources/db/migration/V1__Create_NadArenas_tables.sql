@@ -2,15 +2,14 @@ CREATE TABLE IF NOT EXISTS nadarenas_arenas
 (
     id           INTEGER NOT NULL,
     name         TEXT    NOT NULL UNIQUE,
-    arena_path   TEXT    NOT NULL,
 
     world        TEXT    NOT NULL,
-    x1           DOUBLE  NOT NULL,
-    y1           DOUBLE  NOT NULL,
-    z1           DOUBLE  NOT NULL,
-    x2           DOUBLE  NOT NULL,
-    y2           DOUBLE  NOT NULL,
-    z2           DOUBLE  NOT NULL,
+    min_x        INTEGER NOT NULL,
+    min_y        INTEGER NOT NULL,
+    min_z        INTEGER NOT NULL,
+    max_x        INTEGER NOT NULL,
+    max_y        INTEGER NOT NULL,
+    max_z        INTEGER NOT NULL,
 
     display_name TEXT,
     description  TEXT,
@@ -23,7 +22,7 @@ CREATE TABLE IF NOT EXISTS nadarenas_spawns
 (
     id         INTEGER NOT NULL,
     arena_id   INTEGER NOT NULL,
-    
+
     relative_x DOUBLE  NOT NULL,
     relative_y DOUBLE  NOT NULL,
     relative_z DOUBLE  NOT NULL,

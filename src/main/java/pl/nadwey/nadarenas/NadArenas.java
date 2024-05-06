@@ -5,6 +5,7 @@ import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.model.arena.ArenaManager;
 import pl.nadwey.nadarenas.storage.Storage;
 import pl.nadwey.nadarenas.storage.StorageFactory;
+import pl.nadwey.nadarenas.utility.ArenaLoader;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;
@@ -12,6 +13,7 @@ public final class NadArenas extends JavaPlugin {
     private Storage storage;
 
     private ArenaManager arenaManager;
+    private ArenaLoader arenaLoader;
 
     public static NadArenas getInstance() {
         return instance;
@@ -19,27 +21,33 @@ public final class NadArenas extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        instance = this;
+        NadArenas.instance = this;
+
         getDataFolder().mkdir();
+        getDataFolder().toPath().resolve("arenas").toFile().mkdir();
 
-        commandHandler = new CommandHandler(this);
+        this.commandHandler = new CommandHandler(this);
 
-        commandHandler.onLoad();
+        this.commandHandler.onLoad();
     }
 
     @Override
     public void onEnable() {
+        getLogger().info("Enabling storage and performing migrations...");
         StorageFactory storageFactory = new StorageFactory(this);
         this.storage = storageFactory.getInstance();
 
-        arenaManager = new ArenaManager(this);
+        this.arenaManager = new ArenaManager(this);
+        this.arenaLoader = new ArenaLoader();
 
-        commandHandler.onEnable();
+        this.commandHandler.onEnable();
+        this.arenaLoader.onEnable();
     }
 
     @Override
     public void onDisable() {
-        commandHandler.onDisable();
+        this.commandHandler.onDisable();
+        this.arenaLoader.onDisable();
 
         getLogger().info("Closing storage...");
         this.storage.shutdown();
@@ -51,5 +59,9 @@ public final class NadArenas extends JavaPlugin {
 
     public ArenaManager getArenaManager() {
         return this.arenaManager;
+    }
+
+    public ArenaLoader getArenaLoader() {
+        return this.arenaLoader;
     }
 }

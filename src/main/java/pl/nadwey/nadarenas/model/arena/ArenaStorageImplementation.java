@@ -2,7 +2,6 @@ package pl.nadwey.nadarenas.model.arena;
 
 import org.bukkit.Material;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 

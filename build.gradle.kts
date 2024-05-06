@@ -12,6 +12,7 @@ val mainPackage = "${project.group}.${rootProject.name.lowercase()}"
 
 repositories {
     mavenCentral()
+
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://repo.xenondevs.xyz/releases")

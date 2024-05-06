@@ -28,3 +28,6 @@ permissions:
   nadarenas.command.nadarenas.arena.item:
     description: "Access to the '/nadarenas arena item' command."
     default: op
+  nadarenas.command.nadarenas.arena.load:
+    description: "Access to the '/nadarenas arena load' command."
+    default: op

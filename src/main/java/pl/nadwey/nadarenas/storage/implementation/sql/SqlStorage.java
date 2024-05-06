@@ -1,12 +1,15 @@
 package pl.nadwey.nadarenas.storage.implementation.sql;
 
+import io.papermc.paper.math.BlockPosition;
 import org.bukkit.Material;
 import org.flywaydb.core.Flyway;
 import pl.nadwey.nadarenas.NadArenas;
+import pl.nadwey.nadarenas.model.Position;
 import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.storage.implementation.sql.connection.ConnectionFactory;
 
+import java.awt.print.Paper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements StorageImplementation {
-    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, world) VALUES (?, ?)";
-    public static final String ARENA_SELECT = "SELECT world, display_name, description, item FROM nadarenas_arenas WHERE name = ?";
+    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ARENA_SELECT = "SELECT world, display_name, min_x, min_y, min_z, max_x, max_y, max_z, description, item FROM nadarenas_arenas WHERE name = ?";
     public static final String ARENA_SELECT_ID = "SELECT id FROM nadarenas_arenas WHERE name = ?";
-    public static final String ARENA_SELECT_ALL = "SELECT name, world, display_name, description, item FROM nadarenas_arenas";
+    public static final String ARENA_SELECT_ALL = "SELECT name, world, min_x, min_y, min_z, max_x, max_y, max_z, display_name, description, item FROM nadarenas_arenas";
     public static final String ARENA_UPDATE_DISPLAY_NAME = "UPDATE nadarenas_arenas SET display_name = ? WHERE name = ?";
     public static final String ARENA_UPDATE_DESCRIPTION = "UPDATE nadarenas_arenas SET description = ? WHERE name = ?";
     public static final String ARENA_UPDATE_ITEM = "UPDATE nadarenas_arenas SET item = ? WHERE name = ?";
@@ -84,12 +87,38 @@ public class SqlStorage implements StorageImplementation {
         return rs.getInt("id");
     }
 
+    private Arena getArenaFromResultSet(String name, ResultSet rs) throws SQLException {
+        String world = rs.getString("world");
+        String displayName = rs.getString("display_name");
+        String description = rs.getString("description");
+
+        Integer minX = rs.getInt("min_x");
+        Integer minY = rs.getInt("min_y");
+        Integer minZ = rs.getInt("min_z");
+        Integer maxX = rs.getInt("max_x");
+        Integer maxY = rs.getInt("max_y");
+        Integer maxZ = rs.getInt("max_z");
+
+        Material item = Material.getMaterial(rs.getString("item"));
+
+        Position minPosition = new Position(minX, minY, minZ);
+        Position maxPosition = new Position(maxX, maxY, maxZ);
+
+        return new Arena(name, world, minPosition, maxPosition, displayName, description, item);
+    }
+
     @Override
     public void createArena(Arena arena) throws SQLException {
         PreparedStatement ps = getConnectionFactory().getConnection().prepareStatement(ARENA_INSERT);
 
         ps.setString(1, arena.getName());
         ps.setString(2, arena.getWorld());
+        ps.setInt(3, arena.getMinPosition().x());
+        ps.setInt(4, arena.getMinPosition().y());
+        ps.setInt(5, arena.getMinPosition().z());
+        ps.setInt(6, arena.getMaxPosition().x());
+        ps.setInt(7, arena.getMaxPosition().y());
+        ps.setInt(8, arena.getMaxPosition().z());
 
         ps.executeUpdate();
     }
@@ -104,12 +133,7 @@ public class SqlStorage implements StorageImplementation {
 
         if (!rs.next()) return null;
 
-        String world = rs.getString("world");
-        String displayName = rs.getString("display_name");
-        String description = rs.getString("description");
-        Material item = Material.getMaterial(rs.getString("item"));
-
-        return new Arena(name, world, displayName, description, item);
+        return getArenaFromResultSet(name, rs);
     }
 
     @Override
@@ -120,12 +144,8 @@ public class SqlStorage implements StorageImplementation {
         List<Arena> arenas = new ArrayList<>();
         while (rs.next()) {
             String name = rs.getString("name");
-            String world = rs.getString("world");
-            String displayName = rs.getString("display_name");
-            String description = rs.getString("description");
-            Material item = Material.getMaterial(rs.getString("item"));
 
-            arenas.add(new Arena(name, world, displayName, description, item));
+            arenas.add(getArenaFromResultSet(name, rs));
         }
 
         return arenas;

@@ -1,5 +1,6 @@
 package pl.nadwey.nadarenas.command.commands;
 
+import com.sk89q.worldedit.IncompleteRegionException;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -12,7 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.command.CommandHandler;
-import pl.nadwey.nadarenas.command.arguments.MaterialArgument;
+import pl.nadwey.nadarenas.conversation.CreateArenaConversation;
 import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 
@@ -28,24 +29,18 @@ public class CommandArena extends CommandBase{
 
     @Execute
     public void arena(@Context Player sender) {
-        sender.sendPlainMessage("NadArenas");
+        sender.sendMessage(CommandHandler.infoMessage("nadawenas pwugin iws wowking uwu"));
     }
 
     @Execute(name = "arena create")
     @Permission("nadarenas.command.nadarenas.arena.create")
-    public void arenaCreate(@Context Player sender, @Arg("name") String name) throws SQLException {
-        if (this.getPlugin().getArenaManager().arenaExists(name)) {
-            sender.sendMessage(CommandHandler.errorMessage("Arena " + name + " already exists"));
-            return;
-        }
-
-        this.getPlugin().getArenaManager().createArena(new Arena(name, sender.getWorld()));
-        sender.sendMessage(CommandHandler.infoMessage("Created " + name + " in world " + sender.getWorld().getName()));
+    public void arenaCreate(@Context Player sender) throws IncompleteRegionException {
+        new CreateArenaConversation(sender).begin();
     }
 
     @Execute(name = "arena list")
     @Permission("nadarenas.command.nadarenas.arena.list")
-    public void arenaList(@Context Player sender) throws SQLException {
+    public void arenaList(@Context Player sender) {
         List<Arena> arenas = this.getPlugin().getArenaManager().getArenas();
 
         MiniMessage mm = MiniMessage.miniMessage();
@@ -64,7 +59,7 @@ public class CommandArena extends CommandBase{
 
     @Execute(name = "arena displayName")
     @Permission("nadarenas.command.nadarenas.arena.displayname")
-    public void arenaSetDisplayName(@Context Player sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) throws SQLException {
+    public void arenaSetDisplayName(@Context Player sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
         this.getPlugin().getArenaManager().setArenaDisplayName(arena.getName(), displayName);
 
         sender.sendMessage(CommandHandler.infoMessage(
@@ -97,29 +92,10 @@ public class CommandArena extends CommandBase{
 
         sender.sendMessage(CommandHandler.infoMessage("Set " + arena.getName() + "'s item to " + material));
     }
-//
-//    @Execute(name = "create spawn")
-//    @Permission("nadarenas.command.arena.createspawn")
-//    public void createArenaSpawn(@Context Player sender, @Arg("arenaName") String arenaName) throws SQLException {
-//        ArenaManager arenaManager = plugin.getDataManager().getArenaManager();
-//        SpawnManager spawnManager = plugin.getDataManager().getSpawnManager();
-//
-//        if (!arenaManager.arenaExists(arenaName)) {
-//            sender.sendMessage(CommandHandler.errorMessage("Arena " + arenaName + " doesn't exist"));
-//            return;
-//        }
-//
-//        Spawn spawn = new Spawn(arenaName, sender.getLocation());
-//        Integer id = spawnManager.createArenaSpawn(spawn);
-//
-//        sender.sendMessage(CommandHandler.infoMessage(
-//                Component.text("Created a spawn for arena ")
-//                        .append(Component.text(arenaName))
-//                        .append(Component.text(" with ID: "))
-//                        .append(Component.text(id.toString()
-//                                )
-//                        )
-//        ));
-//
-//    }
+
+    @Execute(name = "arena load")
+    @Permission("nadarenas.command.nadarenas.arena.load")
+    public void arenaLoad(@Context Player sender, @Arg("arena") Arena arena) throws SQLException {
+        this.getPlugin().getArenaLoader().load(arena, 1000);
+    }
 }
