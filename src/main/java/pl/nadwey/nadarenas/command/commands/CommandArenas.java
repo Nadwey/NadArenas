@@ -47,7 +47,6 @@ public class CommandArenas extends CommandBase {
             gui.setItem(i, 1, new TeleportItem(arena, 1));
         }
 
-
         Window window = Window.single()
                 .setViewer(sender)
                 .setTitle(new AdventureComponentWrapper(Component.text("Arenas").color(TextColor.color(0x2080ff)).decorate(TextDecoration.BOLD)))

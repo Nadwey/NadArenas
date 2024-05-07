@@ -6,7 +6,6 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import com.sk89q.worldedit.regions.Region;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
@@ -95,7 +94,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                     throw new RuntimeException(e);
                 }
 
-                context.getForWhom().sendRawMessage("Arena created.");
+                context.getForWhom().sendRawMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "[Arena created]");
                 return Prompt.END_OF_CONVERSATION;
             }
 

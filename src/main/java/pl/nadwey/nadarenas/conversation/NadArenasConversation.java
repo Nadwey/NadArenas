@@ -23,7 +23,7 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
                 .addConversationAbandonedListener(this)
                 .withFirstPrompt(getEntryPrompt());
 
-        conversable.sendRawMessage("Note: Enter 'cancel' to quit the conversation.");
+        conversable.sendRawMessage(ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + "Note: Enter " + ChatColor.GRAY + "'cancel'" + ChatColor.DARK_GRAY + " to quit the conversation.");
     }
 
     public static String getCancelledMessage() {
