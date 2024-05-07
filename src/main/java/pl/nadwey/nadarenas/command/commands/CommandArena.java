@@ -41,19 +41,23 @@ public class CommandArena extends CommandBase{
     @Execute(name = "arena list")
     @Permission("nadarenas.command.nadarenas.arena.list")
     public void arenaList(@Context Player sender) {
-        List<Arena> arenas = this.getPlugin().getArenaManager().getArenas();
+        var arenas = this.getPlugin().getArenaManager().getArenas().iterator();
 
-        MiniMessage mm = MiniMessage.miniMessage();
+
         Component textComponent = CommandHandler.infoMessage("Arenas:\n");
-        for (Arena arena : arenas) {
+
+        while (arenas.hasNext()) {
+            Arena arena = arenas.next();
+
             textComponent = textComponent.append(Component.text(arena.getName()));
 
             if (arena.getDisplayName() != null) {
-                textComponent = textComponent.append(Component.text(": ")).append(mm.deserialize(arena.getDisplayName()));
+                textComponent = textComponent.append(Component.text(": ")).append(AdventureUtils.deserializeLegacy(arena.getDisplayName()));
             }
 
-            textComponent = textComponent.appendNewline();
+            if (arenas.hasNext()) textComponent = textComponent.appendNewline();
         }
+
         sender.sendMessage(textComponent);
     }
 
@@ -64,7 +68,7 @@ public class CommandArena extends CommandBase{
 
         sender.sendMessage(CommandHandler.infoMessage(
                 Component.text("Set " + arena.getName() + "'s display name to ")
-                        .append(AdventureUtils.quickDeserialize(displayName))));
+                        .append(AdventureUtils.deserializeLegacy(displayName))));
     }
 
     @Execute(name = "arena remove")
@@ -81,8 +85,9 @@ public class CommandArena extends CommandBase{
         this.getPlugin().getArenaManager().setArenaDescription(arena.getName(), description);
 
         sender.sendMessage(CommandHandler.infoMessage(
-                Component.text("Set " + arena.getName() + "'s description to ")
-                        .append(AdventureUtils.quickDeserialize(description))));
+                Component.text("Set " + arena.getName() + "'s description to:")
+                        .appendNewline()
+                        .append(AdventureUtils.deserializeMiniMessage(description))));
     }
 
     @Execute(name = "arena item")
@@ -96,6 +101,6 @@ public class CommandArena extends CommandBase{
     @Execute(name = "arena load")
     @Permission("nadarenas.command.nadarenas.arena.load")
     public void arenaLoad(@Context Player sender, @Arg("arena") Arena arena) throws SQLException {
-        this.getPlugin().getArenaLoader().load(arena, 1000);
+        this.getPlugin().getArenaLoader().load(arena, 250);
     }
 }

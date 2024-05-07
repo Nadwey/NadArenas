@@ -10,7 +10,6 @@ import pl.nadwey.nadarenas.Reloadable;
 import pl.nadwey.nadarenas.command.commands.CommandArena;
 import pl.nadwey.nadarenas.command.commands.CommandArenas;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import pl.nadwey.nadarenas.command.arguments.ArenaArgument;
 import pl.nadwey.nadarenas.model.arena.Arena;
 
@@ -43,39 +42,39 @@ public class CommandHandler implements Reloadable {
         this.liteCommands.unregister();
     }
 
-    protected static TextComponent getMessagePrefix() {
+    protected static Component getMessagePrefix() {
         return Component.text("[NadArenas] ").color(TextColor.color(0x2080ff));
     }
 
-    public static TextComponent infoMessage(TextComponent message) {
+    public static Component infoMessage(Component message) {
         return getMessagePrefix().append(Component.text("INFO: ").color(NamedTextColor.AQUA)).append(message);
     }
 
-    public static TextComponent infoMessage(String message) {
+    public static Component infoMessage(String message) {
         return infoMessage(Component.text(message));
     }
 
-    public static TextComponent warnMessage(TextComponent message) {
+    public static Component warnMessage(Component message) {
         return getMessagePrefix().append(Component.text("WARN: ").color(NamedTextColor.YELLOW)).append(message);
     }
 
-    public static TextComponent warnMessage(String message) {
+    public static Component warnMessage(String message) {
         return warnMessage(Component.text(message));
     }
 
-    public static TextComponent errorMessage(TextComponent message) {
+    public static Component errorMessage(Component message) {
         return getMessagePrefix().append(Component.text("ERROR: ").color(NamedTextColor.RED)).append(message);
     }
 
-    public static TextComponent errorMessage(String message) {
+    public static Component errorMessage(String message) {
         return errorMessage(Component.text(message));
     }
 
-    public static TextComponent normalMessage(TextComponent message) {
+    public static Component normalMessage(Component message) {
         return getMessagePrefix().append(message);
     }
 
-    public static TextComponent normalMessage(String message) {
+    public static Component normalMessage(String message) {
         return normalMessage(Component.text(message));
     }
 }

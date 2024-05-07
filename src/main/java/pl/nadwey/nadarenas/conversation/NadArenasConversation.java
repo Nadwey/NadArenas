@@ -19,7 +19,7 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
 
         conversationFactory = new ConversationFactory(NadArenas.getInstance())
                 .withEscapeSequence("cancel")
-                .withTimeout(30)
+                .withTimeout(120)
                 .addConversationAbandonedListener(this)
                 .withFirstPrompt(getEntryPrompt());
 

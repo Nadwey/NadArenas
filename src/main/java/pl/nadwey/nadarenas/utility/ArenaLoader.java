@@ -17,18 +17,13 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class ArenaLoader {
-    private class LoadTask {
-        private final ArenaLoader arenaLoader;
-        private final Arena arena;
+    private static class LoadTask {
         private final int blocksAtOnce;
         private final World world;
         private final Scanner arenaReader;
         private boolean hasFinished = false;
 
-
-        public LoadTask(ArenaLoader arenaLoader, Arena arena, int blocksAtOnce) throws FileNotFoundException {
-            this.arenaLoader = arenaLoader;
-            this.arena = arena;
+        public LoadTask(Arena arena, int blocksAtOnce) throws FileNotFoundException {
             this.blocksAtOnce = blocksAtOnce;
             this.world = Bukkit.getWorld(UUID.fromString(arena.getWorld()));
 
@@ -43,7 +38,7 @@ public class ArenaLoader {
                 return;
             }
 
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < blocksAtOnce; i++) {
                 if (!arenaReader.hasNextLine()) {
                     this.hasFinished = true;
                     arenaReader.close();
@@ -80,6 +75,7 @@ public class ArenaLoader {
         }
     }
 
+    private BukkitTask bukkitTask;
     private final Map<String, LoadTask> loadTasks;
 
     public ArenaLoader() {
@@ -96,21 +92,26 @@ public class ArenaLoader {
         }
 
         try {
-            loadTasks.put(arena.getName(), new LoadTask(this, arena, blocksAtOnce));
+            loadTasks.put(arena.getName(), new LoadTask(arena, blocksAtOnce));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void onEnable() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(NadArenas.getInstance(), () -> {
-            loadTasks.values().forEach(LoadTask::run);
+        bukkitTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                loadTasks.values().forEach(LoadTask::run);
 
-            loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
-        }, 0, 1);
+                loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
+            }
+        }.runTaskTimer(NadArenas.getInstance(), 0, 1);
     }
 
     public void onDisable() {
-        // wait for the threads to finish
+        if (bukkitTask != null) {
+            bukkitTask.cancel();
+        }
     }
 }
