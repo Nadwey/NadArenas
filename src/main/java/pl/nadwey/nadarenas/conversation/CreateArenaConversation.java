@@ -39,7 +39,7 @@ public class CreateArenaConversation extends NadArenasConversation {
 
         @Override
         public @Nullable Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
-            if (!input.matches(Arena.ARENA_NAME_REGEX)) {
+            if (input == null || !input.matches(Arena.ARENA_NAME_REGEX)) {
                 context.getForWhom().sendRawMessage(ChatColor.RED + "Arena name is invalid.");
                 return new ArenaNamePrompt();
             }
@@ -74,8 +74,14 @@ public class CreateArenaConversation extends NadArenasConversation {
                     return new ArenaAreaPrompt();
                 }
 
+                if (region.getWorld() == null) {
+                    context.getForWhom().sendRawMessage(ChatColor.RED + "The world of selection is invalid");
+                    return new ArenaAreaPrompt();
+                }
+
                 String name = (String) context.getSessionData(ARENA_NAME);
-                World world = ((Player) context.getForWhom()).getWorld();
+                World world = BukkitAdapter.adapt(region.getWorld());
+
                 Position minPosition = Position.fromBlockVector3(region.getMinimumPoint());
                 Position maxPosition = Position.fromBlockVector3(region.getMaximumPoint());
 

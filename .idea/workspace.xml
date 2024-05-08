@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="" />
+    <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -153,6 +155,7 @@
       <workItem from="1715029647780" duration="1143000" />
       <workItem from="1715034971721" duration="4000" />
       <workItem from="1715069824521" duration="12078000" />
+      <workItem from="1715195587046" duration="306000" />
     </task>
     <servers />
   </component>
