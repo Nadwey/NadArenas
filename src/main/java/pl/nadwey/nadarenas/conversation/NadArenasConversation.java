@@ -6,10 +6,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import pl.nadwey.nadarenas.NadArenas;
 
+import java.util.Map;
+
 public abstract class NadArenasConversation implements ConversationAbandonedListener {
     private final ConversationFactory conversationFactory;
     private final Conversable conversable;
     private final boolean playerOnly;
+    private static final String ESCAPE_SEQUENCE = "cancel";
 
     public abstract Prompt getEntryPrompt();
 
@@ -18,16 +21,18 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
         this.playerOnly = playerOnly;
 
         conversationFactory = new ConversationFactory(NadArenas.getInstance())
-                .withEscapeSequence("cancel")
+                .withEscapeSequence(ESCAPE_SEQUENCE)
                 .withTimeout(120)
                 .addConversationAbandonedListener(this)
                 .withFirstPrompt(getEntryPrompt());
 
-        conversable.sendRawMessage(ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + "Note: Enter " + ChatColor.GRAY + "'cancel'" + ChatColor.DARK_GRAY + " to quit the conversation.");
+        conversable.sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-cancel", Map.of(
+                "escapeSequence", ESCAPE_SEQUENCE
+        )));
     }
 
     public static String getCancelledMessage() {
-        return ChatColor.GRAY + "" + ChatColor.ITALIC + "[cancelled]";
+        return NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-cancelled");
     }
 
     @Override
@@ -41,7 +46,7 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
         Conversation conversation = conversationFactory.buildConversation(conversable);
 
         if (playerOnly && !(conversable instanceof Player)) {
-            conversation.getForWhom().sendRawMessage(ChatColor.RED + "Only players can start this conversation");
+            conversation.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-player-only"));
         }
 
         conversation.begin();

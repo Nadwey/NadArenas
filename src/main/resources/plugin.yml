@@ -31,3 +31,6 @@ permissions:
   nadarenas.command.nadarenas.arena.load:
     description: "Access to the '/nadarenas arena load' command."
     default: op
+  nadarenas.command.reload:
+    description: "Access to the '/nadarenas reload' command."
+    default: op

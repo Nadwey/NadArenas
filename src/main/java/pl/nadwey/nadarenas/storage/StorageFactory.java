@@ -24,7 +24,7 @@ public class StorageFactory {
         StorageType type = StorageType.SQLITE; // TODO
 
         this.plugin.getLogger().info("Loading storage provider... [" + type.name() + "]");
-        storage = new Storage(createNewImplementation(type));
+        storage = new Storage(this.plugin, createNewImplementation(type));
 
         storage.init();
         return storage;

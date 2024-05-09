@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandReload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/lang/LangManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/lang/en.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/NadArenas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/NadArenas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/Reloadable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/Reloadable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandArena.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/NadArenasConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/NadArenasConversation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/Storage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/utility/ArenaLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/utility/ArenaLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +173,9 @@
       <workItem from="1715029647780" duration="1143000" />
       <workItem from="1715034971721" duration="4000" />
       <workItem from="1715069824521" duration="12078000" />
-      <workItem from="1715195587046" duration="306000" />
+      <workItem from="1715195587046" duration="7270000" />
+      <workItem from="1715237306979" duration="21542000" />
+      <workItem from="1715273720917" duration="328000" />
     </task>
     <servers />
   </component>

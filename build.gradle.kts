@@ -24,6 +24,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     implementation("xyz.xenondevs.invui:invui:1.30")
     implementation("dev.rollczi:litecommands-bukkit:3.4.1")
+    implementation("org.apache.commons:commons-text:1.12.0")
 
     implementation("org.springframework:spring-jdbc:6.1.6")
     implementation("org.flywaydb:flyway-core:10.12.0")

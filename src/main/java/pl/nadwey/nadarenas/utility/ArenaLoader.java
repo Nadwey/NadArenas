@@ -14,7 +14,6 @@ import pl.nadwey.nadarenas.model.arena.Arena;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.logging.Level;
 
 public class ArenaLoader {
     private static class LoadTask {
@@ -32,9 +31,49 @@ public class ArenaLoader {
             arenaReader = new Scanner(arenaFile);
         }
 
+        private void processLine(String line) {
+            String[] parts = line.split(" ");
+            if (parts.length != 4) {
+                NadArenas.getInstance().getLogger().warning("ArenaLoader: invalid arena data line: " + line);
+                return;
+            }
+
+            Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+            Location location = position.toLocation(world);
+
+            Material material = Material.matchMaterial(parts[3]);
+
+            if (material == null) {
+                NadArenas.getInstance().getLogger().warning("ArenaLoader: null block material: " + line);
+                return;
+            }
+
+            Block block = location.getBlock();
+            block.setType(material);
+        }
+
+        public void finish() {
+            if (hasFinished) {
+                NadArenas.getInstance().getLogger().warning("ArenaLoader: LoadTask#finish called after finishing");
+                return;
+            }
+
+            while (arenaReader.hasNextLine()) {
+                String line = arenaReader.nextLine();
+
+                if (line.isBlank())
+                    return;
+
+                processLine(line);
+            }
+
+            hasFinished = true;
+            arenaReader.close();
+        }
+
         public void run() {
             if (hasFinished) {
-                NadArenas.getInstance().getLogger().log(Level.WARNING, "ArenaLoader: LoadTask#run called after finishing");
+                NadArenas.getInstance().getLogger().warning("ArenaLoader: LoadTask#run called after finishing");
                 return;
             }
 
@@ -47,30 +86,10 @@ public class ArenaLoader {
 
                 String line = arenaReader.nextLine();
 
-                if (line.isBlank()) {
+                if (line.isBlank())
                     return;
-                }
 
-                String[] parts = line.split(" ");
-                if (parts.length != 4) {
-                    NadArenas.getInstance().getLogger().log(Level.WARNING, "ArenaLoader: invalid arena data line: " + line);
-                    return;
-                }
-
-                Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
-                Location location = position.toLocation(world);
-
-                Material material = Material.matchMaterial(parts[3]);
-
-                if (material == null) {
-                    NadArenas.getInstance().getLogger().log(Level.WARNING, "ArenaLoader: null block material: " + line);
-                    return;
-                }
-
-                NadArenas.getInstance().getLogger().log(Level.INFO, "ArenaLoader: loading: " + line);
-
-                Block block = location.getBlock();
-                block.setType(material);
+                processLine(line);
             }
         }
     }
@@ -82,11 +101,9 @@ public class ArenaLoader {
         loadTasks = new HashMap<>();
     }
 
-    private void finished(Arena arena) {
-        loadTasks.remove(arena.getName());
-    }
-
     public void load(Arena arena, int blocksAtOnce) {
+        NadArenas.getInstance().getLogger().info("ArenaLoader: loading arena " + arena.getName());
+
         if (loadTasks.containsKey(arena.getName())) {
             throw new IllegalStateException("ArenaLoader: Arena " + arena.getName() + " is already being loaded");
         }
@@ -99,6 +116,8 @@ public class ArenaLoader {
     }
 
     public void onEnable() {
+        NadArenas.getInstance().getLogger().info("ArenaLoader: Enabling...");
+
         bukkitTask = new BukkitRunnable() {
             @Override
             public void run() {
@@ -110,8 +129,22 @@ public class ArenaLoader {
     }
 
     public void onDisable() {
+        if (isLoading())
+            NadArenas.getInstance().getLogger().warning("ArenaLoader: onDisable called during loading arenas, finishing loading every arena, this may take a while...\n(THIS IS NOT A BUG)");
+
         if (bukkitTask != null) {
             bukkitTask.cancel();
         }
+
+        loadTasks.values().forEach(LoadTask::finish);
+        loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
+
+        if (!loadTasks.isEmpty()) {
+            NadArenas.getInstance().getLogger().severe("ArenaLoader: Some arenas failed to finish when disabling ArenaLoader");
+        }
+    }
+
+    public boolean isLoading() {
+        return !loadTasks.isEmpty();
     }
 }

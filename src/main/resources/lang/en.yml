@@ -1,0 +1,15 @@
+conversation-cancel: "<gray>Enter <aqua>'${escapeSequence}'</aqua> to exit the conversation.</gray>"
+conversation-cancelled: "<gray>[<i>cancelled</i>]</gray>"
+conversation-player-only: "<red>Only players can start this conversation.</red>"
+
+command-arena-create-enter-name: "<blue>Please enter the arena name.</blue>"
+command-arena-create-invalid-name: "<red>The provided name is invalid.</red>"
+command-arena-create-arena-exists: "<red>An arena with the name provided already exists.</red>"
+command-arena-create-select-area: "<blue>Please select an area using <dark_purple>WorldEdit</dark_purple>.<br>Then type <aqua>'yes'</aqua> to confirm.</blue>"
+command-arena-create-invalid-selection: "<red>Invalid selection.</red>"
+command-arena-create-invalid-selection-world: "<red>The world of the selection is invalid.</red>"
+command-arena-create-name-null: "<red>Could not get the specified name, cancelling.</red>"
+command-arena-create-arena-created: "<gray>[<green><i>Arena created</i></green>]</gray>"
+
+command-reload-arena-loader-warning: "Reload requested during loading of arenas, loading will be finished instantly, this can take a while, and will hang the server."
+command-reload-reload-finished: "NadArenas reloaded!"

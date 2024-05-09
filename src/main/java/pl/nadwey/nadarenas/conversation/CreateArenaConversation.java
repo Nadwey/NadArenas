@@ -34,18 +34,19 @@ public class CreateArenaConversation extends NadArenasConversation {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return ChatColor.GRAY + "Please enter the arena name.";
+            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enter-name");
         }
 
         @Override
         public @Nullable Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
             if (input == null || !input.matches(Arena.ARENA_NAME_REGEX)) {
-                context.getForWhom().sendRawMessage(ChatColor.RED + "Arena name is invalid.");
+                context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-invalid-name"));
                 return new ArenaNamePrompt();
             }
 
             if (NadArenas.getInstance().getArenaManager().arenaExists(input)) {
-                context.getForWhom().sendRawMessage(ChatColor.RED + "Arena already exists.");
+                context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-arena-exists"));
+
                 return new ArenaNamePrompt();
             }
 
@@ -58,7 +59,7 @@ public class CreateArenaConversation extends NadArenasConversation {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return ChatColor.GRAY + "Please select the area for the arena with " + ChatColor.DARK_PURPLE + "//wand" + ChatColor.GRAY + " and then type 'yes' to confirm.";
+            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-select-area");
         }
 
         @Override
@@ -70,12 +71,12 @@ public class CreateArenaConversation extends NadArenasConversation {
                 try {
                     region = WorldEdit.getInstance().getSessionManager().get(bPlayer).getSelection();
                 } catch (IncompleteRegionException e) {
-                    context.getForWhom().sendRawMessage(ChatColor.RED + "Invalid selection");
+                    context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-invalid-selection"));
                     return new ArenaAreaPrompt();
                 }
 
                 if (region.getWorld() == null) {
-                    context.getForWhom().sendRawMessage(ChatColor.RED + "The world of selection is invalid");
+                    context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-invalid-selection-world"));
                     return new ArenaAreaPrompt();
                 }
 
@@ -86,7 +87,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                 Position maxPosition = Position.fromBlockVector3(region.getMaximumPoint());
 
                 if (name == null) {
-                    context.getForWhom().sendRawMessage(ChatColor.RED + "Name is null for some reason, cancelling");
+                    context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-name-null"));
                     return Prompt.END_OF_CONVERSATION;
                 }
 
@@ -100,7 +101,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                     throw new RuntimeException(e);
                 }
 
-                context.getForWhom().sendRawMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "[Arena created]");
+                context.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-arena-created"));
                 return Prompt.END_OF_CONVERSATION;
             }
 

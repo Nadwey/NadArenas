@@ -8,8 +8,8 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.command.CommandHandler;
@@ -18,9 +18,8 @@ import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 
 import java.sql.SQLException;
-import java.util.List;
 
-@Command(name = "nadarenas", aliases = { "na", "nda" })
+@Command(name = "nadarenas arena", aliases = { "nda arena" })
 @Permission("nadarenas.command.arena")
 public class CommandArena extends CommandBase{
     public CommandArena(NadArenas plugin) {
@@ -28,21 +27,20 @@ public class CommandArena extends CommandBase{
     }
 
     @Execute
-    public void arena(@Context Player sender) {
+    public void arena(@Context CommandSender sender) {
         sender.sendMessage(CommandHandler.infoMessage("nadawenas pwugin iws wowking uwu"));
     }
 
-    @Execute(name = "arena create")
+    @Execute(name = "create")
     @Permission("nadarenas.command.nadarenas.arena.create")
-    public void arenaCreate(@Context Player sender) throws IncompleteRegionException {
+    public void arenaCreate(@Context Player sender) {
         new CreateArenaConversation(sender).begin();
     }
 
-    @Execute(name = "arena list")
+    @Execute(name = "list")
     @Permission("nadarenas.command.nadarenas.arena.list")
-    public void arenaList(@Context Player sender) {
+    public void arenaList(@Context CommandSender sender) {
         var arenas = this.getPlugin().getArenaManager().getArenas().iterator();
-
 
         Component textComponent = CommandHandler.infoMessage("Arenas:\n");
 
@@ -61,9 +59,9 @@ public class CommandArena extends CommandBase{
         sender.sendMessage(textComponent);
     }
 
-    @Execute(name = "arena displayName")
+    @Execute(name = "displayName")
     @Permission("nadarenas.command.nadarenas.arena.displayname")
-    public void arenaSetDisplayName(@Context Player sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
+    public void arenaSetDisplayName(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
         this.getPlugin().getArenaManager().setArenaDisplayName(arena.getName(), displayName);
 
         sender.sendMessage(CommandHandler.infoMessage(
@@ -71,17 +69,17 @@ public class CommandArena extends CommandBase{
                         .append(AdventureUtils.deserializeLegacy(displayName))));
     }
 
-    @Execute(name = "arena remove")
+    @Execute(name = "remove")
     @Permission("nadarenas.command.nadarenas.arena.remove")
-    public void arenaRemove(@Context Player sender, @Arg("arena") Arena arena) throws SQLException {
+    public void arenaRemove(@Context CommandSender sender, @Arg("arena") Arena arena) throws SQLException {
         this.getPlugin().getArenaManager().removeArena(arena.getName());
 
         sender.sendMessage(CommandHandler.warnMessage(Component.text("Removed " + arena.getName())));
     }
 
-    @Execute(name = "arena description")
+    @Execute(name = "description")
     @Permission("nadarenas.command.nadarenas.arena.description")
-    public void arenaSetDescription(@Context Player sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
+    public void arenaSetDescription(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
         this.getPlugin().getArenaManager().setArenaDescription(arena.getName(), description);
 
         sender.sendMessage(CommandHandler.infoMessage(
@@ -90,17 +88,17 @@ public class CommandArena extends CommandBase{
                         .append(AdventureUtils.deserializeMiniMessage(description))));
     }
 
-    @Execute(name = "arena item")
+    @Execute(name = "item")
     @Permission("nadarenas.command.nadarenas.arena.item")
-    public void arenaSetItem(@Context Player sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
+    public void arenaSetItem(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
         this.getPlugin().getArenaManager().setArenaItem(arena.getName(), material);
 
         sender.sendMessage(CommandHandler.infoMessage("Set " + arena.getName() + "'s item to " + material));
     }
 
-    @Execute(name = "arena load")
+    @Execute(name = "load")
     @Permission("nadarenas.command.nadarenas.arena.load")
-    public void arenaLoad(@Context Player sender, @Arg("arena") Arena arena) throws SQLException {
+    public void arenaLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
         this.getPlugin().getArenaLoader().load(arena, 250);
     }
 }
