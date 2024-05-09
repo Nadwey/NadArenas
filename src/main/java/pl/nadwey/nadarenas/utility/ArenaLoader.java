@@ -147,4 +147,8 @@ public class ArenaLoader {
     public boolean isLoading() {
         return !loadTasks.isEmpty();
     }
+
+    public boolean isLoading(String arenaName) {
+        return loadTasks.containsKey(arenaName);
+    }
 }

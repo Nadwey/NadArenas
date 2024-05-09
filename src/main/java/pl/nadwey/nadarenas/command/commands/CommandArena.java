@@ -18,6 +18,7 @@ import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 @Command(name = "nadarenas arena", aliases = { "nda arena" })
 @Permission("nadarenas.command.arena")
@@ -99,6 +100,15 @@ public class CommandArena extends CommandBase{
     @Execute(name = "load")
     @Permission("nadarenas.command.nadarenas.arena.load")
     public void arenaLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
+        if (this.getPlugin().getArenaLoader().isLoading(arena.getName())) {
+            sender.sendMessage(CommandHandler.errorMessage(
+                    this.getPlugin().getLangManager().getAsComponent("command-arena-load-already-loading", Map.of(
+                            "arena", arena.getName()
+                    ))
+            ));
+            return;
+        }
+
         this.getPlugin().getArenaLoader().load(arena, 250);
     }
 }
