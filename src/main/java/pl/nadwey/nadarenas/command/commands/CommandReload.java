@@ -18,11 +18,11 @@ public class CommandReload extends CommandBase{
     @Execute
     public void arena(@Context CommandSender sender) {
         if (this.getPlugin().getArenaLoader().isLoading()) {
-            sender.sendMessage(CommandHandler.warnMessage(this.getPlugin().getLangManager().getString("command-reload-arena-loader-warning")));
+            sender.sendMessage(CommandHandler.warnMessage(this.getPlugin().getLangManager().getAsComponent("command-reload-arena-loader-warning")));
         }
 
         getPlugin().reload();
 
-        sender.sendMessage(CommandHandler.warnMessage(this.getPlugin().getLangManager().getString("command-reload-reload-finished")));
+        sender.sendMessage(CommandHandler.warnMessage(this.getPlugin().getLangManager().getAsComponent("command-reload-reload-finished")));
     }
 }

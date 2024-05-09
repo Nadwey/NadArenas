@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/utility/ArenaLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/utility/ArenaLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lang/en.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandReload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandReload.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +159,7 @@
       <workItem from="1715195587046" duration="7270000" />
       <workItem from="1715237306979" duration="21542000" />
       <workItem from="1715273720917" duration="328000" />
-      <workItem from="1715281875374" duration="1510000" />
+      <workItem from="1715281875374" duration="2418000" />
     </task>
     <servers />
   </component>
