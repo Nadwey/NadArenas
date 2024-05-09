@@ -59,8 +59,11 @@ public final class NadArenas extends JavaPlugin {
         this.arenaLoader.onDisable();
         this.storage.shutdown();
 
+
         this.storage = new StorageFactory(this).getInstance();
+
         this.arenaLoader = new ArenaLoader();
+        this.arenaLoader.onEnable();
 
         this.langManager.reload();
         this.commandHandler.reload();
