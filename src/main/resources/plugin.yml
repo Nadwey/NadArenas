@@ -16,17 +16,17 @@ permissions:
   nadarenas.command.nadarenas.arena.list:
       description: "Access to the '/nadarenas arena list' command."
       default: op
-  nadarenas.command.nadarenas.arena.displayname:
-    description: "Access to the '/nadarenas arena displayName' command."
+  nadarenas.command.nadarenas.arena.setdisplayname:
+    description: "Access to the '/nadarenas arena setDisplayName' command."
     default: op
   nadarenas.command.nadarenas.arena.remove:
     description: "Access to the '/nadarenas arena remove' command."
     default: op
-  nadarenas.command.nadarenas.arena.description:
-    description: "Access to the '/nadarenas arena description' command."
+  nadarenas.command.nadarenas.arena.setdescription:
+    description: "Access to the '/nadarenas arena setDescription' command."
     default: op
-  nadarenas.command.nadarenas.arena.item:
-    description: "Access to the '/nadarenas arena item' command."
+  nadarenas.command.nadarenas.arena.setitem:
+    description: "Access to the '/nadarenas arena setItem' command."
     default: op
   nadarenas.command.nadarenas.arena.load:
     description: "Access to the '/nadarenas arena load' command."

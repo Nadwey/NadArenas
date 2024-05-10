@@ -1,6 +1,5 @@
 package pl.nadwey.nadarenas.conversation;
 
-import org.bukkit.ChatColor;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

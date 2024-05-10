@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
     implementation("xyz.xenondevs.invui:invui:1.30")
     implementation("dev.rollczi:litecommands-bukkit:3.4.1")
     implementation("org.apache.commons:commons-text:1.12.0")
@@ -29,10 +29,10 @@ dependencies {
     implementation("org.springframework:spring-jdbc:6.1.6")
     implementation("org.flywaydb:flyway-core:10.12.0")
 
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.0")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.1")
 }
 
-val targetJavaVersion = 17
+val targetJavaVersion = 21
 java {
     val javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion

@@ -60,8 +60,8 @@ public class CommandArena extends CommandBase{
         sender.sendMessage(textComponent);
     }
 
-    @Execute(name = "displayName")
-    @Permission("nadarenas.command.nadarenas.arena.displayname")
+    @Execute(name = "setDisplayName")
+    @Permission("nadarenas.command.nadarenas.arena.setdisplayname")
     public void arenaSetDisplayName(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
         this.getPlugin().getArenaManager().setArenaDisplayName(arena.getName(), displayName);
 
@@ -78,8 +78,8 @@ public class CommandArena extends CommandBase{
         sender.sendMessage(CommandHandler.warnMessage(Component.text("Removed " + arena.getName())));
     }
 
-    @Execute(name = "description")
-    @Permission("nadarenas.command.nadarenas.arena.description")
+    @Execute(name = "setDescription")
+    @Permission("nadarenas.command.nadarenas.arena.setdescription")
     public void arenaSetDescription(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
         this.getPlugin().getArenaManager().setArenaDescription(arena.getName(), description);
 
@@ -89,8 +89,8 @@ public class CommandArena extends CommandBase{
                         .append(AdventureUtils.deserializeMiniMessage(description))));
     }
 
-    @Execute(name = "item")
-    @Permission("nadarenas.command.nadarenas.arena.item")
+    @Execute(name = "setItem")
+    @Permission("nadarenas.command.nadarenas.arena.setitem")
     public void arenaSetItem(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
         this.getPlugin().getArenaManager().setArenaItem(arena.getName(), material);
 
