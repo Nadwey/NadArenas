@@ -3,22 +3,23 @@ package pl.nadwey.nadarenas.model.arena;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 import pl.nadwey.nadarenas.NadArenas;
+import pl.nadwey.nadarenas.storage.StorageManager;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
-public class ArenaManager implements ArenaStorageImplementation {
-    private final NadArenas plugin;
+public class ArenaStorageManager implements ArenaStorageImplementation {
+    private final StorageManager storageManager;
 
-    public ArenaManager(NadArenas plugin) {
-        this.plugin = plugin;
+    public ArenaStorageManager(StorageManager storageManager) {
+        this.storageManager = storageManager;
     }
 
     public void createArena(@NotNull Arena arena) {
         Objects.requireNonNull(arena, "arena");
         try {
-            this.plugin.getStorage().getImplementation().createArena(arena);
+            this.storageManager.getStorage().getImplementation().createArena(arena);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +29,7 @@ public class ArenaManager implements ArenaStorageImplementation {
         Objects.requireNonNull(name);
 
         try {
-            return this.plugin.getStorage().getImplementation().getArena(name);
+            return this.storageManager.getStorage().getImplementation().getArena(name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +43,7 @@ public class ArenaManager implements ArenaStorageImplementation {
 
     public List<Arena> getArenas() {
         try {
-            return this.plugin.getStorage().getImplementation().getArenas();
+            return this.storageManager.getStorage().getImplementation().getArenas();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +56,7 @@ public class ArenaManager implements ArenaStorageImplementation {
 
 
         try {
-            this.plugin.getStorage().getImplementation().setArenaDisplayName(arena, displayName);
+            this.storageManager.getStorage().getImplementation().setArenaDisplayName(arena, displayName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +67,7 @@ public class ArenaManager implements ArenaStorageImplementation {
         Objects.requireNonNull(name, "name");
 
         try {
-            this.plugin.getStorage().getImplementation().removeArena(name);
+            this.storageManager.getStorage().getImplementation().removeArena(name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -78,7 +79,7 @@ public class ArenaManager implements ArenaStorageImplementation {
         Objects.requireNonNull(description, "description");
 
         try {
-            this.plugin.getStorage().getImplementation().setArenaDescription(name, description);
+            this.storageManager.getStorage().getImplementation().setArenaDescription(name, description);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +91,7 @@ public class ArenaManager implements ArenaStorageImplementation {
         Objects.requireNonNull(item, "item");
 
         try {
-            this.plugin.getStorage().getImplementation().setArenaItem(name, item);
+            this.storageManager.getStorage().getImplementation().setArenaItem(name, item);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,6 @@
 package pl.nadwey.nadarenas.conversation;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -25,19 +26,15 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
                 .addConversationAbandonedListener(this)
                 .withFirstPrompt(getEntryPrompt());
 
-        conversable.sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-cancel", Map.of(
+        sendLangMessage("conversation-cancel", Map.of(
                 "escapeSequence", ESCAPE_SEQUENCE
-        )));
-    }
-
-    public static String getCancelledMessage() {
-        return NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-cancelled");
+        ));
     }
 
     @Override
     public void conversationAbandoned(@NotNull ConversationAbandonedEvent abandonedEvent) {
         if (!abandonedEvent.gracefulExit()) {
-            abandonedEvent.getContext().getForWhom().sendRawMessage(getCancelledMessage());
+            sendLangMessage("conversation-cancelled");
         }
     }
 
@@ -45,9 +42,23 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
         Conversation conversation = conversationFactory.buildConversation(conversable);
 
         if (playerOnly && !(conversable instanceof Player)) {
-            conversation.getForWhom().sendRawMessage(NadArenas.getInstance().getLangManager().getAsLegacyString("conversation-player-only"));
+            sendLangMessage("conversation-player-only");
         }
 
         conversation.begin();
+    }
+
+    protected void sendLangMessage(String key) {
+        if (!(this.conversable instanceof CommandSender commandSender))
+            return;
+
+        commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key));
+    }
+
+    protected void sendLangMessage(String key, Map<String, String> args) {
+        if (!(this.conversable instanceof CommandSender commandSender))
+            return;
+
+        commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key, args));
     }
 }

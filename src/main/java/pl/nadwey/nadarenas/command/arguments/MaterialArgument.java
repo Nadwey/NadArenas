@@ -8,7 +8,6 @@ import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.util.Arrays;
 import java.util.List;

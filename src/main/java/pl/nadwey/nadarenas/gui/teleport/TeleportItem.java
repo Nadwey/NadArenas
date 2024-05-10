@@ -47,6 +47,6 @@ public class TeleportItem extends AbstractItem {
 
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
-        player.sendMessage(CommandHandler.normalMessage("Teleporting to " + arena.getName() + "..."));
+        player.sendMessage("Teleporting to " + arena.getName() + "...");
     }
 }

@@ -29,4 +29,12 @@ public class AdventureUtils {
     public static ComponentWrapper deserializeLegacyToWrapper(String text) {
         return new AdventureComponentWrapper(deserializeLegacy(text));
     }
+
+    public static String legacyAmpersandToMiniMessage(String legacyString) {
+        return MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacyAmpersand().deserialize(legacyString));
+    }
+
+    public static String legacySectionToMiniMessage(String legacyString) {
+        return MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacySection().deserialize(legacyString));
+    }
 }

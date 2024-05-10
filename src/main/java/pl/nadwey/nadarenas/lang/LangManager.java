@@ -1,6 +1,7 @@
 package pl.nadwey.nadarenas.lang;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.text.StringSubstitutor;
@@ -33,6 +34,7 @@ public class LangManager implements Reloadable {
 
     public void loadLanguages() {
         this.plugin.getLogger().info("Enabling Language Manager");
+
         langs.clear();
 
         JarFile file = null;
@@ -70,8 +72,14 @@ public class LangManager implements Reloadable {
             }
         }
 
-        File langFolder = this.plugin.getDataFolder().toPath().resolve("lang").toFile();
-        for (File langFile : langFolder.listFiles()) {
+        var langFiles = this.plugin.getDataFolder().toPath().resolve("lang").toFile().listFiles();
+
+        if (langFiles == null) {
+            this.plugin.getLogger().severe("Failed to load language files from plugin directory");
+            return;
+        }
+
+        for (File langFile : langFiles) {
             langs.put(langFile.getName().replace("lang/", "").replace(".yml", ""), YamlConfiguration.loadConfiguration(langFile));
         }
     }
@@ -141,10 +149,14 @@ public class LangManager implements Reloadable {
     }
 
     public void send(CommandSender commandSender, String key) {
-        commandSender.sendMessage(getAsComponent(key));
+        commandSender.sendMessage(getMessagePrefix().append(getAsComponent(key)));
     }
 
     public void send(CommandSender commandSender, String key, Map<String, String> args) {
-        commandSender.sendMessage(getAsComponent(key, args));
+        commandSender.sendMessage(getMessagePrefix().append(getAsComponent(key, args)));
+    }
+
+    private static Component getMessagePrefix() {
+        return Component.text("[NadArenas] ").color(TextColor.color(0x2080ff));
     }
 }

@@ -11,7 +11,18 @@ command-arena-create-invalid-selection-world: "<red>The world of the selection i
 command-arena-create-name-null: "<red>Couldn't get the specified name, cancelling.</red>"
 command-arena-create-arena-created: "<gray>[<green><i>Arena created</i></green>]</gray>"
 
-command-arena-load-already-loading: "Arena ${arena} is already loading"
+command-arena-list-top: "<blue><b>Arenas:</b><blue>"
 
-command-reload-arena-loader-warning: "You requested a reload during arena loading. Loading will be finished forcefully, but it may take a while and will temporarily freeze the server."
+command-arena-setdisplayname-successful: "Set ${arena}'s display name to ${displayName}"
+
+command-arena-remove-successful: "Removed ${arena}"
+
+command-arena-setdescription-successful: "Set ${arena}'s description to ${description}"
+
+command-arena-setitem-successful: "Set ${arena}'s item to ${item}"
+
+command-arena-load-already-loading: "<red>Arena ${arena} is already loading, cancelling.</red>"
+command-arena-load-failed-to-load-file: "<red>Failed to load ${arena}'s file.</red>"
+
+command-reload-arena-loader-warning: "<yellow>You requested a reload during arena loading. Loading will be finished forcefully, but it may take a while and will temporarily freeze the server.</yellow>"
 command-reload-reload-finished: "NadArenas reloaded!"

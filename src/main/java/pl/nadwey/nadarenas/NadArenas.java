@@ -3,18 +3,15 @@ package pl.nadwey.nadarenas;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.lang.LangManager;
-import pl.nadwey.nadarenas.model.arena.ArenaManager;
-import pl.nadwey.nadarenas.storage.Storage;
-import pl.nadwey.nadarenas.storage.StorageFactory;
-import pl.nadwey.nadarenas.utility.ArenaLoader;
+import pl.nadwey.nadarenas.storage.StorageManager;
+import pl.nadwey.nadarenas.utility.ArenaManager;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;
     private CommandHandler commandHandler;
-    private Storage storage;
 
+    private StorageManager storageManager;
     private ArenaManager arenaManager;
-    private ArenaLoader arenaLoader;
     private LangManager langManager;
 
     public static NadArenas getInstance() {
@@ -33,12 +30,11 @@ public final class NadArenas extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        this.storage = new StorageFactory(this).getInstance();
+        this.storageManager = new StorageManager(this);
+        this.storageManager.onEnable();
 
         this.arenaManager = new ArenaManager(this);
-
-        this.arenaLoader = new ArenaLoader();
-        this.arenaLoader.onEnable();
+        this.arenaManager.onEnable();
 
         this.commandHandler = new CommandHandler(this);
         this.commandHandler.onEnable();
@@ -49,36 +45,32 @@ public final class NadArenas extends JavaPlugin {
     @Override
     public void onDisable() {
         this.commandHandler.onDisable();
-        this.arenaLoader.onDisable();
-
-        getLogger().info("Closing storage...");
-        this.storage.shutdown();
+        this.arenaManager.onDisable();
     }
 
     public void reload() {
-        this.arenaLoader.onDisable();
-        this.storage.shutdown();
+        // disable
+        this.arenaManager.onDisable();
+        this.storageManager.onDisable();
 
+        // enable
+        this.storageManager = new StorageManager(this);
+        this.storageManager.onEnable();
 
-        this.storage = new StorageFactory(this).getInstance();
+        this.arenaManager = new ArenaManager(this);
+        this.arenaManager.onEnable();
 
-        this.arenaLoader = new ArenaLoader();
-        this.arenaLoader.onEnable();
-
+        // reload reloadable stuff
         this.langManager.reload();
         this.commandHandler.reload();
     }
 
-    public Storage getStorage() {
-        return this.storage;
+    public StorageManager getStorageManager() {
+        return this.storageManager;
     }
 
     public ArenaManager getArenaManager() {
         return this.arenaManager;
-    }
-
-    public ArenaLoader getArenaLoader() {
-        return this.arenaLoader;
     }
 
     public LangManager getLangManager() {

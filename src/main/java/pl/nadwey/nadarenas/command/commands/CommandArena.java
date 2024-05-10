@@ -1,6 +1,5 @@
 package pl.nadwey.nadarenas.command.commands;
 
-import com.sk89q.worldedit.IncompleteRegionException;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -12,24 +11,24 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.nadwey.nadarenas.NadArenas;
-import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.conversation.CreateArenaConversation;
 import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Map;
 
-@Command(name = "nadarenas arena", aliases = { "nda arena" })
+@Command(name = "nadarenas arena", aliases = {"nda arena"})
 @Permission("nadarenas.command.arena")
-public class CommandArena extends CommandBase{
+public class CommandArena extends CommandBase {
     public CommandArena(NadArenas plugin) {
         super(plugin);
     }
 
     @Execute
     public void arena(@Context CommandSender sender) {
-        sender.sendMessage(CommandHandler.infoMessage("nadawenas pwugin iws wowking uwu"));
+        sender.sendMessage("nadawenas pwugin iws wowking uwu");
     }
 
     @Execute(name = "create")
@@ -41,9 +40,9 @@ public class CommandArena extends CommandBase{
     @Execute(name = "list")
     @Permission("nadarenas.command.nadarenas.arena.list")
     public void arenaList(@Context CommandSender sender) {
-        var arenas = this.getPlugin().getArenaManager().getArenas().iterator();
+        var arenas = this.getPlugin().getStorageManager().arena().getArenas().iterator();
 
-        Component textComponent = CommandHandler.infoMessage("Arenas:\n");
+        Component textComponent = this.getPlugin().getLangManager().getAsComponent("command-arena-list-top").appendNewline();
 
         while (arenas.hasNext()) {
             Arena arena = arenas.next();
@@ -63,52 +62,65 @@ public class CommandArena extends CommandBase{
     @Execute(name = "setDisplayName")
     @Permission("nadarenas.command.nadarenas.arena.setdisplayname")
     public void arenaSetDisplayName(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
-        this.getPlugin().getArenaManager().setArenaDisplayName(arena.getName(), displayName);
+        this.getPlugin().getStorageManager().arena().setArenaDisplayName(arena.getName(), displayName);
 
-        sender.sendMessage(CommandHandler.infoMessage(
-                Component.text("Set " + arena.getName() + "'s display name to ")
-                        .append(AdventureUtils.deserializeLegacy(displayName))));
+        this.getPlugin().getLangManager().send(sender, "command-arena-setdisplayname-successful", Map.of(
+                "arena", arena.getName(),
+                "displayName", AdventureUtils.legacyAmpersandToMiniMessage(displayName)
+        ));
     }
 
     @Execute(name = "remove")
     @Permission("nadarenas.command.nadarenas.arena.remove")
     public void arenaRemove(@Context CommandSender sender, @Arg("arena") Arena arena) throws SQLException {
-        this.getPlugin().getArenaManager().removeArena(arena.getName());
+        this.getPlugin().getStorageManager().arena().removeArena(arena.getName());
+        this.getPlugin().getArenaManager().removeArena(arena);
 
-        sender.sendMessage(CommandHandler.warnMessage(Component.text("Removed " + arena.getName())));
+        this.getPlugin().getLangManager().send(sender, "command-arena-remove-successful", Map.of(
+                "arena", arena.getName()
+        ));
     }
 
     @Execute(name = "setDescription")
     @Permission("nadarenas.command.nadarenas.arena.setdescription")
     public void arenaSetDescription(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
-        this.getPlugin().getArenaManager().setArenaDescription(arena.getName(), description);
+        this.getPlugin().getStorageManager().arena().setArenaDescription(arena.getName(), description);
 
-        sender.sendMessage(CommandHandler.infoMessage(
-                Component.text("Set " + arena.getName() + "'s description to:")
-                        .appendNewline()
-                        .append(AdventureUtils.deserializeMiniMessage(description))));
+        this.getPlugin().getLangManager().send(sender, "command-arena-setdescription-successful", Map.of(
+                "arena", arena.getName(),
+                "description", description
+        ));
     }
 
     @Execute(name = "setItem")
     @Permission("nadarenas.command.nadarenas.arena.setitem")
     public void arenaSetItem(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
-        this.getPlugin().getArenaManager().setArenaItem(arena.getName(), material);
+        this.getPlugin().getStorageManager().arena().setArenaItem(arena.getName(), material);
 
-        sender.sendMessage(CommandHandler.infoMessage("Set " + arena.getName() + "'s item to " + material));
+        this.getPlugin().getLangManager().send(sender,"command-arena-setitem-successful", Map.of(
+                "arena", arena.getName(),
+                "item", material.toString()
+        ));
     }
 
     @Execute(name = "load")
     @Permission("nadarenas.command.nadarenas.arena.load")
     public void arenaLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
-        if (this.getPlugin().getArenaLoader().isLoading(arena.getName())) {
-            sender.sendMessage(CommandHandler.errorMessage(
-                    this.getPlugin().getLangManager().getAsComponent("command-arena-load-already-loading", Map.of(
-                            "arena", arena.getName()
-                    ))
+        if (this.getPlugin().getArenaManager().isLoading(arena.getName())) {
+            this.getPlugin().getLangManager().send(sender, "command-arena-load-already-loading", Map.of(
+                    "arena", arena.getName()
             ));
+
             return;
         }
 
-        this.getPlugin().getArenaLoader().load(arena, 250);
+        try {
+            this.getPlugin().getArenaManager().loadArena(arena, 250);
+        } catch (FileNotFoundException e) {
+            this.getPlugin().getLangManager().send(sender, "command-arena-load-failed-to-load-file", Map.of(
+                    "arena", arena.getName()
+            ));
+            throw new RuntimeException(e);
+        }
     }
 }
