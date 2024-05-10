@@ -11,7 +11,7 @@ command-arena-create-invalid-selection-world: "<red>The world of the selection i
 command-arena-create-name-null: "<red>Couldn't get the specified name, cancelling.</red>"
 command-arena-create-arena-created: "<gray>[<green><i>Arena created</i></green>]</gray>"
 
-command-arena-list-top: "<blue><b>Arenas:</b><blue>"
+command-arena-list-top: "<blue><b>Arenas:</b></blue>"
 
 command-arena-setdisplayname-successful: "Set ${arena}'s display name to ${displayName}"
 
