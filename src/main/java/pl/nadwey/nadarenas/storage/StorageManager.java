@@ -18,12 +18,14 @@ public class StorageManager {
     }
 
     public void onEnable() {
+        this.plugin.getLogger().info("Enabling storage and performing migrations...");
         this.storage = new StorageFactory(this.plugin).getInstance();
 
         this.arenaStorageManager = new ArenaStorageManager(this);
     }
 
     public void onDisable() {
+        this.plugin.getLogger().info("Shutting down storage...");
         this.storage.shutdown();
     }
 
