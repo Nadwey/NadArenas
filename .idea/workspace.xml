@@ -16,6 +16,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandArenas.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandBase.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/commands/CommandReload.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/Arena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/Arena.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaStorageImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaStorageImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaStorageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaStorageManager.java" afterDir="false" />
@@ -186,6 +187,7 @@
       <workItem from="1715703263249" duration="310000" />
       <workItem from="1715705616369" duration="6000" />
       <workItem from="1715705630724" duration="12520000" />
+      <workItem from="1715723452049" duration="196000" />
     </task>
     <servers />
   </component>
