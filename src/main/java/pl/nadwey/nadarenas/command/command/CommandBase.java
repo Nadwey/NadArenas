@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.command.commands;
+package pl.nadwey.nadarenas.command.command;
 
 import pl.nadwey.nadarenas.NadArenas;
 

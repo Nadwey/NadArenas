@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.command.arguments;
+package pl.nadwey.nadarenas.command.argument;
 
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;

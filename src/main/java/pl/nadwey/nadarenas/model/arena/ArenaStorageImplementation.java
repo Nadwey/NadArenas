@@ -14,9 +14,13 @@ public interface ArenaStorageImplementation {
 
     void setArenaDisplayName(String arena, String displayName) throws SQLException;
 
-    void removeArena(String name) throws SQLException;
-
     void setArenaDescription(String name, String description) throws SQLException;
 
     void setArenaItem(String name, Material item) throws SQLException;
+
+    void removeArena(String name) throws SQLException;
+
+    void setArenaLoaderBlocksPerTick(String arena, Integer loaderBlocksPerTick) throws SQLException;
+
+    void setArenaLoaderEnabled(String arena, Boolean enabled) throws SQLException;
 }

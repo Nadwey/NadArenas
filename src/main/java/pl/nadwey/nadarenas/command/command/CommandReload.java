@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.command.commands;
+package pl.nadwey.nadarenas.command.command;
 
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;

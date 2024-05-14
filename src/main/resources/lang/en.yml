@@ -2,6 +2,11 @@ conversation-cancel: "<gray>Enter <aqua>'${escapeSequence}'</aqua> to exit the c
 conversation-cancelled: "<gray>[<i>cancelled</i>]</gray>"
 conversation-player-only: "<red>Only players can start this conversation.</red>"
 
+no-permissions-to-use-command: "<red>You don't have permission to use this command (<gold>${permission}</gold>)!</red>"
+
+invalid-command-usage-single-schematic: "<red>Invalid usage of command:</red><br><gold>${schematic}</gold>"
+invalid-command-usage-multiple-schematics: "<red>Invalid usage of command!</red>"
+
 command-arena-create-enter-name: "<blue>Please enter the arena name.</blue>"
 command-arena-create-invalid-name: "<red>The provided name is invalid.</red>"
 command-arena-create-arena-exists: "<red>An arena with that name already exists.</red>"

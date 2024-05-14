@@ -1,6 +1,5 @@
 package pl.nadwey.nadarenas.storage.implementation.sql;
 
-import io.papermc.paper.math.BlockPosition;
 import org.bukkit.Material;
 import org.flywaydb.core.Flyway;
 import pl.nadwey.nadarenas.NadArenas;
@@ -9,7 +8,6 @@ import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.storage.implementation.sql.connection.ConnectionFactory;
 
-import java.awt.print.Paper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements StorageImplementation {
-    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    public static final String ARENA_SELECT = "SELECT world, display_name, min_x, min_y, min_z, max_x, max_y, max_z, description, item FROM nadarenas_arenas WHERE name = ?";
+    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, loader_support, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ARENA_SELECT = "SELECT loader_support, world, min_x, min_y, min_z, max_x, max_y, max_z, loader_blocks_per_tick, display_name, description, item FROM nadarenas_arenas WHERE name = ?";
     public static final String ARENA_SELECT_ID = "SELECT id FROM nadarenas_arenas WHERE name = ?";
-    public static final String ARENA_SELECT_ALL = "SELECT name, world, min_x, min_y, min_z, max_x, max_y, max_z, display_name, description, item FROM nadarenas_arenas";
+    public static final String ARENA_SELECT_ALL = "SELECT loader_support, name, world, min_x, min_y, min_z, max_x, max_y, max_z, loader_blocks_per_tick, display_name, description, item FROM nadarenas_arenas";
+    public static final String ARENA_UPDATE_LOADER_BLOCKS_PER_TICK = "UPDATE nadarenas_arenas SET loader_blocks_per_tick = ? WHERE name = ?";
+    public static final String ARENA_UPDATE_LOADER_SUPPORT = "UPDATE nadarenas_arenas SET loader_support = ? WHERE name = ?";
     public static final String ARENA_UPDATE_DISPLAY_NAME = "UPDATE nadarenas_arenas SET display_name = ? WHERE name = ?";
     public static final String ARENA_UPDATE_DESCRIPTION = "UPDATE nadarenas_arenas SET description = ? WHERE name = ?";
     public static final String ARENA_UPDATE_ITEM = "UPDATE nadarenas_arenas SET item = ? WHERE name = ?";
@@ -88,6 +88,7 @@ public class SqlStorage implements StorageImplementation {
     }
 
     private Arena getArenaFromResultSet(String name, ResultSet rs) throws SQLException {
+        Boolean loaderSupport = rs.getBoolean("loader_support");
         String world = rs.getString("world");
         String displayName = rs.getString("display_name");
         String description = rs.getString("description");
@@ -99,12 +100,20 @@ public class SqlStorage implements StorageImplementation {
         Integer maxY = rs.getInt("max_y");
         Integer maxZ = rs.getInt("max_z");
 
+        Integer loaderBlocksPerTick = rs.getInt("loader_blocks_per_tick");
+
         Material item = Material.getMaterial(rs.getString("item"));
 
         Position minPosition = new Position(minX, minY, minZ);
         Position maxPosition = new Position(maxX, maxY, maxZ);
 
-        return new Arena(name, world, minPosition, maxPosition, displayName, description, item);
+        Arena arena = new Arena(name, loaderSupport, world, minPosition, maxPosition);
+        arena.setLoaderBlocksPerTick(loaderBlocksPerTick);
+        arena.setDisplayName(displayName);
+        arena.setDescription(description);
+        arena.setItem(item);
+
+        return arena;
     }
 
     @Override
@@ -112,13 +121,14 @@ public class SqlStorage implements StorageImplementation {
         PreparedStatement ps = getConnectionFactory().getConnection().prepareStatement(ARENA_INSERT);
 
         ps.setString(1, arena.getName());
-        ps.setString(2, arena.getWorld());
-        ps.setInt(3, arena.getMinPosition().x());
-        ps.setInt(4, arena.getMinPosition().y());
-        ps.setInt(5, arena.getMinPosition().z());
-        ps.setInt(6, arena.getMaxPosition().x());
-        ps.setInt(7, arena.getMaxPosition().y());
-        ps.setInt(8, arena.getMaxPosition().z());
+        ps.setBoolean(2, arena.getLoaderSupport());
+        ps.setString(3, arena.getWorld());
+        ps.setInt(4, arena.getMinPosition().x());
+        ps.setInt(5, arena.getMinPosition().y());
+        ps.setInt(6, arena.getMinPosition().z());
+        ps.setInt(7, arena.getMaxPosition().x());
+        ps.setInt(8, arena.getMaxPosition().y());
+        ps.setInt(9, arena.getMaxPosition().z());
 
         ps.executeUpdate();
     }
@@ -152,25 +162,32 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public void setArenaDisplayName(String arena, String displayName) throws SQLException {
-        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_DISPLAY_NAME);
+    public void setArenaLoaderEnabled(String arena, Boolean enabled) throws SQLException {
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_LOADER_SUPPORT);
 
-        stmt.setString(1, displayName);
+        stmt.setBoolean(1, enabled);
         stmt.setString(2, arena);
 
         stmt.executeUpdate();
     }
 
     @Override
-    public void removeArena(String name) throws SQLException {
-        Integer arenaID = getArenaID(name);
+    public void setArenaLoaderBlocksPerTick(String arena, Integer loaderBlocksPerTick) throws SQLException {
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_LOADER_BLOCKS_PER_TICK);
 
-        if (arenaID == null) return;
+        stmt.setInt(1, loaderBlocksPerTick);
+        stmt.setString(2, arena);
 
-        // TODO: remove relations
+        stmt.executeUpdate();
+    }
 
-        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_DELETE);
-        stmt.setString(1, name);
+    @Override
+    public void setArenaDisplayName(String arena, String displayName) throws SQLException {
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_DISPLAY_NAME);
+
+        stmt.setString(1, displayName);
+        stmt.setString(2, arena);
+
         stmt.executeUpdate();
     }
 
@@ -189,6 +206,19 @@ public class SqlStorage implements StorageImplementation {
         stmt.setString(1, item.name());
         stmt.setString(2, name);
 
+        stmt.executeUpdate();
+    }
+
+    @Override
+    public void removeArena(String name) throws SQLException {
+        Integer arenaID = getArenaID(name);
+
+        if (arenaID == null) return;
+
+        // TODO: remove relations
+
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_DELETE);
+        stmt.setString(1, name);
         stmt.executeUpdate();
     }
 }

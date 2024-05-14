@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.command.commands;
+package pl.nadwey.nadarenas.command.command;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -15,7 +15,6 @@ import pl.nadwey.nadarenas.conversation.CreateArenaConversation;
 import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -101,26 +100,5 @@ public class CommandArena extends CommandBase {
                 "arena", arena.getName(),
                 "item", material.toString()
         ));
-    }
-
-    @Execute(name = "load")
-    @Permission("nadarenas.command.nadarenas.arena.load")
-    public void arenaLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
-        if (this.getPlugin().getArenaManager().isLoading(arena.getName())) {
-            this.getPlugin().getLangManager().send(sender, "command-arena-load-already-loading", Map.of(
-                    "arena", arena.getName()
-            ));
-
-            return;
-        }
-
-        try {
-            this.getPlugin().getArenaManager().loadArena(arena, 250);
-        } catch (FileNotFoundException e) {
-            this.getPlugin().getLangManager().send(sender, "command-arena-load-failed-to-load-file", Map.of(
-                    "arena", arena.getName()
-            ));
-            throw new RuntimeException(e);
-        }
     }
 }

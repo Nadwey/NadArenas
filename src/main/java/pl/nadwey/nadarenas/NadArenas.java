@@ -2,9 +2,12 @@ package pl.nadwey.nadarenas;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.command.CommandHandler;
+import pl.nadwey.nadarenas.configuration.MainConfiguration;
 import pl.nadwey.nadarenas.lang.LangManager;
 import pl.nadwey.nadarenas.storage.StorageManager;
-import pl.nadwey.nadarenas.utility.ArenaManager;
+import pl.nadwey.nadarenas.loader.ArenaManager;
+
+import javax.annotation.Nullable;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;
@@ -13,6 +16,7 @@ public final class NadArenas extends JavaPlugin {
     private StorageManager storageManager;
     private ArenaManager arenaManager;
     private LangManager langManager;
+    private MainConfiguration mainConfiguration;
 
     public static NadArenas getInstance() {
         return instance;
@@ -30,6 +34,8 @@ public final class NadArenas extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
+        this.mainConfiguration = new MainConfiguration(this);
+
         this.storageManager = new StorageManager(this);
         this.storageManager.onEnable();
 
@@ -45,7 +51,10 @@ public final class NadArenas extends JavaPlugin {
     @Override
     public void onDisable() {
         this.commandHandler.onDisable();
+
         this.arenaManager.onDisable();
+
+        this.storageManager.onDisable();
     }
 
     public void reload() {
@@ -53,14 +62,15 @@ public final class NadArenas extends JavaPlugin {
         this.arenaManager.onDisable();
         this.storageManager.onDisable();
 
-        // enable
+        // enable and reload reloadable stuff
+        this.mainConfiguration.reload();
+
         this.storageManager = new StorageManager(this);
         this.storageManager.onEnable();
 
         this.arenaManager = new ArenaManager(this);
         this.arenaManager.onEnable();
 
-        // reload reloadable stuff
         this.langManager.reload();
         this.commandHandler.reload();
     }
@@ -75,5 +85,9 @@ public final class NadArenas extends JavaPlugin {
 
     public LangManager getLangManager() {
         return this.langManager;
+    }
+
+    public MainConfiguration getMainConfiguration() {
+        return this.mainConfiguration;
     }
 }

@@ -54,20 +54,8 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(arena, "arena");
         Objects.requireNonNull(displayName, "displayName");
 
-
         try {
             this.storageManager.getStorage().getImplementation().setArenaDisplayName(arena, displayName);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void removeArena(@NotNull String name) throws SQLException {
-        Objects.requireNonNull(name, "name");
-
-        try {
-            this.storageManager.getStorage().getImplementation().removeArena(name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,6 +80,43 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
 
         try {
             this.storageManager.getStorage().getImplementation().setArenaItem(name, item);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void removeArena(@NotNull String name) throws SQLException {
+        Objects.requireNonNull(name, "name");
+
+        try {
+            this.storageManager.getStorage().getImplementation().removeArena(name);
+
+            this.storageManager.getPlugin().getArenaManager().removeArena(name);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setArenaLoaderBlocksPerTick(String arena, Integer loaderBlocksPerTick) {
+        Objects.requireNonNull(arena, "arena");
+        Objects.requireNonNull(loaderBlocksPerTick, "loaderBlocksPerTick");
+
+        try {
+            this.storageManager.getStorage().getImplementation().setArenaLoaderBlocksPerTick(arena, loaderBlocksPerTick);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setArenaLoaderEnabled(String arena, Boolean enabled) {
+        Objects.requireNonNull(arena, "arena");
+        Objects.requireNonNull(enabled, "enabled");
+
+        try {
+            this.storageManager.getStorage().getImplementation().setArenaLoaderEnabled(arena, enabled);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

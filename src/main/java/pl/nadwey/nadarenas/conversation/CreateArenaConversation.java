@@ -89,7 +89,8 @@ public class CreateArenaConversation extends NadArenasConversation {
                     return Prompt.END_OF_CONVERSATION;
                 }
 
-                Arena arena = new Arena(name, world, minPosition, maxPosition);
+                // TODO: create a new prompt for loader support
+                Arena arena = new Arena(name, true, world, minPosition, maxPosition);
 
                 NadArenas.getInstance().getStorageManager().arena().createArena(arena);
 

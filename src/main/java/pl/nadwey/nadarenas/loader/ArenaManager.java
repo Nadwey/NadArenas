@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.utility;
+package pl.nadwey.nadarenas.loader;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -110,8 +110,12 @@ public class ArenaManager {
         this.loadTasks = new ConcurrentHashMap<>();
     }
 
+    private File getArenaFile(String arena) {
+        return this.plugin.getDataFolder().toPath().resolve("arenas/" + arena).toFile();
+    }
+
     private File getArenaFile(Arena arena) {
-        return this.plugin.getDataFolder().toPath().resolve("arenas/" + arena.getName()).toFile();
+        return getArenaFile(arena.getName());
     }
 
     public void loadArena(Arena arena, int blocksAtOnce) throws FileNotFoundException {
@@ -143,8 +147,12 @@ public class ArenaManager {
         writer.close();
     }
 
-    public void removeArena(Arena arena) {
+    public void removeArena(String arena) {
         getArenaFile(arena).delete();
+    }
+
+    public void removeArena(Arena arena) {
+        removeArena(arena.getName());
     }
 
     public void onEnable() {
