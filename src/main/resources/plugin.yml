@@ -28,17 +28,17 @@ permissions:
   nadarenas.command.nadarenas.arena.setitem:
     description: "Access to the '/nadarenas arena setItem' command."
     default: op
-  nadarenas.command.nadarenas.arena.loader:
-    description: "Access to the '/nadarenas arena loader' command."
+  nadarenas.command.nadarenas.arena.restorer:
+    description: "Access to the '/nadarenas arena restorer' command."
     default: op
-  nadarenas.command.nadarenas.arena.loader.load:
-    description: "Access to the '/nadarenas arena loader load' command."
+  nadarenas.command.nadarenas.arena.restorer.load:
+    description: "Access to the '/nadarenas arena restorer load' command."
     default: op
-  nadarenas.command.nadarenas.arena.loader.setenabled:
-    description: "Access to the '/nadarenas arena loader setEnabled' command."
+  nadarenas.command.nadarenas.arena.restorer.setenabled:
+    description: "Access to the '/nadarenas arena restorer setEnabled' command."
     default: op
-  nadarenas.command.nadarenas.arena.loader.setblockspertick:
-    description: "Access to the '/nadarenas arena loader setBlocksPerTick' command."
+  nadarenas.command.nadarenas.arena.restorer.setblockspertick:
+    description: "Access to the '/nadarenas arena restorer setBlocksPerTick' command."
     default: op
   nadarenas.command.reload:
     description: "Access to the '/nadarenas reload' command."

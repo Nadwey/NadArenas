@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements StorageImplementation {
-    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, loader_support, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    public static final String ARENA_SELECT = "SELECT loader_support, world, min_x, min_y, min_z, max_x, max_y, max_z, loader_blocks_per_tick, display_name, description, item FROM nadarenas_arenas WHERE name = ?";
+    public static final String ARENA_INSERT = "INSERT INTO nadarenas_arenas(name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ARENA_SELECT = "SELECT enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item FROM nadarenas_arenas WHERE name = ?";
     public static final String ARENA_SELECT_ID = "SELECT id FROM nadarenas_arenas WHERE name = ?";
-    public static final String ARENA_SELECT_ALL = "SELECT loader_support, name, world, min_x, min_y, min_z, max_x, max_y, max_z, loader_blocks_per_tick, display_name, description, item FROM nadarenas_arenas";
-    public static final String ARENA_UPDATE_LOADER_BLOCKS_PER_TICK = "UPDATE nadarenas_arenas SET loader_blocks_per_tick = ? WHERE name = ?";
-    public static final String ARENA_UPDATE_LOADER_SUPPORT = "UPDATE nadarenas_arenas SET loader_support = ? WHERE name = ?";
+    public static final String ARENA_SELECT_ALL = "SELECT enable_restorer, name, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item FROM nadarenas_arenas";
+    public static final String ARENA_UPDATE_RESTORER_BLOCKS_PER_TICK = "UPDATE nadarenas_arenas SET restorer_blocks_per_tick = ? WHERE name = ?";
+    public static final String ARENA_UPDATE_RESTORER_SUPPORT = "UPDATE nadarenas_arenas SET enable_restorer = ? WHERE name = ?";
     public static final String ARENA_UPDATE_DISPLAY_NAME = "UPDATE nadarenas_arenas SET display_name = ? WHERE name = ?";
     public static final String ARENA_UPDATE_DESCRIPTION = "UPDATE nadarenas_arenas SET description = ? WHERE name = ?";
     public static final String ARENA_UPDATE_ITEM = "UPDATE nadarenas_arenas SET item = ? WHERE name = ?";
@@ -88,7 +88,7 @@ public class SqlStorage implements StorageImplementation {
     }
 
     private Arena getArenaFromResultSet(String name, ResultSet rs) throws SQLException {
-        Boolean loaderSupport = rs.getBoolean("loader_support");
+        Boolean enableRestorer = rs.getBoolean("enable_restorer");
         String world = rs.getString("world");
         String displayName = rs.getString("display_name");
         String description = rs.getString("description");
@@ -100,15 +100,15 @@ public class SqlStorage implements StorageImplementation {
         Integer maxY = rs.getInt("max_y");
         Integer maxZ = rs.getInt("max_z");
 
-        Integer loaderBlocksPerTick = rs.getInt("loader_blocks_per_tick");
+        Integer restorerBlocksPerTick = rs.getInt("restorer_blocks_per_tick");
 
         Material item = Material.getMaterial(rs.getString("item"));
 
         Position minPosition = new Position(minX, minY, minZ);
         Position maxPosition = new Position(maxX, maxY, maxZ);
 
-        Arena arena = new Arena(name, loaderSupport, world, minPosition, maxPosition);
-        arena.setLoaderBlocksPerTick(loaderBlocksPerTick);
+        Arena arena = new Arena(name, enableRestorer, world, minPosition, maxPosition);
+        arena.setRestorerBlocksPerTick(restorerBlocksPerTick);
         arena.setDisplayName(displayName);
         arena.setDescription(description);
         arena.setItem(item);
@@ -121,7 +121,7 @@ public class SqlStorage implements StorageImplementation {
         PreparedStatement ps = getConnectionFactory().getConnection().prepareStatement(ARENA_INSERT);
 
         ps.setString(1, arena.getName());
-        ps.setBoolean(2, arena.getLoaderSupport());
+        ps.setBoolean(2, arena.getEnableRestorer());
         ps.setString(3, arena.getWorld());
         ps.setInt(4, arena.getMinPosition().x());
         ps.setInt(5, arena.getMinPosition().y());
@@ -162,8 +162,8 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public void setArenaLoaderEnabled(String arena, Boolean enabled) throws SQLException {
-        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_LOADER_SUPPORT);
+    public void setArenaRestorerEnabled(String arena, Boolean enabled) throws SQLException {
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_RESTORER_SUPPORT);
 
         stmt.setBoolean(1, enabled);
         stmt.setString(2, arena);
@@ -172,10 +172,10 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public void setArenaLoaderBlocksPerTick(String arena, Integer loaderBlocksPerTick) throws SQLException {
-        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_LOADER_BLOCKS_PER_TICK);
+    public void setArenaRestorerBlocksPerTick(String arena, Integer restorerBlocksPerTick) throws SQLException {
+        PreparedStatement stmt = getConnectionFactory().getConnection().prepareStatement(ARENA_UPDATE_RESTORER_BLOCKS_PER_TICK);
 
-        stmt.setInt(1, loaderBlocksPerTick);
+        stmt.setInt(1, restorerBlocksPerTick);
         stmt.setString(2, arena);
 
         stmt.executeUpdate();

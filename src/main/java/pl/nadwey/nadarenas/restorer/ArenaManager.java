@@ -1,4 +1,4 @@
-package pl.nadwey.nadarenas.loader;
+package pl.nadwey.nadarenas.restorer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

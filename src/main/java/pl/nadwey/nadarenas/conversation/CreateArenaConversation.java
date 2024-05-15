@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class CreateArenaConversation extends NadArenasConversation {
     private final static String ARENA_NAME = "arenaName";
-    private final static String ARENA_LOADER_ENABLED = "arenaLoaderEnabled";
+    private final static String ARENA_RESTORER_ENABLED = "arenaRestorerEnabled";
 
     public CreateArenaConversation(Conversable conversable) {
         super(conversable, true);
@@ -50,20 +50,20 @@ public class CreateArenaConversation extends NadArenasConversation {
             }
 
             context.setSessionData(ARENA_NAME, input);
-            return new ArenaEnableLoaderPrompt();
+            return new ArenaEnableRestorerPrompt();
         }
     }
 
-    private class ArenaEnableLoaderPrompt extends BooleanPrompt {
+    private class ArenaEnableRestorerPrompt extends BooleanPrompt {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enable-loader");
+            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enable-restorer");
         }
 
         @Override
         protected Prompt acceptValidatedInput(@NotNull ConversationContext context, boolean input) {
-            context.setSessionData(ARENA_LOADER_ENABLED, input);
+            context.setSessionData(ARENA_RESTORER_ENABLED, input);
 
             return new ArenaSelectAreaPrompt();
         }
@@ -95,7 +95,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                 }
 
                 String name = (String) context.getSessionData(ARENA_NAME);
-                boolean arenaLoaderEnabled = Boolean.TRUE.equals(context.getSessionData(ARENA_LOADER_ENABLED));
+                boolean arenaRestorerEnabled = Boolean.TRUE.equals(context.getSessionData(ARENA_RESTORER_ENABLED));
 
                 World world = BukkitAdapter.adapt(region.getWorld());
                 Position minPosition = Position.fromBlockVector3(region.getMinimumPoint());
@@ -106,7 +106,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                     return Prompt.END_OF_CONVERSATION;
                 }
 
-                Arena arena = new Arena(name, arenaLoaderEnabled, world, minPosition, maxPosition);
+                Arena arena = new Arena(name, arenaRestorerEnabled, world, minPosition, maxPosition);
                 NadArenas.getInstance().getStorageManager().arena().createArena(arena);
 
                 try {

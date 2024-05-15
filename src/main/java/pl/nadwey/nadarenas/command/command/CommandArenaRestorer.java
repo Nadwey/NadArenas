@@ -12,16 +12,16 @@ import pl.nadwey.nadarenas.model.arena.Arena;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-@Command(name = "nadarenas arena loader", aliases = {"nda arena loader"})
-@Permission("nadarenas.command.arena.loader")
-public class CommandArenaLoader extends CommandBase {
-    public CommandArenaLoader(NadArenas plugin) {
+@Command(name = "nadarenas arena restorer", aliases = {"nda arena restorer"})
+@Permission("nadarenas.command.arena.restorer")
+public class CommandArenaRestorer extends CommandBase {
+    public CommandArenaRestorer(NadArenas plugin) {
         super(plugin);
     }
 
     @Execute(name = "load")
-    @Permission("nadarenas.command.nadarenas.arena.loader.load")
-    public void arenaLoaderLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
+    @Permission("nadarenas.command.nadarenas.arena.restorer.load")
+    public void arenaRestorerLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
         if (this.getPlugin().getArenaManager().isLoading(arena.getName())) {
             this.getPlugin().getLangManager().send(sender, "command-arena-load-already-loading", Map.of(
                     "arena", arena.getName()
@@ -31,7 +31,7 @@ public class CommandArenaLoader extends CommandBase {
         }
 
         try {
-            this.getPlugin().getArenaManager().loadArena(arena, arena.getLoaderBlocksPerTick());
+            this.getPlugin().getArenaManager().loadArena(arena, arena.getRestorerBlocksPerTick());
         } catch (FileNotFoundException e) {
             this.getPlugin().getLangManager().send(sender, "command-arena-load-failed-to-load-file", Map.of(
                     "arena", arena.getName()
@@ -41,14 +41,14 @@ public class CommandArenaLoader extends CommandBase {
     }
 
     @Execute(name = "setEnabled")
-    @Permission("nadarenas.command.nadarenas.arena.loader.setenabled")
-    public void arenaLoaderSetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("enabled") Boolean isEnabled) {
+    @Permission("nadarenas.command.nadarenas.arena.restorer.setenabled")
+    public void arenaRestorerSetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("enabled") Boolean isEnabled) {
         
     }
 
-    @Execute(name = "setLoaderBlocksPerTick")
-    @Permission("nadarenas.command.nadarenas.arena.loader.setblockspertick")
-    public void arenaLoaderSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena) {
+    @Execute(name = "setBlocksPerTick")
+    @Permission("nadarenas.command.nadarenas.arena.restorer.setblockspertick")
+    public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena) {
 
     }
 }

@@ -5,9 +5,7 @@ import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.configuration.MainConfiguration;
 import pl.nadwey.nadarenas.lang.LangManager;
 import pl.nadwey.nadarenas.storage.StorageManager;
-import pl.nadwey.nadarenas.loader.ArenaManager;
-
-import javax.annotation.Nullable;
+import pl.nadwey.nadarenas.restorer.ArenaManager;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;

@@ -17,7 +17,7 @@ public class CommandReload extends CommandBase{
     @Execute
     public void arena(@Context CommandSender sender) {
         if (this.getPlugin().getArenaManager().isLoading()) {
-            this.getPlugin().getLangManager().send(sender, "command-reload-arena-loader-warning");
+            this.getPlugin().getLangManager().send(sender, "command-reload-arena-restorer-warning");
         }
 
         getPlugin().reload();

@@ -99,24 +99,24 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
     }
 
     @Override
-    public void setArenaLoaderBlocksPerTick(String arena, Integer loaderBlocksPerTick) {
+    public void setArenaRestorerBlocksPerTick(String arena, Integer restorerBlocksPerTick) {
         Objects.requireNonNull(arena, "arena");
-        Objects.requireNonNull(loaderBlocksPerTick, "loaderBlocksPerTick");
+        Objects.requireNonNull(restorerBlocksPerTick, "restorerBlocksPerTick");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaLoaderBlocksPerTick(arena, loaderBlocksPerTick);
+            this.storageManager.getStorage().getImplementation().setArenaRestorerBlocksPerTick(arena, restorerBlocksPerTick);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void setArenaLoaderEnabled(String arena, Boolean enabled) {
+    public void setArenaRestorerEnabled(String arena, Boolean enabled) {
         Objects.requireNonNull(arena, "arena");
         Objects.requireNonNull(enabled, "enabled");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaLoaderEnabled(arena, enabled);
+            this.storageManager.getStorage().getImplementation().setArenaRestorerEnabled(arena, enabled);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

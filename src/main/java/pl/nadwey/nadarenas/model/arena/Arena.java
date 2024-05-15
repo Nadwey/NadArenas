@@ -9,27 +9,27 @@ public class Arena {
     public static final String ARENA_NAME_REGEX = "^[a-zA-z0-9-_]+$";
 
     private @NotNull String name;
-    private @NotNull Boolean loaderSupport;
+    private @NotNull Boolean enableRestorer;
     private @NotNull String world;
     private @NotNull Position minPosition;
     private @NotNull Position maxPosition;
 
-    private Integer loaderBlocksPerTick;
+    private Integer restorerBlocksPerTick;
 
     private String displayName;
     private String description;
     private Material item;
 
-    public Arena(@NotNull String name, @NotNull Boolean loaderSupport, @NotNull String world, @NotNull Position minPosition, @NotNull Position maxPosition) {
+    public Arena(@NotNull String name, @NotNull Boolean enableRestorer, @NotNull String world, @NotNull Position minPosition, @NotNull Position maxPosition) {
         this.name = name;
-        this.loaderSupport = loaderSupport;
+        this.enableRestorer = enableRestorer;
         this.world = world;
         this.minPosition = minPosition;
         this.maxPosition = maxPosition;
     }
 
-    public Arena(@NotNull String name, @NotNull Boolean loaderSupport, @NotNull World world, @NotNull Position minPosition, @NotNull Position maxPosition) {
-        this(name, loaderSupport, world.getUID().toString(), minPosition, maxPosition);
+    public Arena(@NotNull String name, @NotNull Boolean enableRestorer, @NotNull World world, @NotNull Position minPosition, @NotNull Position maxPosition) {
+        this(name, enableRestorer, world.getUID().toString(), minPosition, maxPosition);
     }
 
     public @NotNull String getName() {
@@ -40,12 +40,12 @@ public class Arena {
         this.name = name;
     }
 
-    public @NotNull Boolean getLoaderSupport() {
-        return this.loaderSupport;
+    public @NotNull Boolean getEnableRestorer() {
+        return this.enableRestorer;
     }
 
-    public void setLoaderSupport(@NotNull Boolean loaderSupport) {
-        this.loaderSupport = loaderSupport;
+    public void setEnableRestorer(@NotNull Boolean enableRestorer) {
+        this.enableRestorer = enableRestorer;
     }
 
     public @NotNull String getWorld() {
@@ -72,12 +72,12 @@ public class Arena {
         this.maxPosition = maxPosition;
     }
 
-    public Integer getLoaderBlocksPerTick() {
-        return loaderBlocksPerTick;
+    public Integer getRestorerBlocksPerTick() {
+        return this.restorerBlocksPerTick;
     }
 
-    public void setLoaderBlocksPerTick(Integer loaderBlocksPerTick) {
-        this.loaderBlocksPerTick = loaderBlocksPerTick;
+    public void setRestorerBlocksPerTick(Integer restorerBlocksPerTick) {
+        this.restorerBlocksPerTick = restorerBlocksPerTick;
     }
 
     public String getDisplayName() {

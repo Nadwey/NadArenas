@@ -2,14 +2,13 @@ package pl.nadwey.nadarenas.command;
 
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.Reloadable;
 import pl.nadwey.nadarenas.command.argument.MaterialArgument;
 import pl.nadwey.nadarenas.command.command.CommandArena;
-import pl.nadwey.nadarenas.command.command.CommandArenaLoader;
+import pl.nadwey.nadarenas.command.command.CommandArenaRestorer;
 import pl.nadwey.nadarenas.command.command.CommandArenas;
 import pl.nadwey.nadarenas.command.argument.ArenaArgument;
 import pl.nadwey.nadarenas.command.command.CommandReload;
@@ -30,7 +29,7 @@ public class CommandHandler implements Reloadable {
                 .commands(
                         new CommandArenas(plugin),
                         new CommandArena(plugin),
-                        new CommandArenaLoader(plugin),
+                        new CommandArenaRestorer(plugin),
                         new CommandReload(plugin)
                 )
                 .argument(Arena.class, new ArenaArgument(plugin))
