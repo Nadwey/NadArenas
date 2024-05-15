@@ -23,12 +23,12 @@ public class SqliteConnectionFactory extends FlatfileConnectionFactory {
 
     @Override
     public void init(NadArenas plugin) {
-        this.ds = new SingleConnectionDataSource("jdbc:sqlite:" + getFile().toString(), true);
+        ds = new SingleConnectionDataSource("jdbc:sqlite:" + getFile().toString(), true);
     }
 
     @Override
     public void shutdown() throws Exception {
-        this.ds.close();
+        ds.close();
     }
 
     @Override
@@ -38,6 +38,6 @@ public class SqliteConnectionFactory extends FlatfileConnectionFactory {
 
     @Override
     public DataSource getDataSource() {
-        return this.ds;
+        return ds;
     }
 }

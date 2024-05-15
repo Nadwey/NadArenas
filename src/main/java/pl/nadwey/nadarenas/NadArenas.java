@@ -32,60 +32,60 @@ public final class NadArenas extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        this.mainConfiguration = new MainConfiguration(this);
+        mainConfiguration = new MainConfiguration(this);
 
-        this.storageManager = new StorageManager(this);
-        this.storageManager.onEnable();
+        storageManager = new StorageManager(this);
+        storageManager.onEnable();
 
-        this.arenaManager = new ArenaManager(this);
-        this.arenaManager.onEnable();
+        arenaManager = new ArenaManager(this);
+        arenaManager.onEnable();
 
-        this.commandHandler = new CommandHandler(this);
-        this.commandHandler.onEnable();
+        commandHandler = new CommandHandler(this);
+        commandHandler.onEnable();
 
-        this.langManager = new LangManager(this);
+        langManager = new LangManager(this);
     }
 
     @Override
     public void onDisable() {
-        this.commandHandler.onDisable();
+        commandHandler.onDisable();
 
-        this.arenaManager.onDisable();
+        arenaManager.onDisable();
 
-        this.storageManager.onDisable();
+        storageManager.onDisable();
     }
 
     public void reload() {
         // disable
-        this.arenaManager.onDisable();
-        this.storageManager.onDisable();
+        arenaManager.onDisable();
+        storageManager.onDisable();
 
         // enable and reload reloadable stuff
-        this.mainConfiguration.reload();
+        mainConfiguration.reload();
 
-        this.storageManager = new StorageManager(this);
-        this.storageManager.onEnable();
+        storageManager = new StorageManager(this);
+        storageManager.onEnable();
 
-        this.arenaManager = new ArenaManager(this);
-        this.arenaManager.onEnable();
+        arenaManager = new ArenaManager(this);
+        arenaManager.onEnable();
 
-        this.langManager.reload();
-        this.commandHandler.reload();
+        langManager.reload();
+        commandHandler.reload();
     }
 
     public StorageManager getStorageManager() {
-        return this.storageManager;
+        return storageManager;
     }
 
     public ArenaManager getArenaManager() {
-        return this.arenaManager;
+        return arenaManager;
     }
 
     public LangManager getLangManager() {
-        return this.langManager;
+        return langManager;
     }
 
     public MainConfiguration getMainConfiguration() {
-        return this.mainConfiguration;
+        return mainConfiguration;
     }
 }

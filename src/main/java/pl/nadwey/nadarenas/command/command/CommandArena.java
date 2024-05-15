@@ -39,9 +39,9 @@ public class CommandArena extends CommandBase {
     @Execute(name = "list")
     @Permission("nadarenas.command.nadarenas.arena.list")
     public void arenaList(@Context CommandSender sender) {
-        var arenas = this.getPlugin().getStorageManager().arena().getArenas().iterator();
+        var arenas = getPlugin().getStorageManager().arena().getArenas().iterator();
 
-        Component textComponent = this.getPlugin().getLangManager().getAsComponent("command-arena-list-top").appendNewline();
+        Component textComponent = getPlugin().getLangManager().getAsComponent("command-arena-list-top").appendNewline();
 
         while (arenas.hasNext()) {
             Arena arena = arenas.next();
@@ -61,9 +61,9 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setDisplayName")
     @Permission("nadarenas.command.nadarenas.arena.setdisplayname")
     public void arenaSetDisplayName(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) {
-        this.getPlugin().getStorageManager().arena().setArenaDisplayName(arena.getName(), displayName);
+        getPlugin().getStorageManager().arena().setArenaDisplayName(arena.getName(), displayName);
 
-        this.getPlugin().getLangManager().send(sender, "command-arena-setdisplayname-successful", Map.of(
+        getPlugin().getLangManager().send(sender, "command-arena-setdisplayname-successful", Map.of(
                 "arena", arena.getName(),
                 "displayName", AdventureUtils.legacyAmpersandToMiniMessage(displayName)
         ));
@@ -72,10 +72,10 @@ public class CommandArena extends CommandBase {
     @Execute(name = "remove")
     @Permission("nadarenas.command.nadarenas.arena.remove")
     public void arenaRemove(@Context CommandSender sender, @Arg("arena") Arena arena) throws SQLException {
-        this.getPlugin().getStorageManager().arena().removeArena(arena.getName());
-        this.getPlugin().getArenaManager().removeArena(arena);
+        getPlugin().getStorageManager().arena().removeArena(arena.getName());
+        getPlugin().getArenaManager().removeArena(arena);
 
-        this.getPlugin().getLangManager().send(sender, "command-arena-remove-successful", Map.of(
+        getPlugin().getLangManager().send(sender, "command-arena-remove-successful", Map.of(
                 "arena", arena.getName()
         ));
     }
@@ -83,9 +83,9 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setDescription")
     @Permission("nadarenas.command.nadarenas.arena.setdescription")
     public void arenaSetDescription(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
-        this.getPlugin().getStorageManager().arena().setArenaDescription(arena.getName(), description);
+        getPlugin().getStorageManager().arena().setArenaDescription(arena.getName(), description);
 
-        this.getPlugin().getLangManager().send(sender, "command-arena-setdescription-successful", Map.of(
+        getPlugin().getLangManager().send(sender, "command-arena-setdescription-successful", Map.of(
                 "arena", arena.getName(),
                 "description", description
         ));
@@ -94,9 +94,9 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setItem")
     @Permission("nadarenas.command.nadarenas.arena.setitem")
     public void arenaSetItem(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
-        this.getPlugin().getStorageManager().arena().setArenaItem(arena.getName(), material);
+        getPlugin().getStorageManager().arena().setArenaItem(arena.getName(), material);
 
-        this.getPlugin().getLangManager().send(sender,"command-arena-setitem-successful", Map.of(
+        getPlugin().getLangManager().send(sender,"command-arena-setitem-successful", Map.of(
                 "arena", arena.getName(),
                 "item", material.toString()
         ));

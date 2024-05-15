@@ -18,12 +18,12 @@ public class Storage {
     }
 
     public void init() {
-        this.plugin.getLogger().info("Enabling storage and performing migrations...");
-        this.implementation.init();
+        plugin.getLogger().info("Enabling storage and performing migrations...");
+        implementation.init();
     }
 
     public void shutdown() {
-        this.plugin.getLogger().info("Shutting down storage...");
-        this.implementation.shutdown();
+        plugin.getLogger().info("Shutting down storage...");
+        implementation.shutdown();
     }
 }

@@ -37,7 +37,7 @@ public class SqlStorage implements StorageImplementation {
 
     @Override
     public NadArenas getPlugin() {
-        return this.plugin;
+        return plugin;
     }
 
     @Override
@@ -46,12 +46,12 @@ public class SqlStorage implements StorageImplementation {
     }
 
     public ConnectionFactory getConnectionFactory() {
-        return this.connectionFactory;
+        return connectionFactory;
     }
 
     @Override
     public void init() {
-        this.connectionFactory.init(plugin);
+        connectionFactory.init(plugin);
 
         migrate();
     }
@@ -60,7 +60,7 @@ public class SqlStorage implements StorageImplementation {
         Flyway flyway = Flyway
                 .configure(getClass().getClassLoader())
                 .baselineOnMigrate(true)
-                .dataSource(this.connectionFactory.getDataSource())
+                .dataSource(connectionFactory.getDataSource())
                 .locations("classpath:db/migration")
                 .load();
 
@@ -70,7 +70,7 @@ public class SqlStorage implements StorageImplementation {
     @Override
     public void shutdown() {
         try {
-            this.connectionFactory.shutdown();
+            connectionFactory.shutdown();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -25,7 +25,7 @@ public class CommandHandler implements Reloadable {
     }
 
     public void onEnable() {
-        this.liteCommands = LiteBukkitFactory.builder("nadarenas", plugin)
+        liteCommands = LiteBukkitFactory.builder("nadarenas", plugin)
                 .commands(
                         new CommandArenas(plugin),
                         new CommandArena(plugin),
@@ -40,7 +40,7 @@ public class CommandHandler implements Reloadable {
     }
 
     public void onDisable() {
-        this.liteCommands.unregister();
+        liteCommands.unregister();
     }
 
     @Override

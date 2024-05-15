@@ -23,8 +23,8 @@ public class StorageFactory {
         Storage storage;
         StorageType type = StorageType.SQLITE; // TODO
 
-        this.plugin.getLogger().info("Loading storage provider... [" + type.name() + "]");
-        storage = new Storage(this.plugin, createNewImplementation(type));
+        plugin.getLogger().info("Loading storage provider... [" + type.name() + "]");
+        storage = new Storage(plugin, createNewImplementation(type));
 
         storage.init();
         return storage;
@@ -34,8 +34,8 @@ public class StorageFactory {
         switch (method) {
             case SQLITE:
                 return new SqlStorage(
-                        this.plugin,
-                        new SqliteConnectionFactory(this.plugin.getDataFolder().toPath().resolve("nadarenas.db"))
+                        plugin,
+                        new SqliteConnectionFactory(plugin.getDataFolder().toPath().resolve("nadarenas.db"))
                 );
             default:
                 throw new RuntimeException("Unknown storage method: " + method);

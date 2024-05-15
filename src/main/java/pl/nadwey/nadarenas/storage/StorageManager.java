@@ -14,26 +14,26 @@ public class StorageManager {
     }
 
     public Storage getStorage() {
-        return this.storage;
+        return storage;
     }
 
     public void onEnable() {
-        this.plugin.getLogger().info("Enabling storage and performing migrations...");
-        this.storage = new StorageFactory(this.plugin).getInstance();
+        plugin.getLogger().info("Enabling storage and performing migrations...");
+        storage = new StorageFactory(plugin).getInstance();
 
-        this.arenaStorageManager = new ArenaStorageManager(this);
+        arenaStorageManager = new ArenaStorageManager(this);
     }
 
     public void onDisable() {
-        this.plugin.getLogger().info("Shutting down storage...");
-        this.storage.shutdown();
+        plugin.getLogger().info("Shutting down storage...");
+        storage.shutdown();
     }
 
     public NadArenas getPlugin() {
-        return this.plugin;
+        return plugin;
     }
 
     public ArenaStorageManager arena() {
-        return this.arenaStorageManager;
+        return arenaStorageManager;
     }
 }

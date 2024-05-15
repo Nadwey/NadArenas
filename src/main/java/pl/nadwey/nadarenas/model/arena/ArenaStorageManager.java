@@ -19,7 +19,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
     public void createArena(@NotNull Arena arena) {
         Objects.requireNonNull(arena, "arena");
         try {
-            this.storageManager.getStorage().getImplementation().createArena(arena);
+            storageManager.getStorage().getImplementation().createArena(arena);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -29,7 +29,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(name);
 
         try {
-            return this.storageManager.getStorage().getImplementation().getArena(name);
+            return storageManager.getStorage().getImplementation().getArena(name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +43,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
 
     public List<Arena> getArenas() {
         try {
-            return this.storageManager.getStorage().getImplementation().getArenas();
+            return storageManager.getStorage().getImplementation().getArenas();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(displayName, "displayName");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaDisplayName(arena, displayName);
+            storageManager.getStorage().getImplementation().setArenaDisplayName(arena, displayName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -67,7 +67,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(description, "description");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaDescription(name, description);
+            storageManager.getStorage().getImplementation().setArenaDescription(name, description);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +79,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(item, "item");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaItem(name, item);
+            storageManager.getStorage().getImplementation().setArenaItem(name, item);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,9 +90,9 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(name, "name");
 
         try {
-            this.storageManager.getStorage().getImplementation().removeArena(name);
+            storageManager.getStorage().getImplementation().removeArena(name);
 
-            this.storageManager.getPlugin().getArenaManager().removeArena(name);
+            storageManager.getPlugin().getArenaManager().removeArena(name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -104,7 +104,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(restorerBlocksPerTick, "restorerBlocksPerTick");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaRestorerBlocksPerTick(arena, restorerBlocksPerTick);
+            storageManager.getStorage().getImplementation().setArenaRestorerBlocksPerTick(arena, restorerBlocksPerTick);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -116,7 +116,7 @@ public class ArenaStorageManager implements ArenaStorageImplementation {
         Objects.requireNonNull(enabled, "enabled");
 
         try {
-            this.storageManager.getStorage().getImplementation().setArenaRestorerEnabled(arena, enabled);
+            storageManager.getStorage().getImplementation().setArenaRestorerEnabled(arena, enabled);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

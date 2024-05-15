@@ -37,7 +37,7 @@ public class MainConfiguration implements Reloadable {
 
     @Override
     public void reload() {
-        this.plugin.reloadConfig();
-        config = this.plugin.getConfig();
+        plugin.reloadConfig();
+        config = plugin.getConfig();
     }
 }

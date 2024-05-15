@@ -21,14 +21,14 @@ public class ArenaArgument extends ArgumentResolver<CommandSender, Arena> {
 
     @Override
     protected ParseResult<Arena> parse(Invocation<CommandSender> invocation, Argument<Arena> context, String argument) {
-        if (!this.plugin.getStorageManager().arena().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
+        if (!plugin.getStorageManager().arena().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
 
         return ParseResult.success(this.plugin.getStorageManager().arena().getArena(argument));
     }
 
     @Override
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Arena> argument, SuggestionContext context) {
-        List<Arena> arenas = this.plugin.getStorageManager().arena().getArenas();
+        List<Arena> arenas = plugin.getStorageManager().arena().getArenas();
 
         return SuggestionResult.of(arenas.stream().map(Arena::getName).toList());
     }

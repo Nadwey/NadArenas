@@ -49,14 +49,14 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
     }
 
     protected void sendLangMessage(String key) {
-        if (!(this.conversable instanceof CommandSender commandSender))
+        if (!(conversable instanceof CommandSender commandSender))
             return;
 
         commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key));
     }
 
     protected void sendLangMessage(String key, Map<String, String> args) {
-        if (!(this.conversable instanceof CommandSender commandSender))
+        if (!(conversable instanceof CommandSender commandSender))
             return;
 
         commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key, args));

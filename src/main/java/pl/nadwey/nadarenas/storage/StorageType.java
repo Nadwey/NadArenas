@@ -28,10 +28,10 @@ public enum StorageType {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public List<String> getIdentifiers() {
-        return this.identifiers;
+        return identifiers;
     }
 }

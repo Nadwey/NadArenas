@@ -30,5 +30,10 @@ command-arena-setitem-successful: "Set ${arena}'s item to ${item}"
 command-arena-load-already-loading: "<red>Arena ${arena} is already loading, cancelling.</red>"
 command-arena-load-failed-to-load-file: "<red>Failed to load ${arena}'s file.</red>"
 
+command-arena-restorer-getenabled: "<blue>${state}</blue>"
+command-arena-restorer-setenabled-currently-loading: "<red>Can't change enabled state while the arena is loading.</red>"
+command-arena-restorer-setenabled-successful: "<blue>Successfully changed the state to <gray>${state}</gray>.</blue>"
+command-arena-restorer-setblockspertick-successful: "<blue>Successfully changed blocks per tick to <gray>${blocksPerTick}</gray>.</blue>"
+
 command-reload-arena-restorer-warning: "<yellow>You requested a reload during arena restore. Restoring will be finished forcefully, but it may take a while and will temporarily freeze the server.</yellow>"
 command-reload-reload-finished: "NadArenas reloaded!"

@@ -73,7 +73,7 @@ public class Arena {
     }
 
     public Integer getRestorerBlocksPerTick() {
-        return this.restorerBlocksPerTick;
+        return restorerBlocksPerTick;
     }
 
     public void setRestorerBlocksPerTick(Integer restorerBlocksPerTick) {

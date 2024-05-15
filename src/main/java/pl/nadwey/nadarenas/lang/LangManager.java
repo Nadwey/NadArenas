@@ -33,13 +33,13 @@ public class LangManager implements Reloadable {
     }
 
     public void loadLanguages() {
-        this.plugin.getLogger().info("Enabling Language Manager");
+        plugin.getLogger().info("Enabling Language Manager");
 
         langs.clear();
 
         JarFile file = null;
         try {
-            file = new JarFile(this.plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            file = new JarFile(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -50,17 +50,17 @@ public class LangManager implements Reloadable {
             JarEntry e = entries.nextElement();
             if (!e.getName().startsWith("lang/") || e.isDirectory()) continue;
 
-            InputStream langStream = this.plugin.getResource(e.getName());
+            InputStream langStream = plugin.getResource(e.getName());
             if (langStream == null) continue;
             FileConfiguration langStreamConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(langStream));
 
-            File langFile = new File(this.plugin.getDataFolder(), e.getName());
-            if (!langFile.exists()) this.plugin.saveResource(e.getName(), false);
+            File langFile = new File(plugin.getDataFolder(), e.getName());
+            if (!langFile.exists()) plugin.saveResource(e.getName(), false);
 
             FileConfiguration langFileConfig = YamlConfiguration.loadConfiguration(langFile);
 
             if (!langFileConfig.getKeys(true).equals(langStreamConfig.getKeys(true))) {
-                this.plugin.getLogger().warning("Updating language file " + langFile.getName());
+                plugin.getLogger().warning("Updating language file " + langFile.getName());
                 langFileConfig.setDefaults(langStreamConfig);
                 langFileConfig.options().copyDefaults(true);
             }
@@ -72,10 +72,10 @@ public class LangManager implements Reloadable {
             }
         }
 
-        var langFiles = this.plugin.getDataFolder().toPath().resolve("lang").toFile().listFiles();
+        var langFiles = plugin.getDataFolder().toPath().resolve("lang").toFile().listFiles();
 
         if (langFiles == null) {
-            this.plugin.getLogger().severe("Failed to load language files from plugin directory");
+            plugin.getLogger().severe("Failed to load language files from plugin directory");
             return;
         }
 
@@ -145,7 +145,7 @@ public class LangManager implements Reloadable {
     }
 
     private String getStringByLocale(Locale locale, String key) {
-        return this.langs.get(locale.toLanguageTag()).getString(key);
+        return langs.get(locale.toLanguageTag()).getString(key);
     }
 
     public void send(CommandSender commandSender, String key) {

@@ -37,6 +37,9 @@ permissions:
   nadarenas.command.nadarenas.arena.restorer.setenabled:
     description: "Access to the '/nadarenas arena restorer setEnabled' command."
     default: op
+  nadarenas.command.nadarenas.arena.restorer.getblockspertick:
+    description: "Access to the '/nadarenas arena restorer getBlocksPerTick' command."
+    default: op
   nadarenas.command.nadarenas.arena.restorer.setblockspertick:
     description: "Access to the '/nadarenas arena restorer setBlocksPerTick' command."
     default: op

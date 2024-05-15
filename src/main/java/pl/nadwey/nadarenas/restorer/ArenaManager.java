@@ -41,7 +41,7 @@ public class ArenaManager {
             }
 
             Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]))
-                    .add(this.arena.getMinPosition()); // get the absolute position from relative
+                    .add(arena.getMinPosition()); // get the absolute position from relative
 
             Location location = position.toLocation(world);
 
@@ -86,7 +86,7 @@ public class ArenaManager {
 
             for (int i = 0; i < blocksAtOnce; i++) {
                 if (!arenaScanner.hasNextLine()) {
-                    this.hasFinished = true;
+                    hasFinished = true;
                     arenaScanner.close();
                     return;
                 }
@@ -111,7 +111,7 @@ public class ArenaManager {
     }
 
     private File getArenaFile(String arena) {
-        return this.plugin.getDataFolder().toPath().resolve("arenas/" + arena).toFile();
+        return plugin.getDataFolder().toPath().resolve("arenas/" + arena).toFile();
     }
 
     private File getArenaFile(Arena arena) {
@@ -119,7 +119,7 @@ public class ArenaManager {
     }
 
     public void loadArena(Arena arena, int blocksAtOnce) throws FileNotFoundException {
-        this.plugin.getLogger().info("ArenaManager: loading arena " + arena.getName());
+        plugin.getLogger().info("ArenaManager: loading arena " + arena.getName());
 
         if (loadTasks.containsKey(arena.getName())) {
             throw new IllegalStateException("ArenaManager: Arena " + arena.getName() + " is already being loaded");
@@ -156,7 +156,7 @@ public class ArenaManager {
     }
 
     public void onEnable() {
-        this.plugin.getLogger().info("ArenaManager: Enabling...");
+        plugin.getLogger().info("ArenaManager: Enabling...");
 
         bukkitTask = new BukkitRunnable() {
             @Override
@@ -165,12 +165,12 @@ public class ArenaManager {
 
                 loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
             }
-        }.runTaskTimer(this.plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     public void onDisable() {
         if (isLoading())
-            this.plugin.getLogger().warning("ArenaManager: onDisable called during loading arenas, finishing loading every arena, this may take a while...\n(THIS IS NOT A BUG)");
+            plugin.getLogger().warning("ArenaManager: onDisable called during loading arenas, finishing loading every arena, this may take a while...\n(THIS IS NOT A BUG)");
 
         if (bukkitTask != null) {
             bukkitTask.cancel();
@@ -180,7 +180,7 @@ public class ArenaManager {
         loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
 
         if (!loadTasks.isEmpty()) {
-            this.plugin.getLogger().severe("ArenaManager: Some arenas failed to finish when disabling ArenaManager");
+            plugin.getLogger().severe("ArenaManager: Some arenas failed to finish when disabling ArenaManager");
         }
     }
 

@@ -25,14 +25,14 @@ public class NadArenasInvalidUsageHandler implements InvalidUsageHandler<Command
         Schematic schematic = result.getSchematic();
 
         if (schematic.isOnlyFirst()) {
-            this.plugin.getLangManager().send(sender, "invalid-command-usage-single-schematic", Map.of(
+            plugin.getLangManager().send(sender, "invalid-command-usage-single-schematic", Map.of(
                     "schematic", schematic.first()
             ));
 
             return;
         }
 
-        this.plugin.getLangManager().send(sender, "invalid-command-usage-multiple-schematics");
+        plugin.getLangManager().send(sender, "invalid-command-usage-multiple-schematics");
         for (String scheme : schematic.all()) {
             sender.sendMessage(
                     Component.text(" - ").color(NamedTextColor.DARK_GRAY)

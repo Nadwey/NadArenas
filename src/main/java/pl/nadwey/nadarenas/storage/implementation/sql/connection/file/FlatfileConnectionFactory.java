@@ -12,6 +12,6 @@ public abstract class FlatfileConnectionFactory implements ConnectionFactory {
     }
 
     protected Path getFile() {
-        return this.file;
+        return file;
     }
 }
