@@ -10,6 +10,7 @@ invalid-command-usage-multiple-schematics: "<red>Invalid usage of command!</red>
 command-arena-create-enter-name: "<blue>Please enter the arena name.</blue>"
 command-arena-create-invalid-name: "<red>The provided name is invalid.</red>"
 command-arena-create-arena-exists: "<red>An arena with that name already exists.</red>"
+command-arena-create-enable-loader: "<blue>Do you want to enable loader support for this arena?</blue>"
 command-arena-create-select-area: "<blue>Please select an area using <dark_purple>WorldEdit</dark_purple>.<br>Then type <aqua>'yes'</aqua> to confirm.</blue>"
 command-arena-create-invalid-selection: "<red>The selected area is invalid.</red>"
 command-arena-create-invalid-selection-world: "<red>The world of the selection is invalid.</red>"

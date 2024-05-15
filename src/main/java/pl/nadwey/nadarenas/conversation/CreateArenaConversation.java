@@ -18,6 +18,7 @@ import java.io.IOException;
 
 public class CreateArenaConversation extends NadArenasConversation {
     private final static String ARENA_NAME = "arenaName";
+    private final static String ARENA_LOADER_ENABLED = "arenaLoaderEnabled";
 
     public CreateArenaConversation(Conversable conversable) {
         super(conversable, true);
@@ -49,11 +50,26 @@ public class CreateArenaConversation extends NadArenasConversation {
             }
 
             context.setSessionData(ARENA_NAME, input);
-            return new ArenaAreaPrompt();
+            return new ArenaEnableLoaderPrompt();
         }
     }
 
-    private class ArenaAreaPrompt extends BooleanPrompt {
+    private class ArenaEnableLoaderPrompt extends BooleanPrompt {
+        @NotNull
+        @Override
+        public String getPromptText(@NotNull ConversationContext context) {
+            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enable-loader");
+        }
+
+        @Override
+        protected Prompt acceptValidatedInput(@NotNull ConversationContext context, boolean input) {
+            context.setSessionData(ARENA_LOADER_ENABLED, input);
+
+            return new ArenaSelectAreaPrompt();
+        }
+    }
+
+    private class ArenaSelectAreaPrompt extends BooleanPrompt {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
@@ -63,24 +79,25 @@ public class CreateArenaConversation extends NadArenasConversation {
         @Override
         protected Prompt acceptValidatedInput(@NotNull ConversationContext context, boolean input) {
             if (input) {
-                BukkitPlayer bPlayer = BukkitAdapter.adapt((Player)context.getForWhom());
+                BukkitPlayer bPlayer = BukkitAdapter.adapt((Player) context.getForWhom());
                 Region region;
 
                 try {
                     region = WorldEdit.getInstance().getSessionManager().get(bPlayer).getSelection();
                 } catch (IncompleteRegionException e) {
                     sendLangMessage("command-arena-create-invalid-selection");
-                    return new ArenaAreaPrompt();
+                    return new ArenaSelectAreaPrompt();
                 }
 
                 if (region.getWorld() == null) {
                     sendLangMessage("command-arena-create-invalid-selection-world");
-                    return new ArenaAreaPrompt();
+                    return new ArenaSelectAreaPrompt();
                 }
 
                 String name = (String) context.getSessionData(ARENA_NAME);
-                World world = BukkitAdapter.adapt(region.getWorld());
+                boolean arenaLoaderEnabled = Boolean.TRUE.equals(context.getSessionData(ARENA_LOADER_ENABLED));
 
+                World world = BukkitAdapter.adapt(region.getWorld());
                 Position minPosition = Position.fromBlockVector3(region.getMinimumPoint());
                 Position maxPosition = Position.fromBlockVector3(region.getMaximumPoint());
 
@@ -89,9 +106,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                     return Prompt.END_OF_CONVERSATION;
                 }
 
-                // TODO: create a new prompt for loader support
-                Arena arena = new Arena(name, true, world, minPosition, maxPosition);
-
+                Arena arena = new Arena(name, arenaLoaderEnabled, world, minPosition, maxPosition);
                 NadArenas.getInstance().getStorageManager().arena().createArena(arena);
 
                 try {
