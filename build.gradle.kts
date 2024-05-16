@@ -27,7 +27,7 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.12.0")
 
     implementation("org.springframework:spring-jdbc:6.1.6")
-    implementation("org.flywaydb:flyway-core:10.12.0")
+    implementation("org.flywaydb:flyway-core:10.13.0")
 
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.1")
 }
