@@ -11,8 +11,11 @@ permissions:
   nadarenas.command.nadarenas:
     description: "Access to the '/nadarenas' command."
     default: op
+  nadarenas.command.nadarenas.arena:
+    description: "Access to the '/nadarenas arena' command."
+    default: op
   nadarenas.command.nadarenas.arena.create:
-    description: "Access to the '/nadarenas create arena' command."
+    description: "Access to the '/nadarenas arena create' command."
     default: op
   nadarenas.command.nadarenas.arena.list:
       description: "Access to the '/nadarenas arena list' command."
