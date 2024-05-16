@@ -27,7 +27,7 @@ command-arena-setdescription-successful: "Set ${arena}'s description to ${descri
 
 command-arena-setitem-successful: "Set ${arena}'s item to ${item}"
 
-command-arena-load-already-loading: "<red>Arena ${arena} is already loading, cancelling.</red>"
+command-arena-load-already-loading: "<red>Arena ${arena} is already loading.</red>"
 command-arena-load-failed-to-load-file: "<red>Failed to load ${arena}'s file.</red>"
 
 command-arena-restorer-getenabled: "<blue>${state}</blue>"
