@@ -67,7 +67,7 @@ public class CommandArenaRestorer extends CommandBase {
     public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("blocksPerTick") Integer blocksPerTick) {
         getPlugin().getStorageManager().arena().setArenaRestorerBlocksPerTick(arena.getName(), blocksPerTick);
 
-        getPlugin().getLangManager().send(sender, "command-arena-restorer-setenabled-successful", Map.of(
+        getPlugin().getLangManager().send(sender, "command-arena-restorer-setblockspertick-successful", Map.of(
                 "blocksPerTick", blocksPerTick.toString()
         ));
     }
