@@ -1,13 +1,13 @@
 package pl.nadwey.nadarenas.storage;
 
 import pl.nadwey.nadarenas.NadArenas;
-import pl.nadwey.nadarenas.model.arena.ArenaStorageManager;
+import pl.nadwey.nadarenas.model.arena.ArenaManager;
 
 public class StorageManager {
     private final NadArenas plugin;
     private Storage storage;
 
-    private ArenaStorageManager arenaStorageManager;
+    private ArenaManager arenaManager;
 
     public StorageManager(NadArenas plugin) {
         this.plugin = plugin;
@@ -21,7 +21,7 @@ public class StorageManager {
         plugin.getLogger().info("Enabling storage and performing migrations...");
         storage = new StorageFactory(plugin).getInstance();
 
-        arenaStorageManager = new ArenaStorageManager(this);
+        arenaManager = new ArenaManager(this);
     }
 
     public void onDisable() {
@@ -33,7 +33,7 @@ public class StorageManager {
         return plugin;
     }
 
-    public ArenaStorageManager arena() {
-        return arenaStorageManager;
+    public ArenaManager arena() {
+        return arenaManager;
     }
 }

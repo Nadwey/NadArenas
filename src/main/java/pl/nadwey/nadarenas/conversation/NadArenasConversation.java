@@ -16,13 +16,13 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
 
     public abstract Prompt getEntryPrompt();
 
-    protected NadArenasConversation(Conversable conversable, boolean playerOnly) {
+    protected NadArenasConversation(Conversable conversable, boolean playerOnly, int timeout) {
         this.conversable = conversable;
         this.playerOnly = playerOnly;
 
         conversationFactory = new ConversationFactory(NadArenas.getInstance())
                 .withEscapeSequence(ESCAPE_SEQUENCE)
-                .withTimeout(120)
+                .withTimeout(timeout)
                 .addConversationAbandonedListener(this)
                 .withFirstPrompt(getEntryPrompt());
 

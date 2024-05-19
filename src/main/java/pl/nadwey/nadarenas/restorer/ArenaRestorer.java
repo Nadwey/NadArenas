@@ -7,23 +7,25 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.model.Position;
-import pl.nadwey.nadarenas.model.arena.Arena;
+import pl.nadwey.nadarenas.model.Region;
+import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
 
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ArenaManager {
+public class ArenaRestorer {
     private class LoadTask {
-        private final Arena arena;
+        private final ArenaRecord arena;
         private final int blocksAtOnce;
         private final World world;
         private final Scanner arenaScanner;
         private boolean hasFinished = false;
 
-        public LoadTask(Arena arena, int blocksAtOnce) throws FileNotFoundException {
+        public LoadTask(ArenaRecord arena, int blocksAtOnce) throws FileNotFoundException {
             this.arena = arena;
             this.blocksAtOnce = blocksAtOnce;
             this.world = Bukkit.getWorld(UUID.fromString(arena.getWorld()));
@@ -41,7 +43,7 @@ public class ArenaManager {
             }
 
             Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]))
-                    .add(arena.getMinPosition()); // get the absolute position from relative
+                    .add(ArenaRecordUtils.getRegion(arena).getMinPosition()); // get the absolute position from relative
 
             Location location = position.toLocation(world);
 
@@ -105,7 +107,7 @@ public class ArenaManager {
     private BukkitTask bukkitTask;
     private final Map<String, LoadTask> loadTasks;
 
-    public ArenaManager(NadArenas plugin) {
+    public ArenaRestorer(NadArenas plugin) {
         this.plugin = plugin;
         this.loadTasks = new ConcurrentHashMap<>();
     }
@@ -114,11 +116,11 @@ public class ArenaManager {
         return plugin.getDataFolder().toPath().resolve("arenas/" + arena).toFile();
     }
 
-    private File getArenaFile(Arena arena) {
+    private File getArenaFile(ArenaRecord arena) {
         return getArenaFile(arena.getName());
     }
 
-    public void loadArena(Arena arena, int blocksAtOnce) throws FileNotFoundException {
+    public void loadArena(ArenaRecord arena, int blocksAtOnce) throws FileNotFoundException {
         plugin.getLogger().info("ArenaManager: loading arena " + arena.getName());
 
         if (loadTasks.containsKey(arena.getName())) {
@@ -128,18 +130,22 @@ public class ArenaManager {
         loadTasks.put(arena.getName(), new LoadTask(arena, blocksAtOnce));
     }
 
-    public void saveArena(Arena arena) throws IOException {
+    public void saveArena(ArenaRecord arena) throws IOException {
         World world = Bukkit.getWorld(UUID.fromString(arena.getWorld()));
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(getArenaFile(arena)));
 
-        for (int x = arena.getMinPosition().x(); x <= arena.getMaxPosition().x(); x++) {
-            for (int y = arena.getMinPosition().y(); y <= arena.getMaxPosition().y(); y++) {
-                for (int z = arena.getMinPosition().z(); z <= arena.getMaxPosition().z(); z++) {
+        Region region = ArenaRecordUtils.getRegion(arena);
+        Position minPosition = region.getMinPosition();
+        Position maxPosition = region.getMaxPosition();
+
+        for (int y = minPosition.y(); y <= maxPosition.y(); y++) {
+            for (int x = minPosition.x(); x <= maxPosition.x(); x++) {
+                for (int z = minPosition.z(); z <= maxPosition.z(); z++) {
                     Location loc = new Location(world, x, y, z);
 
                     // positions relative to the min position
-                    writer.write((x - arena.getMinPosition().x()) + " " + (y - arena.getMinPosition().y()) + " " + (z - arena.getMinPosition().z()) + " " + loc.getBlock().getType() + "\n");
+                    writer.write((x - minPosition.x()) + " " + (y - minPosition.y()) + " " + (z - minPosition.z()) + " " + loc.getBlock().getType() + "\n");
                 }
             }
         }
@@ -148,10 +154,12 @@ public class ArenaManager {
     }
 
     public void removeArena(String arena) {
-        getArenaFile(arena).delete();
+        if (!getArenaFile(arena).delete()) {
+            plugin.getLogger().warning("ArenaManager: Could not delete the arena file of " + arena);
+        }
     }
 
-    public void removeArena(Arena arena) {
+    public void removeArena(ArenaRecord arena) {
         removeArena(arena.getName());
     }
 

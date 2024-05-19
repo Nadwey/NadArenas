@@ -1,14 +1,12 @@
 package pl.nadwey.nadarenas.gui.teleport;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import pl.nadwey.nadarenas.command.CommandHandler;
-import pl.nadwey.nadarenas.model.arena.Arena;
+import org.jooq.generated.tables.records.ArenaRecord;
+import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 import xyz.xenondevs.inventoryaccess.component.AdventureComponentWrapper;
 import xyz.xenondevs.inventoryaccess.component.ComponentWrapper;
@@ -20,18 +18,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeleportItem extends AbstractItem {
-    private final Arena arena;
+    private final ArenaRecord arena;
     private final int players;
 
-    public TeleportItem(Arena arena, int players) {
+    public TeleportItem(ArenaRecord arena, int players) {
         this.arena = arena;
         this.players = players;
     }
 
     @Override
     public ItemProvider getItemProvider() {
-        ItemBuilder item = new ItemBuilder(arena.getItem() != null ? arena.getItem() : Material.BARRIER)
-                .setDisplayName(AdventureUtils.deserializeLegacyToWrapper(arena.getPreferredName()))
+        Material material = Material.matchMaterial(arena.getItem());
+
+        ItemBuilder item = new ItemBuilder(material != null ? material : Material.BARRIER)
+                .setDisplayName(AdventureUtils.deserializeLegacyToWrapper(ArenaRecordUtils.getPreferredName(arena)))
                 .setAmount(Math.min(64, Math.max(1, players)));
 
         if (arena.getDescription() != null) {

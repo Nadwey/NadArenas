@@ -6,8 +6,8 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.command.CommandSender;
+import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
-import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -21,8 +21,8 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "load")
     @Permission("nadarenas.command.nadarenas.arena.restorer.load")
-    public void arenaRestorerLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
-        if (getPlugin().getArenaManager().isLoading(arena.getName())) {
+    public void arenaRestorerLoad(@Context CommandSender sender, @Arg("arena") ArenaRecord arena) {
+        if (getPlugin().getArenaRestorer().isLoading(arena.getName())) {
             getPlugin().getLangManager().send(sender, "command-arena-load-already-loading", Map.of(
                     "arena", arena.getName()
             ));
@@ -31,7 +31,7 @@ public class CommandArenaRestorer extends CommandBase {
         }
 
         try {
-            getPlugin().getArenaManager().loadArena(arena, arena.getRestorerBlocksPerTick());
+            getPlugin().getArenaRestorer().loadArena(arena, arena.getRestorerBlocksPerTick());
         } catch (FileNotFoundException e) {
             getPlugin().getLangManager().send(sender, "command-arena-load-failed-to-load-file", Map.of(
                     "arena", arena.getName()
@@ -42,7 +42,7 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "getEnabled")
     @Permission("nadarenas.command.nadarenas.arena.restorer.getenabled")
-    public void arenaRestorerGetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena) {
+    public void arenaRestorerGetEnabled(@Context CommandSender sender, @Arg("arena") ArenaRecord arena) {
         getPlugin().getLangManager().send(sender, "command-arena-restorer-getenabled", Map.of(
                 "state", arena.getEnableRestorer().toString()
         ));
@@ -50,12 +50,12 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "setEnabled")
     @Permission("nadarenas.command.nadarenas.arena.restorer.setenabled")
-    public void arenaRestorerSetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("enabled") Boolean enabled) {
-        if (getPlugin().getArenaManager().isLoading(arena.getName())) {
+    public void arenaRestorerSetEnabled(@Context CommandSender sender, @Arg("arena") ArenaRecord arena, @Arg("enabled") Boolean enabled) {
+        if (getPlugin().getArenaRestorer().isLoading(arena.getName())) {
             getPlugin().getLangManager().send(sender, "command-arena-restorer-setenabled-currently-loading");
         }
 
-        getPlugin().getStorageManager().arena().setArenaRestorerEnabled(arena.getName(), enabled);
+        getPlugin().getStorageManager().arena().setArenaRestorerEnabled(arena.getId(), enabled);
 
         getPlugin().getLangManager().send(sender, "command-arena-restorer-setenabled-successful", Map.of(
                 "state", enabled.toString()
@@ -64,8 +64,8 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "setBlocksPerTick")
     @Permission("nadarenas.command.nadarenas.arena.restorer.setblockspertick")
-    public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("blocksPerTick") Integer blocksPerTick) {
-        getPlugin().getStorageManager().arena().setArenaRestorerBlocksPerTick(arena.getName(), blocksPerTick);
+    public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") ArenaRecord arena, @Arg("blocksPerTick") Integer blocksPerTick) {
+        getPlugin().getStorageManager().arena().setArenaRestorerBlocksPerTick(arena.getId(), blocksPerTick);
 
         getPlugin().getLangManager().send(sender, "command-arena-restorer-setblockspertick-successful", Map.of(
                 "blocksPerTick", blocksPerTick.toString()

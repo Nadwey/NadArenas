@@ -5,23 +5,27 @@ import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import com.sk89q.worldedit.regions.Region;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.World;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.model.Position;
-import pl.nadwey.nadarenas.model.arena.Arena;
+import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CreateArenaConversation extends NadArenasConversation {
     private final static String ARENA_NAME = "arenaName";
     private final static String ARENA_RESTORER_ENABLED = "arenaRestorerEnabled";
 
     public CreateArenaConversation(Conversable conversable) {
-        super(conversable, true);
+        super(conversable, true, 240);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class CreateArenaConversation extends NadArenasConversation {
 
         @Override
         public @Nullable Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
-            if (input == null || !input.matches(Arena.ARENA_NAME_REGEX)) {
+            if (input == null || !input.matches(ArenaRecordUtils.ARENA_NAME_REGEX)) {
                 sendLangMessage("command-arena-create-invalid-name");
                 return new ArenaNamePrompt();
             }
@@ -78,50 +82,75 @@ public class CreateArenaConversation extends NadArenasConversation {
 
         @Override
         protected Prompt acceptValidatedInput(@NotNull ConversationContext context, boolean input) {
-            if (input) {
-                BukkitPlayer bPlayer = BukkitAdapter.adapt((Player) context.getForWhom());
-                Region region;
-
-                try {
-                    region = WorldEdit.getInstance().getSessionManager().get(bPlayer).getSelection();
-                } catch (IncompleteRegionException e) {
-                    sendLangMessage("command-arena-create-invalid-selection");
-                    return new ArenaSelectAreaPrompt();
-                }
-
-                if (region.getWorld() == null) {
-                    sendLangMessage("command-arena-create-invalid-selection-world");
-                    return new ArenaSelectAreaPrompt();
-                }
-
-                String name = (String) context.getSessionData(ARENA_NAME);
-                boolean arenaRestorerEnabled = Boolean.TRUE.equals(context.getSessionData(ARENA_RESTORER_ENABLED));
-
-                World world = BukkitAdapter.adapt(region.getWorld());
-                Position minPosition = Position.fromBlockVector3(region.getMinimumPoint());
-                Position maxPosition = Position.fromBlockVector3(region.getMaximumPoint());
-
-                if (name == null) {
-                    sendLangMessage("command-arena-create-name-null");
-                    return Prompt.END_OF_CONVERSATION;
-                }
-
-                Arena arena = new Arena(name, arenaRestorerEnabled, world, minPosition, maxPosition);
-                NadArenas.getInstance().getStorageManager().arena().createArena(arena);
-
-                try {
-                    NadArenas.getInstance().getArenaManager().saveArena(arena);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                sendLangMessage("command-arena-create-arena-created");
+            if (!input) {
+                sendLangMessage("conversation-cancelled");
                 return Prompt.END_OF_CONVERSATION;
             }
 
-            sendLangMessage("conversation-cancelled");
+            Player player = (Player) context.getForWhom();
+            Region weRegion = getSelectedRegion(player);
 
+            if (weRegion == null) {
+                sendLangMessage("command-arena-create-invalid-selection");
+                return Prompt.END_OF_CONVERSATION;
+            }
+
+            pl.nadwey.nadarenas.model.Region region =  new pl.nadwey.nadarenas.model.Region(
+                    Position.fromBlockVector3(weRegion.getMinimumPoint()),
+                    Position.fromBlockVector3(weRegion.getMaximumPoint())
+            );
+
+            // get and list the overlapping arenas
+            List<ArenaRecord> overlapping = NadArenas.getInstance().getStorageManager().arena().getOverlappingArenas(region);
+            if (!overlapping.isEmpty()) {
+                sendOverlappingArenasMessage(player, overlapping);
+                return new ArenaSelectAreaPrompt();
+            }
+            
+            createAndSaveArena(context, BukkitAdapter.adapt(weRegion.getWorld()), region);
+
+            sendLangMessage("command-arena-create-arena-created");
             return Prompt.END_OF_CONVERSATION;
+        }
+
+        private Region getSelectedRegion(Player player) {
+            BukkitPlayer wePlayer = BukkitAdapter.adapt(player);
+            try {
+                Region weRegion = WorldEdit.getInstance().getSessionManager().get(wePlayer).getSelection();
+                if (weRegion.getWorld() == null) {
+                    return null;
+                }
+                return weRegion;
+            } catch (IncompleteRegionException e) {
+                return null;
+            }
+        }
+
+        private void sendOverlappingArenasMessage(Player player, List<ArenaRecord> overlapping) {
+            Component textComponent = NadArenas.getInstance().getLangManager().getAsComponent("command-arena-create-overlapping").appendNewline();
+            for (ArenaRecord overlappingArena : overlapping) {
+                textComponent = textComponent
+                        .append(Component.text("- ").color(NamedTextColor.DARK_GRAY))
+                        .append(Component.text(overlappingArena.getName()).color(NamedTextColor.GOLD))
+                        .appendNewline();
+            }
+            player.sendMessage(textComponent);
+        }
+
+        private void createAndSaveArena(ConversationContext context, World world, pl.nadwey.nadarenas.model.Region region) {
+            ArenaRecord arena = new ArenaRecord();
+            arena.setName((String) context.getSessionData(ARENA_NAME));
+            arena.setEnableRestorer(Boolean.TRUE.equals(context.getSessionData(ARENA_RESTORER_ENABLED)));
+            arena.setWorld(world.getUID().toString());
+            ArenaRecordUtils.setRegion(arena, region);
+
+            NadArenas.getInstance().getStorageManager().arena().createArena(arena);
+
+            try {
+                NadArenas.getInstance().getArenaRestorer().saveArena(arena);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

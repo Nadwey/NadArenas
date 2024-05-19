@@ -5,14 +5,18 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 public class Position {
-    private Integer x;
-    private Integer y;
-    private Integer z;
+    private Integer x = 0;
+    private Integer y = 0;
+    private Integer z = 0;
 
     public Position(Integer x, Integer y, Integer z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public Position() {
+
     }
 
     public Integer x() {
@@ -47,12 +51,12 @@ public class Position {
         return add(position.x(), position.y(), position.z());
     }
 
-    public Position substract(int x, int y, int z) {
+    public Position subtract(int x, int y, int z) {
         return new Position(this.x - x, this.y - y, this.z - z);
     }
 
-    public Position substract(Position position) {
-        return substract(position.x(), position.y(), position.z());
+    public Position subtract(Position position) {
+        return subtract(position.x(), position.y(), position.z());
     }
 
     public Location toLocation(World world) {

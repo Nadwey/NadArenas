@@ -3,7 +3,8 @@ plugins {
     idea
 
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.flywaydb.flyway") version "10.12.0"
+    id("org.jooq.jooq-codegen-gradle") version "3.19.8"
+    id("org.flywaydb.flyway") version "10.13.0"
 }
 
 group = "pl.nadwey"
@@ -26,8 +27,10 @@ dependencies {
     implementation("dev.rollczi:litecommands-bukkit:3.4.1")
     implementation("org.apache.commons:commons-text:1.12.0")
 
-    implementation("org.springframework:spring-jdbc:6.1.6")
     implementation("org.flywaydb:flyway-core:10.13.0")
+    implementation("org.jooq:jooq:3.19.8")
+    jooqCodegen("org.jooq:jooq-meta:3.19.8")
+    jooqCodegen("org.jooq:jooq-meta-extensions:3.19.8")
 
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.1")
 }
@@ -49,5 +52,28 @@ tasks {
 
     processResources {
         filteringCharset = Charsets.UTF_8.name()
+    }
+}
+
+
+jooq {
+    configuration {
+        generator {
+            database {
+                name = "org.jooq.meta.extensions.ddl.DDLDatabase"
+
+                properties {
+                    property {
+                        key = "scripts"
+                        value = "src/main/resources/db/migration/*.sql"
+                    }
+                }
+            }
+
+            target {
+                packageName = "org.jooq.generated"
+                directory = "${layout.projectDirectory}/src/main/java"
+            }
+        }
     }
 }

@@ -18,8 +18,8 @@ permissions:
     description: "Access to the '/nadarenas arena create' command."
     default: op
   nadarenas.command.nadarenas.arena.list:
-      description: "Access to the '/nadarenas arena list' command."
-      default: op
+    description: "Access to the '/nadarenas arena list' command."
+    default: op
   nadarenas.command.nadarenas.arena.setdisplayname:
     description: "Access to the '/nadarenas arena setDisplayName' command."
     default: op
@@ -46,6 +46,9 @@ permissions:
     default: op
   nadarenas.command.nadarenas.arena.restorer.setblockspertick:
     description: "Access to the '/nadarenas arena restorer setBlocksPerTick' command."
+    default: op
+  nadarenas.command.spawn:
+    description: "Access to the '/nadarenas spawn' command."
     default: op
   nadarenas.command.reload:
     description: "Access to the '/nadarenas reload' command."

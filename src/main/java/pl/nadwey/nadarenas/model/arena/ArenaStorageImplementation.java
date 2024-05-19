@@ -1,26 +1,29 @@
 package pl.nadwey.nadarenas.model.arena;
 
 import org.bukkit.Material;
+import org.jooq.generated.tables.records.ArenaRecord;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface ArenaStorageImplementation {
-    void createArena(Arena arena) throws SQLException;
+    void createArena(ArenaRecord arena) throws SQLException;
 
-    Arena getArena(String name) throws SQLException;
+    ArenaRecord getArenaByName(String name) throws SQLException;
 
-    List<Arena> getArenas() throws SQLException;
+    boolean arenaExists(String name) throws SQLException;
 
-    void setArenaDisplayName(String arena, String displayName) throws SQLException;
+    List<ArenaRecord> getAllArenas() throws SQLException;
 
-    void setArenaDescription(String name, String description) throws SQLException;
+    void setArenaRestorerBlocksPerTick(Integer arenaId, Integer restorerBlocksPerTick) throws SQLException;
 
-    void setArenaItem(String name, Material item) throws SQLException;
+    void setArenaRestorerEnabled(Integer arenaId, Boolean enabled) throws SQLException;
 
-    void removeArena(String name) throws SQLException;
+    void setArenaDisplayName(Integer arenaId, String displayName) throws SQLException;
 
-    void setArenaRestorerBlocksPerTick(String arena, Integer restorerBlocksPerTick) throws SQLException;
+    void setArenaDescription(Integer arenaId, String description) throws SQLException;
 
-    void setArenaRestorerEnabled(String arena, Boolean enabled) throws SQLException;
+    void setArenaItem(Integer arenaId, Material item) throws SQLException;
+
+    void removeArena(Integer arenaId) throws SQLException;
 }

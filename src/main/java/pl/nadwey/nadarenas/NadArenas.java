@@ -5,14 +5,14 @@ import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.configuration.MainConfiguration;
 import pl.nadwey.nadarenas.lang.LangManager;
 import pl.nadwey.nadarenas.storage.StorageManager;
-import pl.nadwey.nadarenas.restorer.ArenaManager;
+import pl.nadwey.nadarenas.restorer.ArenaRestorer;
 
 public final class NadArenas extends JavaPlugin {
     private static NadArenas instance;
     private CommandHandler commandHandler;
 
     private StorageManager storageManager;
-    private ArenaManager arenaManager;
+    private ArenaRestorer arenaRestorer;
     private LangManager langManager;
     private MainConfiguration mainConfiguration;
 
@@ -26,6 +26,9 @@ public final class NadArenas extends JavaPlugin {
 
         getDataFolder().mkdir();
         getDataFolder().toPath().resolve("arenas").toFile().mkdir();
+
+        System.setProperty("org.jooq.no-logo", "true");
+        System.setProperty("org.jooq.no-tips", "true");
     }
 
     @Override
@@ -37,8 +40,8 @@ public final class NadArenas extends JavaPlugin {
         storageManager = new StorageManager(this);
         storageManager.onEnable();
 
-        arenaManager = new ArenaManager(this);
-        arenaManager.onEnable();
+        arenaRestorer = new ArenaRestorer(this);
+        arenaRestorer.onEnable();
 
         commandHandler = new CommandHandler(this);
         commandHandler.onEnable();
@@ -50,14 +53,14 @@ public final class NadArenas extends JavaPlugin {
     public void onDisable() {
         commandHandler.onDisable();
 
-        arenaManager.onDisable();
+        arenaRestorer.onDisable();
 
         storageManager.onDisable();
     }
 
     public void reload() {
         // disable
-        arenaManager.onDisable();
+        arenaRestorer.onDisable();
         storageManager.onDisable();
 
         // enable and reload reloadable stuff
@@ -66,8 +69,8 @@ public final class NadArenas extends JavaPlugin {
         storageManager = new StorageManager(this);
         storageManager.onEnable();
 
-        arenaManager = new ArenaManager(this);
-        arenaManager.onEnable();
+        arenaRestorer = new ArenaRestorer(this);
+        arenaRestorer.onEnable();
 
         langManager.reload();
         commandHandler.reload();
@@ -77,8 +80,8 @@ public final class NadArenas extends JavaPlugin {
         return storageManager;
     }
 
-    public ArenaManager getArenaManager() {
-        return arenaManager;
+    public ArenaRestorer getArenaRestorer() {
+        return arenaRestorer;
     }
 
     public LangManager getLangManager() {
