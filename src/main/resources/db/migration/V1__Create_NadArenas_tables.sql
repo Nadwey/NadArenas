@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS arena
+CREATE TABLE IF NOT EXISTS "${table_prefix}arenas"
 (
     id                       INTEGER      NOT NULL,
     name                     VARCHAR(127) NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS arena
     max_y                    INTEGER      NOT NULL,
     max_z                    INTEGER      NOT NULL,
 
-    restorer_blocks_per_tick INTEGER DEFAULT 250,
+    restorer_blocks_per_tick INTEGER      NOT NULL,
 
     display_name             TEXT,
     description              TEXT,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS arena
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS spawn
+CREATE TABLE IF NOT EXISTS "${table_prefix}spawns"
 (
     id         INTEGER NOT NULL,
     arena_id   INTEGER NOT NULL,

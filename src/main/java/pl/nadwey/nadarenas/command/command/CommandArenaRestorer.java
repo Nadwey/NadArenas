@@ -6,8 +6,8 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.command.CommandSender;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "load")
     @Permission("nadarenas.command.nadarenas.arena.restorer.load")
-    public void arenaRestorerLoad(@Context CommandSender sender, @Arg("arena") ArenaRecord arena) {
+    public void arenaRestorerLoad(@Context CommandSender sender, @Arg("arena") Arena arena) {
         if (getPlugin().getArenaRestorer().isLoading(arena.getName())) {
             getPlugin().getLangManager().send(sender, "command-arena-load-already-loading", Map.of(
                     "arena", arena.getName()
@@ -42,7 +42,7 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "getEnabled")
     @Permission("nadarenas.command.nadarenas.arena.restorer.getenabled")
-    public void arenaRestorerGetEnabled(@Context CommandSender sender, @Arg("arena") ArenaRecord arena) {
+    public void arenaRestorerGetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena) {
         getPlugin().getLangManager().send(sender, "command-arena-restorer-getenabled", Map.of(
                 "state", arena.getEnableRestorer().toString()
         ));
@@ -50,7 +50,7 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "setEnabled")
     @Permission("nadarenas.command.nadarenas.arena.restorer.setenabled")
-    public void arenaRestorerSetEnabled(@Context CommandSender sender, @Arg("arena") ArenaRecord arena, @Arg("enabled") Boolean enabled) {
+    public void arenaRestorerSetEnabled(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("enabled") Boolean enabled) {
         if (getPlugin().getArenaRestorer().isLoading(arena.getName())) {
             getPlugin().getLangManager().send(sender, "command-arena-restorer-setenabled-currently-loading");
         }
@@ -64,7 +64,7 @@ public class CommandArenaRestorer extends CommandBase {
 
     @Execute(name = "setBlocksPerTick")
     @Permission("nadarenas.command.nadarenas.arena.restorer.setblockspertick")
-    public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") ArenaRecord arena, @Arg("blocksPerTick") Integer blocksPerTick) {
+    public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("blocksPerTick") Integer blocksPerTick) {
         getPlugin().getStorageManager().arena().setArenaRestorerBlocksPerTick(arena.getId(), blocksPerTick);
 
         getPlugin().getLangManager().send(sender, "command-arena-restorer-setblockspertick-successful", Map.of(

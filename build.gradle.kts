@@ -2,9 +2,7 @@ plugins {
     java
     idea
 
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.jooq.jooq-codegen-gradle") version "3.19.8"
-    id("org.flywaydb.flyway") version "10.13.0"
+    id("io.github.goooler.shadow") version "8.1.8"
 }
 
 group = "pl.nadwey"
@@ -23,16 +21,15 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
-    implementation("xyz.xenondevs.invui:invui:1.30")
-    implementation("dev.rollczi:litecommands-bukkit:3.4.1")
+
+    implementation("xyz.xenondevs.invui:invui:1.32")
+    implementation("dev.rollczi:litecommands-bukkit:3.4.2")
     implementation("org.apache.commons:commons-text:1.12.0")
+    implementation("org.flywaydb:flyway-core:10.15.2")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.3")
 
-    implementation("org.flywaydb:flyway-core:10.13.0")
-    implementation("org.jooq:jooq:3.19.8")
-    jooqCodegen("org.jooq:jooq-meta:3.19.8")
-    jooqCodegen("org.jooq:jooq-meta-extensions:3.19.8")
-
-    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.1")
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
 }
 
 val targetJavaVersion = 21
@@ -52,28 +49,5 @@ tasks {
 
     processResources {
         filteringCharset = Charsets.UTF_8.name()
-    }
-}
-
-
-jooq {
-    configuration {
-        generator {
-            database {
-                name = "org.jooq.meta.extensions.ddl.DDLDatabase"
-
-                properties {
-                    property {
-                        key = "scripts"
-                        value = "src/main/resources/db/migration/*.sql"
-                    }
-                }
-            }
-
-            target {
-                packageName = "org.jooq.generated"
-                directory = "${layout.projectDirectory}/src/main/java"
-            }
-        }
     }
 }

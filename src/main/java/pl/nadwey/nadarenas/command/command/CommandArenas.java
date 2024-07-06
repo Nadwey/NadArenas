@@ -9,9 +9,9 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.gui.teleport.TeleportItem;
+import pl.nadwey.nadarenas.model.arena.Arena;
 import xyz.xenondevs.inventoryaccess.component.AdventureComponentWrapper;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -39,10 +39,10 @@ public class CommandArenas extends CommandBase {
 
         gui.setBackground(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE));
 
-        List<ArenaRecord> arenas = getPlugin().getStorageManager().arena().getAllArenas();
+        List<Arena> arenas = getPlugin().getStorageManager().arena().getAllArenas();
 
         for (int i = 0; i < arenas.size(); i++) {
-            ArenaRecord arena = arenas.get(i);
+            Arena arena = arenas.get(i);
 
             gui.setItem(i, 1, new TeleportItem(arena, 1));
         }

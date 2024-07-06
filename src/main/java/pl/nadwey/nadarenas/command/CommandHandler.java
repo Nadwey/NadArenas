@@ -4,7 +4,6 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.Reloadable;
 import pl.nadwey.nadarenas.command.argument.MaterialArgument;
@@ -15,6 +14,7 @@ import pl.nadwey.nadarenas.command.argument.ArenaRecordArgument;
 import pl.nadwey.nadarenas.command.command.CommandReload;
 import pl.nadwey.nadarenas.command.handler.NadArenasInvalidUsageHandler;
 import pl.nadwey.nadarenas.command.handler.NadArenasMissingPermissionsHandler;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 public class CommandHandler implements Reloadable {
     private final NadArenas plugin;
@@ -32,7 +32,7 @@ public class CommandHandler implements Reloadable {
                         new CommandArenaRestorer(plugin),
                         new CommandReload(plugin)
                 )
-                .argument(ArenaRecord.class, new ArenaRecordArgument(plugin))
+                .argument(Arena.class, new ArenaRecordArgument(plugin))
                 .argument(Material.class, new MaterialArgument())
                 .invalidUsage(new NadArenasInvalidUsageHandler(plugin))
                 .missingPermission(new NadArenasMissingPermissionsHandler(plugin))

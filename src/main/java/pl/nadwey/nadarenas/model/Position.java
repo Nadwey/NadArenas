@@ -1,9 +1,17 @@
 package pl.nadwey.nadarenas.model;
 
 import com.sk89q.worldedit.math.BlockVector3;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import javax.annotation.Nonnull;
+
+@Setter
+@Getter
+@Accessors(fluent = true)
 public class Position {
     private Integer x = 0;
     private Integer y = 0;
@@ -15,32 +23,12 @@ public class Position {
         this.z = z;
     }
 
+    public Position(BlockVector3 vector) {
+        this(vector.x(), vector.y(), vector.z());
+    }
+
     public Position() {
 
-    }
-
-    public Integer x() {
-        return x;
-    }
-
-    public void setX(Integer x) {
-        this.x = x;
-    }
-
-    public Integer y() {
-        return y;
-    }
-
-    public void setY(Integer y) {
-        this.y = y;
-    }
-
-    public Integer z() {
-        return z;
-    }
-
-    public void setZ(Integer z) {
-        this.z = z;
     }
 
     public Position add(int x, int y, int z) {
@@ -59,11 +47,7 @@ public class Position {
         return subtract(position.x(), position.y(), position.z());
     }
 
-    public Location toLocation(World world) {
+    public Location asLocation(World world) {
         return new Location(world, x, y, z);
-    }
-
-    public static Position fromBlockVector3(BlockVector3 blockVector3) {
-        return new Position(blockVector3.x(), blockVector3.y(), blockVector3.z());
     }
 }

@@ -12,10 +12,9 @@ import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.model.Position;
-import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,7 +41,7 @@ public class CreateArenaConversation extends NadArenasConversation {
 
         @Override
         public @Nullable Prompt acceptInput(@NotNull ConversationContext context, @Nullable String input) {
-            if (input == null || !input.matches(ArenaRecordUtils.ARENA_NAME_REGEX)) {
+            if (input == null || !input.matches(Arena.ARENA_NAME_REGEX)) {
                 sendLangMessage("command-arena-create-invalid-name");
                 return new ArenaNamePrompt();
             }
@@ -95,18 +94,18 @@ public class CreateArenaConversation extends NadArenasConversation {
                 return Prompt.END_OF_CONVERSATION;
             }
 
-            pl.nadwey.nadarenas.model.Region region =  new pl.nadwey.nadarenas.model.Region(
-                    Position.fromBlockVector3(weRegion.getMinimumPoint()),
-                    Position.fromBlockVector3(weRegion.getMaximumPoint())
+            pl.nadwey.nadarenas.model.Region region = new pl.nadwey.nadarenas.model.Region(
+                    new Position(weRegion.getMinimumPoint()),
+                    new Position(weRegion.getMaximumPoint())
             );
 
             // get and list the overlapping arenas
-            List<ArenaRecord> overlapping = NadArenas.getInstance().getStorageManager().arena().getOverlappingArenas(region);
+            List<Arena> overlapping = NadArenas.getInstance().getStorageManager().arena().getOverlappingArenas(region);
             if (!overlapping.isEmpty()) {
                 sendOverlappingArenasMessage(player, overlapping);
                 return new ArenaSelectAreaPrompt();
             }
-            
+
             createAndSaveArena(context, BukkitAdapter.adapt(weRegion.getWorld()), region);
 
             sendLangMessage("command-arena-create-arena-created");
@@ -126,9 +125,9 @@ public class CreateArenaConversation extends NadArenasConversation {
             }
         }
 
-        private void sendOverlappingArenasMessage(Player player, List<ArenaRecord> overlapping) {
+        private void sendOverlappingArenasMessage(Player player, List<Arena> overlapping) {
             Component textComponent = NadArenas.getInstance().getLangManager().getAsComponent("command-arena-create-overlapping").appendNewline();
-            for (ArenaRecord overlappingArena : overlapping) {
+            for (Arena overlappingArena : overlapping) {
                 textComponent = textComponent
                         .append(Component.text("- ").color(NamedTextColor.DARK_GRAY))
                         .append(Component.text(overlappingArena.getName()).color(NamedTextColor.GOLD))
@@ -138,11 +137,12 @@ public class CreateArenaConversation extends NadArenasConversation {
         }
 
         private void createAndSaveArena(ConversationContext context, World world, pl.nadwey.nadarenas.model.Region region) {
-            ArenaRecord arena = new ArenaRecord();
-            arena.setName((String) context.getSessionData(ARENA_NAME));
-            arena.setEnableRestorer(Boolean.TRUE.equals(context.getSessionData(ARENA_RESTORER_ENABLED)));
-            arena.setWorld(world.getUID().toString());
-            ArenaRecordUtils.setRegion(arena, region);
+            Arena arena = new Arena(
+                    (String) context.getSessionData(ARENA_NAME),
+                    world.getUID().toString(),
+                    Boolean.TRUE.equals(context.getSessionData(ARENA_RESTORER_ENABLED)),
+                    region
+            );
 
             NadArenas.getInstance().getStorageManager().arena().createArena(arena);
 

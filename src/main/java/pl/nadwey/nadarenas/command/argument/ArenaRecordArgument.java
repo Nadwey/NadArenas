@@ -7,12 +7,12 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.command.CommandSender;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.util.List;
 
-public class ArenaRecordArgument extends ArgumentResolver<CommandSender, ArenaRecord> {
+public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> {
     private final NadArenas plugin;
 
     public ArenaRecordArgument(NadArenas plugin) {
@@ -20,16 +20,16 @@ public class ArenaRecordArgument extends ArgumentResolver<CommandSender, ArenaRe
     }
 
     @Override
-    protected ParseResult<ArenaRecord> parse(Invocation<CommandSender> invocation, Argument<ArenaRecord> context, String argument) {
+    protected ParseResult<Arena> parse(Invocation<CommandSender> invocation, Argument<Arena> context, String argument) {
         if (!plugin.getStorageManager().arena().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
 
         return ParseResult.success(this.plugin.getStorageManager().arena().getArenaByName(argument));
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<ArenaRecord> argument, SuggestionContext context) {
-        List<ArenaRecord> arenas = plugin.getStorageManager().arena().getAllArenas();
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Arena> argument, SuggestionContext context) {
+        List<Arena> arenas = plugin.getStorageManager().arena().getAllArenas();
 
-        return SuggestionResult.of(arenas.stream().map(ArenaRecord::getName).toList());
+        return SuggestionResult.of(arenas.stream().map(Arena::getName).toList());
     }
 }

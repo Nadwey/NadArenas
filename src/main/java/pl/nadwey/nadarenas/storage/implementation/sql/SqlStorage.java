@@ -1,21 +1,37 @@
 package pl.nadwey.nadarenas.storage.implementation.sql;
 
+import lombok.Getter;
+import org.apache.commons.text.StringSubstitutor;
 import org.bukkit.Material;
 import org.flywaydb.core.Flyway;
-import org.jooq.DSLContext;
-import org.jooq.generated.tables.Arena;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
+import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.storage.implementation.sql.connection.ConnectionFactory;
 
-import java.sql.SQLException;
+import java.sql.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SqlStorage implements StorageImplementation {
+    private static final String TABLE_PREFIX = "nadarenas_";
+
+    public static final String ARENA_INSERT = "INSERT INTO ${table_prefix}arenas(name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ARENA_SELECT = "SELECT id, name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item FROM ${table_prefix}arenas WHERE name = ?";
+    public static final String ARENA_SELECT_ALL = "SELECT id, name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item FROM ${table_prefix}arenas";
+    public static final String ARENA_UPDATE_ENABLE_RESTORER = "UPDATE ${table_prefix}arenas SET enable_restorer = ? WHERE id = ?";
+    public static final String ARENA_UPDATE_RESTORER_BLOCKS_PER_TICK = "UPDATE ${table_prefix}arenas SET restorer_blocks_per_tick = ? WHERE id = ?";
+    public static final String ARENA_UPDATE_DISPLAY_NAME = "UPDATE ${table_prefix}arenas SET display_name = ? WHERE id = ?";
+    public static final String ARENA_UPDATE_DESCRIPTION = "UPDATE ${table_prefix}arenas SET description = ? WHERE id = ?";
+    public static final String ARENA_UPDATE_ITEM = "UPDATE ${table_prefix}arenas SET item = ? WHERE id = ?";
+    public static final String ARENA_DELETE = "DELETE FROM ${table_prefix}arenas WHERE id = ?";
+
+    @Getter
     private final NadArenas plugin;
 
+    @Getter
     private final ConnectionFactory connectionFactory;
 
     public SqlStorage(NadArenas plugin, ConnectionFactory connectionFactory) {
@@ -24,17 +40,8 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public NadArenas getPlugin() {
-        return plugin;
-    }
-
-    @Override
     public String getImplementationName() {
         return "";
-    }
-
-    public ConnectionFactory getConnectionFactory() {
-        return connectionFactory;
     }
 
     @Override
@@ -42,23 +49,18 @@ public class SqlStorage implements StorageImplementation {
         connectionFactory.init(plugin);
 
         migrate();
-
-        try {
-            getPlugin().getLogger().info("Initializing jOOQ...");
-
-            // jOOQ seems to initialize on the first query, so we force it here
-            getConnectionFactory().getDSLContext().selectOne().fetch();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void migrate() {
         Flyway flyway = Flyway
                 .configure(getClass().getClassLoader())
                 .baselineOnMigrate(true)
-                .dataSource(connectionFactory.getDataSource())
+                .dataSource(connectionFactory.getUrl(), "", "")
                 .locations("classpath:db/migration")
+                .table(TABLE_PREFIX + "schema_history")
+                .placeholders(Map.of(
+                        "table_prefix", TABLE_PREFIX
+                ))
                 .load();
 
         flyway.migrate();
@@ -73,21 +75,76 @@ public class SqlStorage implements StorageImplementation {
         }
     }
 
-    @Override
-    public void createArena(ArenaRecord arena) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+    private String prepareQueryString(String string) {
+        return StringSubstitutor.replace(string, Map.of(
+                "table_prefix", TABLE_PREFIX
+        ));
+    }
 
-        arena.attach(context.configuration());
-        arena.store();
+    private Arena getArenaFromResultSet(ResultSet rs) throws SQLException {
+        Integer id = rs.getInt("id");
+        String name = rs.getString("name");
+
+        Boolean enableRestorer = rs.getBoolean("enable_restorer");
+        String world = rs.getString("world");
+        String displayName = rs.getString("display_name");
+        String description = rs.getString("description");
+
+        Integer minX = rs.getInt("min_x");
+        Integer minY = rs.getInt("min_y");
+        Integer minZ = rs.getInt("min_z");
+        Integer maxX = rs.getInt("max_x");
+        Integer maxY = rs.getInt("max_y");
+        Integer maxZ = rs.getInt("max_z");
+
+        Integer restorerBlocksPerTick = rs.getInt("restorer_blocks_per_tick");
+
+        Material item = Material.getMaterial(rs.getString("item"));
+
+        Arena arena = new Arena(name, world, enableRestorer, minX, minY, minZ, maxX, maxY, maxZ);
+        arena.setId(id);
+        arena.setRestorerBlocksPerTick(restorerBlocksPerTick);
+        arena.setDisplayName(displayName);
+        arena.setDescription(description);
+        arena.setItem(item);
+
+        return arena;
     }
 
     @Override
-    public ArenaRecord getArenaByName(String name) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+    public void createArena(Arena arena) throws SQLException {
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_INSERT));
 
-        return context
-                .select().from(Arena.ARENA).where(Arena.ARENA.NAME.eq(name))
-                .fetchAnyInto(ArenaRecord.class);
+        ps.setString(1, arena.getName());
+        ps.setBoolean(2, arena.getEnableRestorer());
+        ps.setString(3, arena.getWorld());
+        ps.setInt(4, arena.getMinPos().x());
+        ps.setInt(5, arena.getMinPos().y());
+        ps.setInt(6, arena.getMinPos().z());
+        ps.setInt(7, arena.getMaxPos().x());
+        ps.setInt(8, arena.getMaxPos().y());
+        ps.setInt(9, arena.getMaxPos().z());
+        ps.setInt(10, arena.getRestorerBlocksPerTick() == null ? 250 : arena.getRestorerBlocksPerTick());
+        ps.setString(11, arena.getDisplayName());
+        ps.setString(12, arena.getDescription());
+        ps.setString(13, arena.getItem() != null ? arena.getItem().toString() : null);
+
+        ps.executeUpdate();
+    }
+
+    @Override
+    public Arena getArenaByName(String name) throws SQLException {
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_SELECT));
+
+        ps.setString(1, name);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) return null;
+
+        return getArenaFromResultSet(rs);
     }
 
     @Override
@@ -96,66 +153,81 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public List<ArenaRecord> getAllArenas() throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+    public List<Arena> getAllArenas() throws SQLException {
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_SELECT_ALL));
 
-        return context.select().from(Arena.ARENA).fetchInto(ArenaRecord.class);
+        ResultSet rs = ps.executeQuery();
+
+        List<Arena> arenas = new ArrayList<>();
+        while (rs.next()) {
+            arenas.add(getArenaFromResultSet(rs));
+        }
+
+        return arenas;
     }
 
     @Override
     public void setArenaRestorerEnabled(Integer arenaId, Boolean enabled) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_UPDATE_ENABLE_RESTORER));
 
-        context.update(Arena.ARENA)
-                .set(Arena.ARENA.ENABLE_RESTORER, enabled)
-                .where(Arena.ARENA.ID.eq(arenaId))
-                .execute();
+        ps.setBoolean(1, enabled);
+        ps.setInt(2, arenaId);
+
+        ps.executeUpdate();
     }
 
     @Override
     public void setArenaRestorerBlocksPerTick(Integer arenaId, Integer restorerBlocksPerTick) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_UPDATE_RESTORER_BLOCKS_PER_TICK));
 
-        context.update(Arena.ARENA)
-                .set(Arena.ARENA.RESTORER_BLOCKS_PER_TICK, restorerBlocksPerTick)
-                .where(Arena.ARENA.ID.eq(arenaId))
-                .execute();
+        ps.setInt(1, restorerBlocksPerTick);
+        ps.setInt(2, arenaId);
+
+        ps.executeUpdate();
     }
 
     @Override
     public void setArenaDisplayName(Integer arenaId, String displayName) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_UPDATE_DISPLAY_NAME));
 
-        context.update(Arena.ARENA)
-                .set(Arena.ARENA.DISPLAY_NAME, displayName)
-                .where(Arena.ARENA.ID.eq(arenaId))
-                .execute();
+        ps.setString(1, displayName);
+        ps.setInt(2, arenaId);
+
+        ps.executeUpdate();
     }
 
     @Override
     public void setArenaDescription(Integer arenaId, String description) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_UPDATE_DESCRIPTION));
 
-        context.update(Arena.ARENA)
-                .set(Arena.ARENA.DESCRIPTION, description)
-                .where(Arena.ARENA.ID.eq(arenaId))
-                .execute();
+        ps.setString(1, description);
+        ps.setInt(2, arenaId);
+
+        ps.executeUpdate();
     }
 
     @Override
     public void setArenaItem(Integer arenaId, Material item) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_UPDATE_ITEM));
 
-        context.update(Arena.ARENA)
-                .set(Arena.ARENA.ITEM, item.toString())
-                .where(Arena.ARENA.ID.eq(arenaId))
-                .execute();
+        ps.setString(1, item.toString());
+        ps.setInt(2, arenaId);
+
+        ps.executeUpdate();
     }
 
     @Override
     public void removeArena(Integer arenaId) throws SQLException {
-        DSLContext context = getConnectionFactory().getDSLContext();
+        Connection conn = getConnectionFactory().getConnection();
+        PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_DELETE));
 
-        context.delete(Arena.ARENA).where(Arena.ARENA.ID.eq(arenaId)).execute();
+        ps.setInt(1, arenaId);
+        ps.executeUpdate();
     }
 }

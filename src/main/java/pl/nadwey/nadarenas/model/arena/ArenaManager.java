@@ -1,7 +1,6 @@
 package pl.nadwey.nadarenas.model.arena;
 
 import org.bukkit.Material;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.model.Region;
 import pl.nadwey.nadarenas.storage.StorageManager;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class ArenaManager implements ArenaStorageImplementation {
 
 
     @Override
-    public void createArena(ArenaRecord arena) {
+    public void createArena(Arena arena) {
         Objects.requireNonNull(arena);
 
         try {
@@ -30,7 +29,7 @@ public class ArenaManager implements ArenaStorageImplementation {
     }
 
     @Override
-    public ArenaRecord getArenaByName(String name) {
+    public Arena getArenaByName(String name) {
         Objects.requireNonNull(name);
 
         try {
@@ -52,7 +51,7 @@ public class ArenaManager implements ArenaStorageImplementation {
     }
 
     @Override
-    public List<ArenaRecord> getAllArenas() {
+    public List<Arena> getAllArenas() {
         try {
             return Collections.unmodifiableList(storageManager.getStorage().getImplementation().getAllArenas());
         } catch (SQLException e) {
@@ -131,13 +130,12 @@ public class ArenaManager implements ArenaStorageImplementation {
         }
     }
 
-    public List<ArenaRecord> getOverlappingArenas(Region region) {
-        List<ArenaRecord> arenas = getAllArenas();
+    public List<Arena> getOverlappingArenas(Region region) {
+        List<Arena> arenas = getAllArenas();
+        List<Arena> overlapping = new ArrayList<>();
 
-        List<ArenaRecord> overlapping = new ArrayList<>();
-
-        for (ArenaRecord arena : arenas) {
-            if (ArenaRecordUtils.getRegion(arena).isOverlapping(region))
+        for (Arena arena : arenas) {
+            if (arena.getRegion().overlaps(region))
                 overlapping.add(arena);
         }
 

@@ -7,11 +7,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.jooq.generated.tables.records.ArenaRecord;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.model.Position;
 import pl.nadwey.nadarenas.model.Region;
-import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
+import pl.nadwey.nadarenas.model.arena.Arena;
 
 import java.io.*;
 import java.util.*;
@@ -19,13 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ArenaRestorer {
     private class LoadTask {
-        private final ArenaRecord arena;
+        private final Arena arena;
         private final int blocksAtOnce;
         private final World world;
         private final Scanner arenaScanner;
         private boolean hasFinished = false;
 
-        public LoadTask(ArenaRecord arena, int blocksAtOnce) throws FileNotFoundException {
+        public LoadTask(Arena arena, int blocksAtOnce) throws FileNotFoundException {
             this.arena = arena;
             this.blocksAtOnce = blocksAtOnce;
             this.world = Bukkit.getWorld(UUID.fromString(arena.getWorld()));
@@ -43,9 +42,9 @@ public class ArenaRestorer {
             }
 
             Position position = new Position(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]))
-                    .add(ArenaRecordUtils.getRegion(arena).getMinPosition()); // get the absolute position from relative
+                    .add(arena.getMinPos()); // get the absolute position from relative
 
-            Location location = position.toLocation(world);
+            Location location = position.asLocation(world);
 
             Material material = Material.matchMaterial(parts[3]);
 
@@ -116,11 +115,11 @@ public class ArenaRestorer {
         return plugin.getDataFolder().toPath().resolve("arenas/" + arena).toFile();
     }
 
-    private File getArenaFile(ArenaRecord arena) {
+    private File getArenaFile(Arena arena) {
         return getArenaFile(arena.getName());
     }
 
-    public void loadArena(ArenaRecord arena, int blocksAtOnce) throws FileNotFoundException {
+    public void loadArena(Arena arena, int blocksAtOnce) throws FileNotFoundException {
         plugin.getLogger().info("ArenaManager: loading arena " + arena.getName());
 
         if (loadTasks.containsKey(arena.getName())) {
@@ -130,12 +129,12 @@ public class ArenaRestorer {
         loadTasks.put(arena.getName(), new LoadTask(arena, blocksAtOnce));
     }
 
-    public void saveArena(ArenaRecord arena) throws IOException {
+    public void saveArena(Arena arena) throws IOException {
         World world = Bukkit.getWorld(UUID.fromString(arena.getWorld()));
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(getArenaFile(arena)));
 
-        Region region = ArenaRecordUtils.getRegion(arena);
+        Region region = arena.getRegion();
         Position minPosition = region.getMinPosition();
         Position maxPosition = region.getMaxPosition();
 
@@ -158,11 +157,7 @@ public class ArenaRestorer {
             plugin.getLogger().warning("ArenaManager: Could not delete the arena file of " + arena);
         }
     }
-
-    public void removeArena(ArenaRecord arena) {
-        removeArena(arena.getName());
-    }
-
+    
     public void onEnable() {
         plugin.getLogger().info("ArenaManager: Enabling...");
 

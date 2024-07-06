@@ -5,8 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import org.jooq.generated.tables.records.ArenaRecord;
-import pl.nadwey.nadarenas.model.arena.ArenaRecordUtils;
+import pl.nadwey.nadarenas.model.arena.Arena;
 import pl.nadwey.nadarenas.utility.AdventureUtils;
 import xyz.xenondevs.inventoryaccess.component.AdventureComponentWrapper;
 import xyz.xenondevs.inventoryaccess.component.ComponentWrapper;
@@ -18,20 +17,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeleportItem extends AbstractItem {
-    private final ArenaRecord arena;
+    private final Arena arena;
     private final int players;
 
-    public TeleportItem(ArenaRecord arena, int players) {
+    public TeleportItem(Arena arena, int players) {
         this.arena = arena;
         this.players = players;
     }
 
     @Override
     public ItemProvider getItemProvider() {
-        Material material = Material.matchMaterial(arena.getItem());
+        Material material = arena.getItem();
 
         ItemBuilder item = new ItemBuilder(material != null ? material : Material.BARRIER)
-                .setDisplayName(AdventureUtils.deserializeLegacyToWrapper(ArenaRecordUtils.getPreferredName(arena)))
+                .setDisplayName(AdventureUtils.deserializeLegacyToWrapper(arena.getPreferredName()))
                 .setAmount(Math.min(64, Math.max(1, players)));
 
         if (arena.getDescription() != null) {
