@@ -17,6 +17,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ArenaRestorer {
+    private final NadArenas plugin;
+    private BukkitTask bukkitTask;
+    private final Map<String, LoadTask> loadTasks;
+
     private class LoadTask {
         private final Arena arena;
         private final int blocksAtOnce;
@@ -54,7 +58,7 @@ public class ArenaRestorer {
             }
 
             Block block = location.getBlock();
-            block.setType(material);
+            block.setType(material, false);
         }
 
         /**
@@ -101,10 +105,6 @@ public class ArenaRestorer {
             }
         }
     }
-
-    private final NadArenas plugin;
-    private BukkitTask bukkitTask;
-    private final Map<String, LoadTask> loadTasks;
 
     public ArenaRestorer(NadArenas plugin) {
         this.plugin = plugin;
@@ -157,7 +157,7 @@ public class ArenaRestorer {
             plugin.getLogger().warning("ArenaManager: Could not delete the arena file of " + arena);
         }
     }
-    
+
     public void onEnable() {
         plugin.getLogger().info("ArenaManager: Enabling...");
 
