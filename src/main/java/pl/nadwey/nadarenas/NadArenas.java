@@ -1,5 +1,6 @@
 package pl.nadwey.nadarenas;
 
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.command.CommandHandler;
 import pl.nadwey.nadarenas.configuration.MainConfiguration;
@@ -8,18 +9,19 @@ import pl.nadwey.nadarenas.storage.StorageManager;
 import pl.nadwey.nadarenas.restorer.ArenaRestorer;
 
 public final class NadArenas extends JavaPlugin {
-    private static NadArenas instance;
     private CommandHandler commandHandler;
 
+    @Getter
     private StorageManager storageManager;
+    @Getter
     private ArenaRestorer arenaRestorer;
+    @Getter
     private LangManager langManager;
+    @Getter
     private MainConfiguration mainConfiguration;
 
     @Override
     public void onLoad() {
-        NadArenas.instance = this;
-
         getDataFolder().mkdir();
         getDataFolder().toPath().resolve("arenas").toFile().mkdir();
 
@@ -70,21 +72,5 @@ public final class NadArenas extends JavaPlugin {
 
         langManager.reload();
         commandHandler.reload();
-    }
-
-    public StorageManager getStorageManager() {
-        return storageManager;
-    }
-
-    public ArenaRestorer getArenaRestorer() {
-        return arenaRestorer;
-    }
-
-    public LangManager getLangManager() {
-        return langManager;
-    }
-
-    public MainConfiguration getMainConfiguration() {
-        return mainConfiguration;
     }
 }
