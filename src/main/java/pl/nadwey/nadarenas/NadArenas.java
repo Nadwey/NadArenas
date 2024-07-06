@@ -16,10 +16,6 @@ public final class NadArenas extends JavaPlugin {
     private LangManager langManager;
     private MainConfiguration mainConfiguration;
 
-    public static NadArenas getInstance() {
-        return instance;
-    }
-
     @Override
     public void onLoad() {
         NadArenas.instance = this;

@@ -1,5 +1,6 @@
 package pl.nadwey.nadarenas.conversation;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
@@ -9,6 +10,8 @@ import pl.nadwey.nadarenas.NadArenas;
 import java.util.Map;
 
 public abstract class NadArenasConversation implements ConversationAbandonedListener {
+    @Getter
+    private final NadArenas plugin;
     private final ConversationFactory conversationFactory;
     private final Conversable conversable;
     private final boolean playerOnly;
@@ -16,11 +19,12 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
 
     public abstract Prompt getEntryPrompt();
 
-    protected NadArenasConversation(Conversable conversable, boolean playerOnly, int timeout) {
+    protected NadArenasConversation(NadArenas plugin, Conversable conversable, boolean playerOnly, int timeout) {
+        this.plugin = plugin;
         this.conversable = conversable;
         this.playerOnly = playerOnly;
 
-        conversationFactory = new ConversationFactory(NadArenas.getInstance())
+        conversationFactory = new ConversationFactory(plugin)
                 .withEscapeSequence(ESCAPE_SEQUENCE)
                 .withTimeout(timeout)
                 .addConversationAbandonedListener(this)
@@ -52,13 +56,13 @@ public abstract class NadArenasConversation implements ConversationAbandonedList
         if (!(conversable instanceof CommandSender commandSender))
             return;
 
-        commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key));
+        commandSender.sendMessage(plugin.getLangManager().getAsComponent(key));
     }
 
     protected void sendLangMessage(String key, Map<String, String> args) {
         if (!(conversable instanceof CommandSender commandSender))
             return;
 
-        commandSender.sendMessage(NadArenas.getInstance().getLangManager().getAsComponent(key, args));
+        commandSender.sendMessage(plugin.getLangManager().getAsComponent(key, args));
     }
 }

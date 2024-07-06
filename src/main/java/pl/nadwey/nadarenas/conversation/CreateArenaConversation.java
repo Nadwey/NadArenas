@@ -23,8 +23,8 @@ public class CreateArenaConversation extends NadArenasConversation {
     private final static String ARENA_NAME = "arenaName";
     private final static String ARENA_RESTORER_ENABLED = "arenaRestorerEnabled";
 
-    public CreateArenaConversation(Conversable conversable) {
-        super(conversable, true, 240);
+    public CreateArenaConversation(NadArenas plugin, Conversable conversable) {
+        super(plugin, conversable, true, 240);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CreateArenaConversation extends NadArenasConversation {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enter-name");
+            return getPlugin().getLangManager().getAsLegacyString("command-arena-create-enter-name");
         }
 
         @Override
@@ -46,7 +46,7 @@ public class CreateArenaConversation extends NadArenasConversation {
                 return new ArenaNamePrompt();
             }
 
-            if (NadArenas.getInstance().getStorageManager().arena().arenaExists(input)) {
+            if (getPlugin().getStorageManager().arena().arenaExists(input)) {
                 sendLangMessage("command-arena-create-arena-exists");
 
                 return new ArenaNamePrompt();
@@ -61,7 +61,7 @@ public class CreateArenaConversation extends NadArenasConversation {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-enable-restorer");
+            return getPlugin().getLangManager().getAsLegacyString("command-arena-create-enable-restorer");
         }
 
         @Override
@@ -76,7 +76,7 @@ public class CreateArenaConversation extends NadArenasConversation {
         @NotNull
         @Override
         public String getPromptText(@NotNull ConversationContext context) {
-            return NadArenas.getInstance().getLangManager().getAsLegacyString("command-arena-create-select-area");
+            return getPlugin().getLangManager().getAsLegacyString("command-arena-create-select-area");
         }
 
         @Override
@@ -100,7 +100,7 @@ public class CreateArenaConversation extends NadArenasConversation {
             );
 
             // get and list the overlapping arenas
-            List<Arena> overlapping = NadArenas.getInstance().getStorageManager().arena().getOverlappingArenas(region);
+            List<Arena> overlapping = getPlugin().getStorageManager().arena().getOverlappingArenas(region);
             if (!overlapping.isEmpty()) {
                 sendOverlappingArenasMessage(player, overlapping);
                 return new ArenaSelectAreaPrompt();
@@ -126,7 +126,7 @@ public class CreateArenaConversation extends NadArenasConversation {
         }
 
         private void sendOverlappingArenasMessage(Player player, List<Arena> overlapping) {
-            Component textComponent = NadArenas.getInstance().getLangManager().getAsComponent("command-arena-create-overlapping").appendNewline();
+            Component textComponent = getPlugin().getLangManager().getAsComponent("command-arena-create-overlapping").appendNewline();
             for (Arena overlappingArena : overlapping) {
                 textComponent = textComponent
                         .append(Component.text("- ").color(NamedTextColor.DARK_GRAY))
@@ -144,10 +144,10 @@ public class CreateArenaConversation extends NadArenasConversation {
                     region
             );
 
-            NadArenas.getInstance().getStorageManager().arena().createArena(arena);
+            getPlugin().getStorageManager().arena().createArena(arena);
 
             try {
-                NadArenas.getInstance().getArenaRestorer().saveArena(arena);
+                getPlugin().getArenaRestorer().saveArena(arena);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -33,7 +33,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "create")
     @Permission("nadarenas.command.nadarenas.arena.create")
     public void arenaCreate(@Context Player sender) {
-        new CreateArenaConversation(sender).begin();
+        new CreateArenaConversation(getPlugin(), sender).begin();
     }
 
     @Execute(name = "list")

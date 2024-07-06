@@ -18,6 +18,6 @@ public class CommandSpawn extends CommandBase {
     @Execute(name = "create")
     @Permission("nadarenas.command.nadarenas.spawn.create")
     public void arenaCreate(@Context Player sender) {
-        new CreateArenaConversation(sender).begin();
+        new CreateArenaConversation(getPlugin(), sender).begin();
     }
 }

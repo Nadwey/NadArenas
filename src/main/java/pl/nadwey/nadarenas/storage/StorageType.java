@@ -1,9 +1,11 @@
 package pl.nadwey.nadarenas.storage;
 
 import com.google.common.collect.ImmutableList;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public enum StorageType {
     SQLITE("SQLite", "sqlite");
 
@@ -25,13 +27,5 @@ public enum StorageType {
             }
         }
         return def;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getIdentifiers() {
-        return identifiers;
     }
 }

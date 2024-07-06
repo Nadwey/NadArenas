@@ -1,20 +1,19 @@
 package pl.nadwey.nadarenas.storage;
 
+import lombok.Getter;
 import pl.nadwey.nadarenas.NadArenas;
 import pl.nadwey.nadarenas.model.arena.ArenaManager;
 
 public class StorageManager {
+    @Getter
     private final NadArenas plugin;
+    @Getter
     private Storage storage;
 
     private ArenaManager arenaManager;
 
     public StorageManager(NadArenas plugin) {
         this.plugin = plugin;
-    }
-
-    public Storage getStorage() {
-        return storage;
     }
 
     public void onEnable() {
@@ -27,10 +26,6 @@ public class StorageManager {
     public void onDisable() {
         plugin.getLogger().info("Shutting down storage...");
         storage.shutdown();
-    }
-
-    public NadArenas getPlugin() {
-        return plugin;
     }
 
     public ArenaManager arena() {

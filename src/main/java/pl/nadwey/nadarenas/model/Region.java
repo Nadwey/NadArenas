@@ -14,11 +14,6 @@ public class Region {
         this.maxPosition = maxPosition;
     }
 
-    public Region() {
-        this.minPosition = new Position();
-        this.maxPosition = new Position();
-    }
-
     public boolean overlaps(Region region) {
         return ((getMinPosition().x() <= region.getMinPosition().x() && region.getMinPosition().x() <= getMaxPosition().x()) || (region.getMinPosition().x() <= getMinPosition().x() && getMinPosition().x() <= region.getMaxPosition().x())) &&
                 ((getMinPosition().y() <= region.getMinPosition().y() && region.getMinPosition().y() <= getMaxPosition().y()) || (region.getMinPosition().y() <= getMinPosition().y() && getMinPosition().y() <= region.getMaxPosition().y())) &&
