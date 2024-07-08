@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Documents.GitHub.NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Documents.GitHub.NadArenas.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHub.NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHub.NadArenas.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/NadArenas.api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api/NadArenas.api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/NadArenas.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/NadArenas.common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/NadArenas.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin/NadArenas.plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin/NadArenas.plugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pl.nadwey.NadArenas.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pl.nadwey.NadArenas.main.iml" />
     </modules>
   </component>

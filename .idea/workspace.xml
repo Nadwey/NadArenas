@@ -5,16 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Documents.GitHub.NadArenas.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Documents.GitHub.NadArenas.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/NadArenas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/NadArenas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandArena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandArena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandSpawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandSpawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/NadArenasConversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/NadArenasConversation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/Region.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/Region.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/NadArenas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/Reloadable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/CommandHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/argument/ArenaRecordArgument.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/argument/MaterialArgument.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandArena.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandArenaRestorer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandArenas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandReload.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/command/CommandSpawn.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/handler/NadArenasInvalidUsageHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/command/handler/NadArenasMissingPermissionsHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/configuration/MainConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/CreateArenaConversation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/conversation/NadArenasConversation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/gui/teleport/TeleportItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/gui/teleport/TeleportTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/gui/teleport/TeleportWindow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/lang/LangManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/Position.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/Region.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/Arena.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/model/arena/ArenaStorageImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/restorer/ArenaRestorer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/Storage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/StorageType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/implementation/StorageImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/implementation/sql/SqlStorage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/implementation/sql/connection/ConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/implementation/sql/connection/file/FlatfileConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/storage/implementation/sql/connection/file/SqliteConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/nadwey/nadarenas/utility/AdventureUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__Create_NadArenas_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/en.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +87,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -77,11 +115,13 @@
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.NadArenas [flywayMigrate].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.NadArenas [jooqCodegen].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.NadArenas [plugin:build].executor&quot;: &quot;Run&quot;,
     &quot;OpenRewrite.Faces2xMigrationToJakarta4x.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: &quot;21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Nadwey/Documents/GitHub/NadArenas&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -89,9 +129,9 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -100,11 +140,19 @@
       &quot;sqlite&quot;,
       &quot;mariadb&quot;,
       &quot;mysql&quot;
+    ],
+    &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
+      &quot;21=C:/Program Files/Java/jdk-21&quot;
     ]
   }
 }</component>
-  <component name="RunManager" selected="Gradle.ArenaManager [build]">
-    <configuration name="ArenaManager [build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nadwey\Documents\GitHub\NadArenas\plugin" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.NadArenas [plugin:build]">
+    <configuration name="NadArenas [plugin:build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -115,7 +163,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
+            <option value="plugin:build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -132,7 +180,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Gradle.ArenaManager [build]" />
+      <item itemvalue="Gradle.NadArenas [plugin:build]" />
       <item itemvalue="OpenRewrite.Faces2xMigrationToJakarta4x" />
     </list>
     <recent_temporary>
@@ -206,7 +254,17 @@
       <workItem from="1716135525058" duration="3000" />
       <workItem from="1720209777641" duration="3101000" />
       <workItem from="1720271962144" duration="7472000" />
-      <workItem from="1720286195234" duration="15892000" />
+      <workItem from="1720286195234" duration="18244000" />
+      <workItem from="1720310867105" duration="2278000" />
+      <workItem from="1720313304132" duration="344000" />
+      <workItem from="1720340867205" duration="6710000" />
+      <workItem from="1720353692232" duration="6000" />
+      <workItem from="1720373483182" duration="44000" />
+      <workItem from="1720373621085" duration="2633000" />
+      <workItem from="1720384419069" duration="647000" />
+      <workItem from="1720385283164" duration="296000" />
+      <workItem from="1720389170302" duration="3935000" />
+      <workItem from="1720395605852" duration="2242000" />
     </task>
     <servers />
   </component>
