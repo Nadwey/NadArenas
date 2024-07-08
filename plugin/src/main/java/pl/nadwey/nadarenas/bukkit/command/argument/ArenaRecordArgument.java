@@ -23,9 +23,9 @@ public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> 
     @Override
     protected ParseResult<Arena> parse(Invocation<CommandSender> invocation, Argument<Arena> context, String argument) {
         try {
-            if (!plugin.getStorageManager().getImplementation().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
+            //if (!plugin.getStorage().getImplementation().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
 
-            return ParseResult.success(this.plugin.getStorageManager().getImplementation().getArenaByName(argument));
+            return ParseResult.success(this.plugin.getStorage().getImplementation().getArenaByName(argument));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,7 +35,7 @@ public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> 
     @Override
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Arena> argument, SuggestionContext context) {
         try {
-            List<Arena> arenas = plugin.getStorageManager().getImplementation().getAllArenas();
+            List<Arena> arenas = plugin.getStorage().getImplementation().getAllArenas();
 
             return SuggestionResult.of(arenas.stream().map(Arena::getName).toList());
         } catch (SQLException e) {

@@ -7,8 +7,6 @@ import dev.rollczi.litecommands.permission.MissingPermissionsHandler;
 import org.bukkit.command.CommandSender;
 import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 
-import java.util.Map;
-
 public class NadArenasMissingPermissionsHandler implements MissingPermissionsHandler<CommandSender> {
     private final BukkitNadArenasPlugin plugin;
 

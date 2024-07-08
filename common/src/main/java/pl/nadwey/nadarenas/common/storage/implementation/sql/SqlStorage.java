@@ -3,8 +3,8 @@ package pl.nadwey.nadarenas.common.storage.implementation.sql;
 import lombok.Getter;
 import org.apache.commons.text.StringSubstitutor;
 import org.flywaydb.core.Flyway;
+import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.api.model.arena.Arena;
-import pl.nadwey.nadarenas.common.plugin.NadArenasPlugin;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.ConnectionFactory;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SqlStorage implements StorageImplementation {
-    private static final String TABLE_PREFIX = "nadarenas_";
+    private final String tablePrefix;
 
     public static final String ARENA_INSERT = "INSERT INTO ${table_prefix}arenas(name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String ARENA_SELECT = "SELECT id, name, enable_restorer, world, min_x, min_y, min_z, max_x, max_y, max_z, restorer_blocks_per_tick, display_name, description, item FROM ${table_prefix}arenas WHERE name = ?";
@@ -28,19 +28,16 @@ public class SqlStorage implements StorageImplementation {
     public static final String ARENA_DELETE = "DELETE FROM ${table_prefix}arenas WHERE id = ?";
 
     @Getter
-    private final NadArenasPlugin plugin;
+    private final INadArenasPlugin plugin;
 
     @Getter
     private final ConnectionFactory connectionFactory;
 
-    public SqlStorage(NadArenasPlugin plugin, ConnectionFactory connectionFactory) {
+    public SqlStorage(INadArenasPlugin plugin, ConnectionFactory connectionFactory) {
         this.plugin = plugin;
         this.connectionFactory = connectionFactory;
-    }
 
-    @Override
-    public String getImplementationName() {
-        return "";
+        tablePrefix = plugin.getConfigManager().getStorageConfig().getTablePrefix();
     }
 
     @Override
@@ -56,9 +53,9 @@ public class SqlStorage implements StorageImplementation {
                 .baselineOnMigrate(true)
                 .dataSource(connectionFactory.getUrl(), "", "")
                 .locations("classpath:db/migration")
-                .table(TABLE_PREFIX + "schema_history")
+                .table(tablePrefix + "schema_history")
                 .placeholders(Map.of(
-                        "table_prefix", TABLE_PREFIX
+                        "table_prefix", tablePrefix
                 ))
                 .load();
 
@@ -76,7 +73,7 @@ public class SqlStorage implements StorageImplementation {
 
     private String prepareQueryString(String string) {
         return StringSubstitutor.replace(string, Map.of(
-                "table_prefix", TABLE_PREFIX
+                "table_prefix", tablePrefix
         ));
     }
 
@@ -144,11 +141,6 @@ public class SqlStorage implements StorageImplementation {
         if (!rs.next()) return null;
 
         return getArenaFromResultSet(rs);
-    }
-
-    @Override
-    public boolean arenaExists(String name) throws SQLException {
-        return getArenaByName(name) != null;
     }
 
     @Override

@@ -1,28 +1,24 @@
 package pl.nadwey.nadarenas.common.storage;
 
-import pl.nadwey.nadarenas.common.plugin.NadArenasPlugin;
-import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.file.SqliteConnectionFactory;
+import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.SqlStorage;
+import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.file.SqliteConnectionFactory;
 
 import java.util.Set;
 
 public class StorageFactory {
-    private final NadArenasPlugin plugin;
+    private final INadArenasPlugin plugin;
 
-    public StorageFactory(NadArenasPlugin plugin) {
+    public StorageFactory(INadArenasPlugin plugin) {
         this.plugin = plugin;
-    }
-
-    public Set<StorageType> getRequiredTypes() {
-        return Set.of(StorageType.SQLITE); // TODO
     }
 
     public Storage getInstance() {
         Storage storage;
-        StorageType type = StorageType.SQLITE; // TODO
+        StorageType type = plugin.getConfigManager().getStorageConfig().getStorageMethod();
 
-        plugin.getBootstrap().getLogger().info("Loading storage provider... [" + type.name() + "]");
+        plugin.getLogger().info("Loading storage provider... [" + type.toString() + "]");
         storage = new Storage(plugin, createNewImplementation(type));
 
         storage.init();
@@ -34,7 +30,7 @@ public class StorageFactory {
             case SQLITE:
                 return new SqlStorage(
                         plugin,
-                        new SqliteConnectionFactory(plugin.getBootstrap().getDataDirectory().resolve("nadarenas.db"))
+                        new SqliteConnectionFactory(plugin.getDataDir().resolve("nadarenas.db"))
                 );
             default:
                 throw new RuntimeException("Unknown storage method: " + method);

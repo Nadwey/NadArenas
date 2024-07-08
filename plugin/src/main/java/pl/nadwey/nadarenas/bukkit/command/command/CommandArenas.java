@@ -39,7 +39,7 @@ public class CommandArenas extends CommandBase {
 
         gui.setBackground(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE));
 
-        List<Arena> arenas = getPlugin().getStorageManager().getImplementation().getAllArenas();
+        List<Arena> arenas = getPlugin().getStorage().getImplementation().getAllArenas();
 
         for (int i = 0; i < arenas.size(); i++) {
             Arena arena = arenas.get(i);

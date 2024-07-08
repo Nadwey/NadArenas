@@ -1,6 +1,6 @@
 package pl.nadwey.nadarenas.common.storage.implementation.sql.connection.file;
 
-import pl.nadwey.nadarenas.common.plugin.NadArenasPlugin;
+import pl.nadwey.nadarenas.common.INadArenasPlugin;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -15,17 +15,12 @@ public class SqliteConnectionFactory extends FlatfileConnectionFactory {
     }
 
     @Override
-    public String getImplementationName() {
-        return "SQLite";
-    }
-
-    @Override
     public String getUrl() {
         return "jdbc:sqlite:" + getFile().toString();
     }
 
     @Override
-    public void init(NadArenasPlugin plugin) {
+    public void init(INadArenasPlugin plugin) {
         try {
             connection = DriverManager.getConnection(getUrl());
         } catch (SQLException e) {
@@ -39,7 +34,7 @@ public class SqliteConnectionFactory extends FlatfileConnectionFactory {
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         return connection;
     }
 }

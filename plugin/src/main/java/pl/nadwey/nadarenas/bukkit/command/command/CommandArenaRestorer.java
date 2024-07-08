@@ -50,7 +50,7 @@ public class CommandArenaRestorer extends CommandBase {
             return;
         }
 
-        getPlugin().getStorageManager().getImplementation().setArenaRestorerEnabled(arena.getId(), enabled);
+        getPlugin().getStorage().getImplementation().setArenaRestorerEnabled(arena.getId(), enabled);
 
         sender.sendMessage("restorer enabled: " + enabled);
     }
@@ -58,7 +58,7 @@ public class CommandArenaRestorer extends CommandBase {
     @Execute(name = "setBlocksPerTick")
     @Permission("nadarenas.command.nadarenas.arena.restorer.setblockspertick")
     public void arenaRestorerSetBlocksPerTick(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("blocksPerTick") Integer blocksPerTick) throws SQLException {
-        getPlugin().getStorageManager().getImplementation().setArenaRestorerBlocksPerTick(arena.getId(), blocksPerTick);
+        getPlugin().getStorage().getImplementation().setArenaRestorerBlocksPerTick(arena.getId(), blocksPerTick);
 
         sender.sendMessage("restorer blocks per tick: " + blocksPerTick);
     }

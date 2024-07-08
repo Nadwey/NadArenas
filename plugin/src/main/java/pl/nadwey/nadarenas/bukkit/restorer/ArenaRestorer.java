@@ -42,7 +42,7 @@ public class ArenaRestorer {
         private void processLine(String line) {
             String[] parts = line.split(" ");
             if (parts.length != 4) {
-                plugin.getBootstrap().getLogger().warn("ArenaManager: invalid arena data line: " + line);
+                plugin.getLogger().warning("ArenaManager: invalid arena data line: " + line);
                 return;
             }
 
@@ -54,7 +54,7 @@ public class ArenaRestorer {
             Material material = Material.matchMaterial(parts[3]);
 
             if (material == null) {
-                plugin.getBootstrap().getLogger().warn("ArenaManager: null block material: " + line);
+                plugin.getLogger().warning("ArenaManager: null block material: " + line);
                 return;
             }
 
@@ -67,7 +67,7 @@ public class ArenaRestorer {
          */
         public void finish() {
             if (hasFinished) {
-                plugin.getBootstrap().getLogger().warn("ArenaManager: LoadTask#finish called after finishing");
+                plugin.getLogger().warning("ArenaManager: LoadTask#finish called after finishing");
                 return;
             }
 
@@ -86,7 +86,7 @@ public class ArenaRestorer {
 
         public void run() {
             if (hasFinished) {
-                plugin.getBootstrap().getLogger().warn("ArenaManager: LoadTask#run called after finishing");
+                plugin.getLogger().warning("ArenaManager: LoadTask#run called after finishing");
                 return;
             }
 
@@ -110,10 +110,21 @@ public class ArenaRestorer {
     public ArenaRestorer(BukkitNadArenasPlugin plugin) {
         this.plugin = plugin;
         this.loadTasks = new ConcurrentHashMap<>();
+
+        plugin.getLogger().info("ArenaManager: Enabling...");
+
+        bukkitTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                loadTasks.values().forEach(LoadTask::run);
+
+                loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     private File getArenaFile(String arena) {
-        return plugin.getBootstrap().getDataDirectory().resolve("arenas/" + arena).toFile();
+        return plugin.getDataDir().resolve("arenas/" + arena).toFile();
     }
 
     private File getArenaFile(Arena arena) {
@@ -121,7 +132,7 @@ public class ArenaRestorer {
     }
 
     public void loadArena(Arena arena, int blocksAtOnce) throws FileNotFoundException {
-        plugin.getBootstrap().getLogger().info("ArenaManager: loading arena " + arena.getName());
+        plugin.getLogger().info("ArenaManager: loading arena " + arena.getName());
 
         if (loadTasks.containsKey(arena.getName())) {
             throw new IllegalStateException("ArenaManager: Arena " + arena.getName() + " is already being loaded");
@@ -155,26 +166,13 @@ public class ArenaRestorer {
 
     public void removeArena(String arena) {
         if (!getArenaFile(arena).delete()) {
-            plugin.getBootstrap().getLogger().warn("ArenaManager: Could not delete the arena file of " + arena);
+            plugin.getLogger().warning("ArenaManager: Could not delete the arena file of " + arena);
         }
-    }
-
-    public void onEnable() {
-        plugin.getBootstrap().getLogger().info("ArenaManager: Enabling...");
-
-        bukkitTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                loadTasks.values().forEach(LoadTask::run);
-
-                loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
-            }
-        }.runTaskTimer(plugin.getLoader(), 0, 1);
     }
 
     public void onDisable() {
         if (isLoading())
-            plugin.getBootstrap().getLogger().warn("ArenaManager: onDisable called during loading arenas, finishing loading every arena, this may take a while...\n(THIS IS NOT A BUG)");
+            plugin.getLogger().warning("ArenaManager: onDisable called during loading arenas, finishing loading every arena, this may take a while...\n(THIS IS NOT A BUG)");
 
         if (bukkitTask != null) {
             bukkitTask.cancel();
@@ -184,7 +182,7 @@ public class ArenaRestorer {
         loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
 
         if (!loadTasks.isEmpty()) {
-            plugin.getBootstrap().getLogger().severe("ArenaManager: Some arenas failed to finish when disabling ArenaManager");
+            plugin.getLogger().severe("ArenaManager: Some arenas failed to finish when disabling ArenaManager");
         }
     }
 

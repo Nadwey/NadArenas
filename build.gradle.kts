@@ -22,6 +22,13 @@ subprojects {
 
     repositories {
         mavenCentral()
+
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://oss.sonatype.org/content/groups/public/")
+        maven("https://repo.xenondevs.xyz/releases")
+        maven("https://repo.panda-lang.org/releases")
+        maven("https://maven.enginehub.org/repo/")
+        maven("https://storehouse.okaeri.eu/repository/maven-public/")
     }
 
     dependencies {

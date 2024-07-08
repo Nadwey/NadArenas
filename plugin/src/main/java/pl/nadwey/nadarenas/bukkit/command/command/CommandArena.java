@@ -15,7 +15,6 @@ import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 import pl.nadwey.nadarenas.bukkit.utility.AdventureUtils;
 
 import java.sql.SQLException;
-import java.util.Map;
 
 @Command(name = "nadarenas arena", aliases = {"nda arena"})
 @Permission("nadarenas.command.arena")
@@ -38,7 +37,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "list")
     @Permission("nadarenas.command.nadarenas.arena.list")
     public void arenaList(@Context CommandSender sender) throws SQLException {
-        var arenas = getPlugin().getStorageManager().getImplementation().getAllArenas().iterator();
+        var arenas = getPlugin().getStorage().getImplementation().getAllArenas().iterator();
 
         Component textComponent = Component.text("arenas:").appendNewline();
 
@@ -60,7 +59,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setDisplayName")
     @Permission("nadarenas.command.nadarenas.arena.setdisplayname")
     public void arenaSetDisplayName(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("displayName") String displayName) throws SQLException {
-        getPlugin().getStorageManager().getImplementation().setArenaDisplayName(arena.getId(), displayName);
+        getPlugin().getStorage().getImplementation().setArenaDisplayName(arena.getId(), displayName);
 
         sender.sendMessage("set arena's display name to " + displayName);
     }
@@ -68,7 +67,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "remove")
     @Permission("nadarenas.command.nadarenas.arena.remove")
     public void arenaRemove(@Context CommandSender sender, @Arg("arena") Arena arena) throws SQLException {
-        getPlugin().getStorageManager().getImplementation().removeArena(arena.getId());
+        getPlugin().getStorage().getImplementation().removeArena(arena.getId());
         getPlugin().getArenaRestorer().removeArena(arena.getName());
 
         sender.sendMessage("successfully removed");
@@ -77,7 +76,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setDescription")
     @Permission("nadarenas.command.nadarenas.arena.setdescription")
     public void arenaSetDescription(@Context CommandSender sender, @Arg("arena") Arena arena, @Join("description") String description) throws SQLException {
-        getPlugin().getStorageManager().getImplementation().setArenaDescription(arena.getId(), description);
+        getPlugin().getStorage().getImplementation().setArenaDescription(arena.getId(), description);
 
         sender.sendMessage("set arena's description to " + description);
     }
@@ -85,7 +84,7 @@ public class CommandArena extends CommandBase {
     @Execute(name = "setItem")
     @Permission("nadarenas.command.nadarenas.arena.setitem")
     public void arenaSetItem(@Context CommandSender sender, @Arg("arena") Arena arena, @Arg("item") Material material) throws SQLException {
-        getPlugin().getStorageManager().getImplementation().setArenaItem(arena.getId(), material.toString());
+        getPlugin().getStorage().getImplementation().setArenaItem(arena.getId(), material.toString());
 
         sender.sendMessage("set arena's item to " + material.toString());
     }

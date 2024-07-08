@@ -1,26 +1,26 @@
 package pl.nadwey.nadarenas.common.storage;
 
 import lombok.Getter;
-import pl.nadwey.nadarenas.common.plugin.NadArenasPlugin;
+import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 
 public class Storage {
-    private final NadArenasPlugin plugin;
+    private final INadArenasPlugin plugin;
     @Getter
     private final StorageImplementation implementation;
 
-    public Storage(NadArenasPlugin plugin, StorageImplementation implementation) {
+    public Storage(INadArenasPlugin plugin, StorageImplementation implementation) {
         this.plugin = plugin;
         this.implementation = implementation;
     }
 
     public void init() {
-        plugin.getBootstrap().getLogger().info("Enabling storage and performing migrations...");
+        plugin.getLogger().info("Enabling storage and performing migrations...");
         implementation.init();
     }
 
     public void shutdown() {
-        plugin.getBootstrap().getLogger().info("Shutting down storage...");
+        plugin.getLogger().info("Shutting down storage...");
         implementation.shutdown();
     }
 }

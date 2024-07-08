@@ -21,8 +21,7 @@ public class CommandReload extends CommandBase{
             return;
         }
 
-        getPlugin().onDisable();
-        getPlugin().onEnable();
+        getPlugin().reload();
 
         sender.sendMessage("reloaded");
     }

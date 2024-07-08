@@ -16,15 +16,10 @@ import pl.nadwey.nadarenas.bukkit.command.handler.NadArenasInvalidUsageHandler;
 import pl.nadwey.nadarenas.bukkit.command.handler.NadArenasMissingPermissionsHandler;
 
 public class CommandHandler {
-    private final BukkitNadArenasPlugin plugin;
-    private LiteCommands<CommandSender> liteCommands;
+    private final LiteCommands<CommandSender> liteCommands;
 
     public CommandHandler(BukkitNadArenasPlugin plugin) {
-        this.plugin = plugin;
-    }
-
-    public void onEnable() {
-        liteCommands = LiteBukkitFactory.builder("nadarenas", plugin.getLoader())
+        liteCommands = LiteBukkitFactory.builder("nadarenas", plugin)
                 .commands(
                         new CommandArenas(plugin),
                         new CommandArena(plugin),

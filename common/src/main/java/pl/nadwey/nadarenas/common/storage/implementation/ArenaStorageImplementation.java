@@ -10,8 +10,6 @@ public interface ArenaStorageImplementation {
 
     Arena getArenaByName(String name) throws SQLException;
 
-    boolean arenaExists(String name) throws SQLException;
-
     List<Arena> getAllArenas() throws SQLException;
 
     void setArenaRestorerBlocksPerTick(Integer arenaId, Integer restorerBlocksPerTick) throws SQLException;

@@ -1,11 +1,9 @@
 package pl.nadwey.nadarenas.common.storage.implementation;
 
-import pl.nadwey.nadarenas.common.plugin.NadArenasPlugin;
+import pl.nadwey.nadarenas.common.INadArenasPlugin;
 
 public interface StorageImplementation extends ArenaStorageImplementation {
-    NadArenasPlugin getPlugin();
-
-    String getImplementationName();
+    INadArenasPlugin getPlugin();
 
     void init();
 

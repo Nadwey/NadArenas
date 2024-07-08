@@ -10,8 +10,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 
-import java.util.Map;
-
 public class NadArenasInvalidUsageHandler implements InvalidUsageHandler<CommandSender> {
     private final BukkitNadArenasPlugin plugin;
 
