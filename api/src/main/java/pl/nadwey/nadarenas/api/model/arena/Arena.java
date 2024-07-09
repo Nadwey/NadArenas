@@ -44,19 +44,6 @@ public class Arena {
         this(name, world, enableRestorer, region.getMinPosition(), region.getMaxPosition());
     }
 
-    public Arena(Arena arena) {
-        this.id = arena.id;
-        this.name = arena.name;
-        this.world = arena.world;
-        this.enableRestorer = arena.enableRestorer;
-        this.minPos = arena.minPos;
-        this.maxPos = arena.maxPos;
-        this.restorerBlocksPerTick = arena.restorerBlocksPerTick;
-        this.displayName = arena.displayName;
-        this.description = arena.description;
-        this.item = arena.item;
-    }
-
     public Region getRegion() {
         return new Region(minPos, maxPos);
     }
