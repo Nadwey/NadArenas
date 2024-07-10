@@ -1,14 +1,9 @@
 package pl.nadwey.nadarenas.bukkit;
 
 import lombok.Getter;
-import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.bukkit.command.CommandHandler;
 import pl.nadwey.nadarenas.bukkit.restorer.ArenaRestorer;
-import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.common.NadArenasPlugin;
-import pl.nadwey.nadarenas.common.config.ConfigManager;
-import pl.nadwey.nadarenas.common.storage.Storage;
-import pl.nadwey.nadarenas.common.storage.StorageFactory;
 
 import java.nio.file.Path;
 import java.util.logging.Logger;

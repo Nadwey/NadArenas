@@ -5,8 +5,6 @@ import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.SqlStorage;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.file.SqliteConnectionFactory;
 
-import java.util.Set;
-
 public class StorageFactory {
     private final INadArenasPlugin plugin;
 
