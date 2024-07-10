@@ -5,7 +5,7 @@ plugins {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
 
-    implementation("xyz.xenondevs.invui:invui:1.32")
+    implementation("xyz.xenondevs.invui:invui:1.33")
     implementation("dev.rollczi:litecommands-bukkit:3.4.2")
     implementation("org.apache.commons:commons-text:1.12.0")
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.3")
