@@ -1,6 +1,6 @@
 name: NadArenas
 version: '${version}'
-main: pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin
+main: pl.nadwey.nadarenas.bukkit.BukkitNadArenasPluginLoader
 api-version: '1.20'
 depend: [WorldEdit]
 

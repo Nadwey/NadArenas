@@ -120,7 +120,7 @@ public class ArenaRestorer {
 
                 loadTasks.entrySet().removeIf(task -> task.getValue().hasFinished);
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin.getLoader(), 0, 1);
     }
 
     private File getArenaFile(String arena) {

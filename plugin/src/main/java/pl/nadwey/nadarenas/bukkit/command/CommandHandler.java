@@ -19,7 +19,7 @@ public class CommandHandler {
     private final LiteCommands<CommandSender> liteCommands;
 
     public CommandHandler(BukkitNadArenasPlugin plugin) {
-        liteCommands = LiteBukkitFactory.builder("nadarenas", plugin)
+        liteCommands = LiteBukkitFactory.builder("nadarenas", plugin.getLoader())
                 .commands(
                         new CommandArenas(plugin),
                         new CommandArena(plugin),

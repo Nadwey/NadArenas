@@ -5,44 +5,42 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.nadwey.nadarenas.bukkit.command.CommandHandler;
 import pl.nadwey.nadarenas.bukkit.restorer.ArenaRestorer;
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
+import pl.nadwey.nadarenas.common.NadArenasPlugin;
 import pl.nadwey.nadarenas.common.config.ConfigManager;
 import pl.nadwey.nadarenas.common.storage.Storage;
 import pl.nadwey.nadarenas.common.storage.StorageFactory;
 
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
-public final class BukkitNadArenasPlugin extends JavaPlugin implements INadArenasPlugin {
+public final class BukkitNadArenasPlugin extends NadArenasPlugin {
     @Getter
-    private ConfigManager configManager;
-    @Getter
-    private Storage storage;
+    private final BukkitNadArenasPluginLoader loader;
     @Getter
     private ArenaRestorer arenaRestorer;
     private CommandHandler commandHandler;
 
-    @Override
-    public void onLoad() {
-        getDataFolder().mkdir();
-        getDataFolder().toPath().resolve("arenas").toFile().mkdir();
+    public BukkitNadArenasPlugin(BukkitNadArenasPluginLoader loader) {
+        this.loader = loader;
     }
 
-    @Override
+    public void onLoad() {
+
+    }
+
     public void onEnable() {
-        configManager = new ConfigManager(this);
-        storage = new StorageFactory(this).getInstance();
+        enable();
+
         arenaRestorer = new ArenaRestorer(this);
         commandHandler = new CommandHandler(this);
     }
 
-    @Override
     public void onDisable() {
         commandHandler.onDisable();
 
         arenaRestorer.onDisable();
 
-        storage.shutdown();
-
-        configManager.onDisable();
+        disable();
     }
 
     public void reload() {
@@ -51,7 +49,12 @@ public final class BukkitNadArenasPlugin extends JavaPlugin implements INadArena
     }
 
     @Override
+    public Logger getLogger() {
+        return loader.getLogger();
+    }
+
+    @Override
     public Path getDataDir() {
-        return getDataFolder().toPath();
+        return loader.getDataFolder().toPath();
     }
 }

@@ -1,11 +1,9 @@
 package pl.nadwey.nadarenas.common.model.arena;
 
-import lombok.Getter;
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.api.math.Region;
 import pl.nadwey.nadarenas.api.model.arena.Arena;
 import pl.nadwey.nadarenas.api.model.arena.IArenaManager;
-import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 
 import java.sql.SQLException;
 import java.util.List;
