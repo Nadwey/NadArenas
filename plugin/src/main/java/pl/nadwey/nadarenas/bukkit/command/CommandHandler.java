@@ -8,8 +8,6 @@ import pl.nadwey.nadarenas.api.model.arena.Arena;
 import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 import pl.nadwey.nadarenas.bukkit.command.argument.ArenaRecordArgument;
 import pl.nadwey.nadarenas.bukkit.command.argument.MaterialArgument;
-import pl.nadwey.nadarenas.bukkit.command.command.CommandArena;
-import pl.nadwey.nadarenas.bukkit.command.command.CommandArenaRestorer;
 import pl.nadwey.nadarenas.bukkit.command.command.CommandArenas;
 import pl.nadwey.nadarenas.bukkit.command.command.CommandReload;
 import pl.nadwey.nadarenas.bukkit.command.handler.NadArenasInvalidUsageHandler;
@@ -22,8 +20,6 @@ public class CommandHandler {
         liteCommands = LiteBukkitFactory.builder("nadarenas", plugin.getLoader())
                 .commands(
                         new CommandArenas(plugin),
-                        new CommandArena(plugin),
-                        new CommandArenaRestorer(plugin),
                         new CommandReload(plugin)
                 )
                 .argument(Arena.class, new ArenaRecordArgument(plugin))

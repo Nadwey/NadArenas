@@ -16,11 +16,6 @@ public class CommandReload extends CommandBase{
 
     @Execute
     public void arena(@Context CommandSender sender) {
-        if (getPlugin().getArenaRestorer().isLoading()) {
-            sender.sendMessage("arena restorer is working...");
-            return;
-        }
-
         getPlugin().reload();
 
         sender.sendMessage("reloaded");
