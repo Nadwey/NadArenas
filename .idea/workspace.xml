@@ -6,16 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/BukkitNadArenasPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/BukkitNadArenasPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/argument/ArenaRecordArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/argument/ArenaRecordArgument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/command/CommandArena.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/command/CommandArenaRestorer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/command/CommandReload.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/command/CommandReload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/restorer/ArenaRestorer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/teleport/TeleportTarget.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/teleport/TeleportWindow.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +83,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
@@ -115,6 +105,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nadwey\Documents\GitHub\NadArenas\common\src\main\resources\db" />
+      <recent name="C:\Users\Nadwey\Documents\GitHub\NadArenas\common\src\main\resources" />
       <recent name="C:\Users\Nadwey\Documents\GitHub\NadArenas\plugin" />
     </key>
   </component>
@@ -260,7 +252,7 @@
       <workItem from="1720480908286" duration="7000" />
       <workItem from="1720514994896" duration="6976000" />
       <workItem from="1720604529336" duration="13926000" />
-      <workItem from="1720634613875" duration="15870000" />
+      <workItem from="1720634613875" duration="16433000" />
     </task>
     <servers />
   </component>

@@ -43,7 +43,7 @@ Check out the [Developer Guide](https://nadarenas.nadwey.pl/developers/getting-s
 If you like this project, consider supporting me!
 
 <a href="https://ko-fi.com/Nadwey">
-    <img alt="kofi" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-plural_vector.svg" />
+    <img alt="kofi" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg" />
 </a>
 <a href="https://buymeacoffee.com/nadwey">
     <img alt="buymeacoffee" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/buymeacoffee-singular_vector.svg" />
