@@ -21,6 +21,6 @@ jobs:
           ./gradlew build
       - uses: actions/upload-artifact@v4
         with:
-          name: nadarenas
+          name: nadarenas-plugin
           path: |
-            build/libs/*.jar
+            plugin/build/libs/*.jar
