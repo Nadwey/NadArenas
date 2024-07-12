@@ -11,45 +11,6 @@ permissions:
   nadarenas.command.nadarenas:
     description: "Access to the '/nadarenas' command."
     default: op
-  nadarenas.command.nadarenas.arena:
-    description: "Access to the '/nadarenas arena' command."
-    default: op
-  nadarenas.command.nadarenas.arena.create:
-    description: "Access to the '/nadarenas arena create' command."
-    default: op
-  nadarenas.command.nadarenas.arena.list:
-    description: "Access to the '/nadarenas arena list' command."
-    default: op
-  nadarenas.command.nadarenas.arena.setdisplayname:
-    description: "Access to the '/nadarenas arena setDisplayName' command."
-    default: op
-  nadarenas.command.nadarenas.arena.remove:
-    description: "Access to the '/nadarenas arena remove' command."
-    default: op
-  nadarenas.command.nadarenas.arena.setdescription:
-    description: "Access to the '/nadarenas arena setDescription' command."
-    default: op
-  nadarenas.command.nadarenas.arena.setitem:
-    description: "Access to the '/nadarenas arena setItem' command."
-    default: op
-  nadarenas.command.nadarenas.arena.restorer:
-    description: "Access to the '/nadarenas arena restorer' command."
-    default: op
-  nadarenas.command.nadarenas.arena.restorer.load:
-    description: "Access to the '/nadarenas arena restorer load' command."
-    default: op
-  nadarenas.command.nadarenas.arena.restorer.setenabled:
-    description: "Access to the '/nadarenas arena restorer setEnabled' command."
-    default: op
-  nadarenas.command.nadarenas.arena.restorer.getblockspertick:
-    description: "Access to the '/nadarenas arena restorer getBlocksPerTick' command."
-    default: op
-  nadarenas.command.nadarenas.arena.restorer.setblockspertick:
-    description: "Access to the '/nadarenas arena restorer setBlocksPerTick' command."
-    default: op
-  nadarenas.command.spawn:
-    description: "Access to the '/nadarenas spawn' command."
-    default: op
   nadarenas.command.reload:
     description: "Access to the '/nadarenas reload' command."
     default: op

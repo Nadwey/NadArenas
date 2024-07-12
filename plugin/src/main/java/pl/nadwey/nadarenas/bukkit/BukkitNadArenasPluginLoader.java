@@ -7,9 +7,6 @@ public class BukkitNadArenasPluginLoader extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        getDataFolder().mkdir();
-        getDataFolder().toPath().resolve("arenas").toFile().mkdir();
-
         plugin = new BukkitNadArenasPlugin(this);
     }
 

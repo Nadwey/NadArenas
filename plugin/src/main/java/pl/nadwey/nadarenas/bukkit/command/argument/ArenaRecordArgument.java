@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import pl.nadwey.nadarenas.api.model.arena.Arena;
 import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> {

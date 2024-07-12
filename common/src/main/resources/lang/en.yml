@@ -1,39 +1,5 @@
-conversation-cancel: "<gray>Enter <aqua>'${escapeSequence}'</aqua> to exit the conversation.</gray>"
-conversation-cancelled: "<gray>[<i>cancelled</i>]</gray>"
-conversation-player-only: "<red>Only players can start this conversation.</red>"
+storage-enabling: "Enabling storage and performing migrations..."
+storage-disabling: "Disabling storage..."
+storage-loading-provider: "Loading storage provider ${provider}..."
 
-no-permissions-to-use-command: "<red>You don't have permission to use this command (<gold>${permission}</gold>)!</red>"
-
-invalid-command-usage-single-schematic: "<red>Invalid usage of command:</red><br><gold>${schematic}</gold>"
-invalid-command-usage-multiple-schematics: "<red>Invalid usage of command!</red>"
-
-command-arena-create-enter-name: "<blue>Please enter the arena name.</blue>"
-command-arena-create-invalid-name: "<red>The provided name is invalid.</red>"
-command-arena-create-arena-exists: "<red>An arena with that name already exists.</red>"
-command-arena-create-enable-restorer: "<blue>Do you want to enable arena restorer support for this arena?</blue>"
-command-arena-create-select-area: "<blue>Please select an area using <dark_purple>WorldEdit</dark_purple>.<br>Then type <aqua>'yes'</aqua> to confirm.</blue>"
-command-arena-create-invalid-selection: "<red>The selected area is invalid.</red>"
-command-arena-create-name-null: "<red>Couldn't get the specified name, cancelling.</red>"
-command-arena-create-overlapping: "<red>Can't proceed, the selected area is overlapping with the following arenas:</red>"
-command-arena-create-arena-created: "<gray>[<green><i>Arena created</i></green>]</gray>"
-
-command-arena-list-top: "<blue><b>Arenas:</b></blue>"
-
-command-arena-setdisplayname-successful: "Set ${arena}'s display name to ${displayName}"
-
-command-arena-remove-successful: "Removed ${arena}"
-
-command-arena-setdescription-successful: "Set ${arena}'s description to ${description}"
-
-command-arena-setitem-successful: "Set ${arena}'s item to ${item}"
-
-command-arena-load-already-loading: "<red>Arena ${arena} is already loading.</red>"
-command-arena-load-failed-to-load-file: "<red>Failed to load ${arena}'s file.</red>"
-
-command-arena-restorer-getenabled: "<blue>${state}</blue>"
-command-arena-restorer-setenabled-currently-loading: "<red>Can't change enabled state while the arena is loading.</red>"
-command-arena-restorer-setenabled-successful: "<blue>Successfully changed the state to <gray>${state}</gray>.</blue>"
-command-arena-restorer-setblockspertick-successful: "<blue>Successfully changed blocks per tick to <gray>${blocksPerTick}</gray>.</blue>"
-
-command-reload-arena-restorer-warning: "<yellow>You requested a reload during arena restore. Restoring will be finished forcefully, but it may take a while and will temporarily freeze the server.</yellow>"
-command-reload-reload-finished: "NadArenas reloaded!"
+initialized: "NadArenas initialized!"

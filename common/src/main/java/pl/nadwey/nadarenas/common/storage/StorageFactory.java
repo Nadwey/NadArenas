@@ -1,9 +1,12 @@
 package pl.nadwey.nadarenas.common.storage;
 
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
+import pl.nadwey.nadarenas.common.lang.LangMessage;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.SqlStorage;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.file.SqliteConnectionFactory;
+
+import java.util.Map;
 
 public class StorageFactory {
     private final INadArenasPlugin plugin;
@@ -16,7 +19,8 @@ public class StorageFactory {
         Storage storage;
         StorageType type = plugin.getConfigManager().getStorageConfig().getStorageMethod();
 
-        plugin.getLogger().info("Loading storage provider... [" + type.toString() + "]");
+        plugin.getLogger().info(plugin.getLangManager().getMessage(LangMessage.STORAGE_LOADING_PROVIDER, Map.of("provider", type.toString())));
+
         storage = new Storage(plugin, createNewImplementation(type));
 
         storage.init();

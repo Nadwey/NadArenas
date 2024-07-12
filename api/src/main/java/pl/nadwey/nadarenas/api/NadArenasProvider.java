@@ -1,11 +1,11 @@
 package pl.nadwey.nadarenas.api;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class NadArenasProvider {
     private static NadArenas instance = null;
 
-    public static @Nonnull NadArenas get() {
+    public static @NotNull NadArenas get() {
         NadArenas instance = NadArenasProvider.instance;
         if (instance == null) {
             throw new IllegalStateException("NadArenasProvider has not been initialized");

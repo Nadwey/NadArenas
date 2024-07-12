@@ -2,6 +2,7 @@ package pl.nadwey.nadarenas.common.storage;
 
 import lombok.Getter;
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
+import pl.nadwey.nadarenas.common.lang.LangMessage;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 
 public class Storage {
@@ -15,12 +16,12 @@ public class Storage {
     }
 
     public void init() {
-        plugin.getLogger().info("Enabling storage and performing migrations...");
+        plugin.getLogger().info(plugin.getLangManager().getMessage(LangMessage.STORAGE_ENABLING));
         implementation.init();
     }
 
     public void shutdown() {
-        plugin.getLogger().info("Shutting down storage...");
+        plugin.getLogger().info(plugin.getLangManager().getMessage(LangMessage.STORAGE_DISABLING));
         implementation.shutdown();
     }
 }

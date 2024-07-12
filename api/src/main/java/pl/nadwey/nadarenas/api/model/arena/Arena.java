@@ -5,8 +5,8 @@ import lombok.Setter;
 import pl.nadwey.nadarenas.api.math.Position;
 import pl.nadwey.nadarenas.api.math.Region;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
@@ -14,13 +14,13 @@ public class Arena {
     public static final String ARENA_NAME_REGEX = "^[a-zA-z0-9-_]+$";
 
     private @Nullable Integer id;
-    private @Nonnull String name;
+    private @NotNull String name;
 
-    private @Nonnull Boolean enableRestorer;
+    private @NotNull Boolean enableRestorer;
 
-    private @Nonnull String world;
-    private @Nonnull Position minPos;
-    private @Nonnull Position maxPos;
+    private @NotNull String world;
+    private @NotNull Position minPos;
+    private @NotNull Position maxPos;
 
     private @Nullable Integer restorerBlocksPerTick;
 
@@ -28,7 +28,7 @@ public class Arena {
     private @Nullable String description;
     private @Nullable String item;
 
-    public Arena(@Nonnull String name, @Nonnull String world, @Nonnull Boolean enableRestorer, @Nonnull Position minPos, @Nonnull Position maxPos) {
+    public Arena(@NotNull String name, @NotNull String world, @NotNull Boolean enableRestorer, @NotNull Position minPos, @NotNull Position maxPos) {
         this.name = name;
         this.world = world;
         this.enableRestorer = enableRestorer;
@@ -36,11 +36,11 @@ public class Arena {
         this.maxPos = maxPos;
     }
 
-    public Arena(@Nonnull String name, @Nonnull String world, @Nonnull Boolean enableRestorer, Integer minX, Integer minY, Integer minZ, Integer maxX, Integer maxY, Integer maxZ) {
+    public Arena(@NotNull String name, @NotNull String world, @NotNull Boolean enableRestorer, Integer minX, Integer minY, Integer minZ, Integer maxX, Integer maxY, Integer maxZ) {
         this(name, world, enableRestorer, new Position(minX, minY, minZ), new Position(maxX, maxY, maxZ));
     }
 
-    public Arena(@Nonnull String name, @Nonnull String world, @Nonnull Boolean enableRestorer, Region region) {
+    public Arena(@NotNull String name, @NotNull String world, @NotNull Boolean enableRestorer, Region region) {
         this(name, world, enableRestorer, region.getMinPosition(), region.getMaxPosition());
     }
 
