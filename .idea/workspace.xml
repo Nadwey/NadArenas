@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/config/GeneralConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/lang/LangManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/lang/LangManagerException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/lang/LangMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/lang/pl.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/pl/nadwey/nadarenas/api/NadArenasProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/pl/nadwey/nadarenas/api/NadArenasProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/pl/nadwey/nadarenas/api/model/arena/Arena.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/pl/nadwey/nadarenas/api/model/arena/Arena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/INadArenasPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/INadArenasPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/NadArenasPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/NadArenasPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/config/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/config/ConfigManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/storage/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/storage/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/storage/StorageFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/pl/nadwey/nadarenas/common/storage/StorageFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/lang/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/lang/en.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/BukkitNadArenasPluginLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/BukkitNadArenasPluginLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/argument/ArenaRecordArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/pl/nadwey/nadarenas/bukkit/command/argument/ArenaRecordArgument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" afterDir="false" />
-    </list>
+    <list default="true" id="325e5454-b460-4c92-bf99-c4bb5bd72c97" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -280,7 +258,7 @@
       <workItem from="1720685964044" duration="26446000" />
       <workItem from="1720732155434" duration="845000" />
       <workItem from="1720743383770" duration="2300000" />
-      <workItem from="1720775480408" duration="4957000" />
+      <workItem from="1720775480408" duration="5282000" />
     </task>
     <servers />
   </component>
