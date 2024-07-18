@@ -1,16 +1,16 @@
 package pl.nadwey.nadarenas.common.storage.implementation;
 
-import pl.nadwey.nadarenas.api.model.arena.Arena;
+import pl.nadwey.nadarenas.api.model.arena.ArenaRecord;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface ArenaStorageImplementation {
-    void createArena(Arena arena) throws SQLException;
+    void createArena(ArenaRecord arenaRecord) throws SQLException;
 
-    Arena getArenaByName(String name) throws SQLException;
+    ArenaRecord getArenaByName(String name) throws SQLException;
 
-    List<Arena> getAllArenas() throws SQLException;
+    List<ArenaRecord> getAllArenas() throws SQLException;
 
     void setArenaRestorerBlocksPerTick(Integer arenaId, Integer restorerBlocksPerTick) throws SQLException;
 

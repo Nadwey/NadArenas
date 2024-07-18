@@ -3,8 +3,8 @@ package pl.nadwey.nadarenas.common.storage.implementation.sql;
 import lombok.Getter;
 import org.apache.commons.text.StringSubstitutor;
 import org.flywaydb.core.Flyway;
+import pl.nadwey.nadarenas.api.model.arena.ArenaRecord;
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
-import pl.nadwey.nadarenas.api.model.arena.Arena;
 import pl.nadwey.nadarenas.common.storage.implementation.StorageImplementation;
 import pl.nadwey.nadarenas.common.storage.implementation.sql.connection.ConnectionFactory;
 
@@ -77,7 +77,7 @@ public class SqlStorage implements StorageImplementation {
         ));
     }
 
-    private Arena getArenaFromResultSet(ResultSet rs) throws SQLException {
+    private ArenaRecord getArenaFromResultSet(ResultSet rs) throws SQLException {
         Integer id = rs.getInt("id");
         String name = rs.getString("name");
 
@@ -97,40 +97,40 @@ public class SqlStorage implements StorageImplementation {
         Integer restorerBlocksPerTick = rs.getInt("restorer_blocks_per_tick");
 
 
-        Arena arena = new Arena(name, world, enableRestorer, minX, minY, minZ, maxX, maxY, maxZ);
-        arena.setId(id);
-        arena.setRestorerBlocksPerTick(restorerBlocksPerTick);
-        arena.setDisplayName(displayName);
-        arena.setDescription(description);
-        arena.setItem(item);
+        ArenaRecord arenaRecord = new ArenaRecord(name, world, enableRestorer, minX, minY, minZ, maxX, maxY, maxZ);
+        arenaRecord.setId(id);
+        arenaRecord.setRestorerBlocksPerTick(restorerBlocksPerTick);
+        arenaRecord.setDisplayName(displayName);
+        arenaRecord.setDescription(description);
+        arenaRecord.setItem(item);
 
-        return arena;
+        return arenaRecord;
     }
 
     @Override
-    public void createArena(Arena arena) throws SQLException {
+    public void createArena(ArenaRecord arenaRecord) throws SQLException {
         Connection conn = getConnectionFactory().getConnection();
         PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_INSERT));
 
-        ps.setString(1, arena.getName());
-        ps.setBoolean(2, arena.getEnableRestorer());
-        ps.setString(3, arena.getWorld());
-        ps.setInt(4, arena.getMinPos().x());
-        ps.setInt(5, arena.getMinPos().y());
-        ps.setInt(6, arena.getMinPos().z());
-        ps.setInt(7, arena.getMaxPos().x());
-        ps.setInt(8, arena.getMaxPos().y());
-        ps.setInt(9, arena.getMaxPos().z());
-        ps.setInt(10, arena.getRestorerBlocksPerTick() == null ? 250 : arena.getRestorerBlocksPerTick());
-        ps.setString(11, arena.getDisplayName());
-        ps.setString(12, arena.getDescription());
-        ps.setString(13, arena.getItem() != null ? arena.getItem() : null);
+        ps.setString(1, arenaRecord.getName());
+        ps.setBoolean(2, arenaRecord.getEnableRestorer());
+        ps.setString(3, arenaRecord.getWorld());
+        ps.setInt(4, arenaRecord.getMinPos().x());
+        ps.setInt(5, arenaRecord.getMinPos().y());
+        ps.setInt(6, arenaRecord.getMinPos().z());
+        ps.setInt(7, arenaRecord.getMaxPos().x());
+        ps.setInt(8, arenaRecord.getMaxPos().y());
+        ps.setInt(9, arenaRecord.getMaxPos().z());
+        ps.setInt(10, arenaRecord.getRestorerBlocksPerTick() == null ? 250 : arenaRecord.getRestorerBlocksPerTick());
+        ps.setString(11, arenaRecord.getDisplayName());
+        ps.setString(12, arenaRecord.getDescription());
+        ps.setString(13, arenaRecord.getItem() != null ? arenaRecord.getItem() : null);
 
         ps.executeUpdate();
     }
 
     @Override
-    public Arena getArenaByName(String name) throws SQLException {
+    public ArenaRecord getArenaByName(String name) throws SQLException {
         Connection conn = getConnectionFactory().getConnection();
         PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_SELECT));
 
@@ -144,18 +144,18 @@ public class SqlStorage implements StorageImplementation {
     }
 
     @Override
-    public List<Arena> getAllArenas() throws SQLException {
+    public List<ArenaRecord> getAllArenas() throws SQLException {
         Connection conn = getConnectionFactory().getConnection();
         PreparedStatement ps = conn.prepareStatement(prepareQueryString(ARENA_SELECT_ALL));
 
         ResultSet rs = ps.executeQuery();
 
-        List<Arena> arenas = new ArrayList<>();
+        List<ArenaRecord> arenaRecords = new ArrayList<>();
         while (rs.next()) {
-            arenas.add(getArenaFromResultSet(rs));
+            arenaRecords.add(getArenaFromResultSet(rs));
         }
 
-        return arenas;
+        return arenaRecords;
     }
 
     @Override

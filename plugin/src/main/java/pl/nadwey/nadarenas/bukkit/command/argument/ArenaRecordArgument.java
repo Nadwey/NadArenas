@@ -7,12 +7,12 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.command.CommandSender;
-import pl.nadwey.nadarenas.api.model.arena.Arena;
+import pl.nadwey.nadarenas.api.model.arena.ArenaRecord;
 import pl.nadwey.nadarenas.bukkit.BukkitNadArenasPlugin;
 
 import java.util.List;
 
-public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> {
+public class ArenaRecordArgument extends ArgumentResolver<CommandSender, ArenaRecord> {
     private final BukkitNadArenasPlugin plugin;
 
     public ArenaRecordArgument(BukkitNadArenasPlugin plugin) {
@@ -20,17 +20,17 @@ public class ArenaRecordArgument extends ArgumentResolver<CommandSender, Arena> 
     }
 
     @Override
-    protected ParseResult<Arena> parse(Invocation<CommandSender> invocation, Argument<Arena> context, String argument) {
+    protected ParseResult<ArenaRecord> parse(Invocation<CommandSender> invocation, Argument<ArenaRecord> context, String argument) {
         if (!plugin.getApiProvider().getArenaManager().arenaExists(argument)) return ParseResult.failure("Arena " + argument + " does not exist");
 
         return ParseResult.success(this.plugin.getApiProvider().getArenaManager().getArena(argument));
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Arena> argument, SuggestionContext context) {
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<ArenaRecord> argument, SuggestionContext context) {
         // TODO: Cache this
-        List<Arena> arenas = plugin.getApiProvider().getArenaManager().getArenas();
+        List<ArenaRecord> arenaRecords = plugin.getApiProvider().getArenaManager().getArenas();
 
-        return SuggestionResult.of(arenas.stream().map(Arena::getName).toList());
+        return SuggestionResult.of(arenaRecords.stream().map(ArenaRecord::getName).toList());
     }
 }

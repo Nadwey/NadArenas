@@ -1,8 +1,8 @@
 package pl.nadwey.nadarenas.common.model.arena;
 
+import pl.nadwey.nadarenas.api.model.arena.ArenaRecord;
 import pl.nadwey.nadarenas.common.INadArenasPlugin;
 import pl.nadwey.nadarenas.api.math.Region;
-import pl.nadwey.nadarenas.api.model.arena.Arena;
 import pl.nadwey.nadarenas.api.model.arena.IArenaManager;
 
 import java.sql.SQLException;
@@ -17,17 +17,17 @@ public class ArenaManager implements IArenaManager {
 
     @Override
     public void createArena(String name, String world, boolean enableRestorer, Region region) {
-        Arena arena = new Arena(name, world, enableRestorer, region);
+        ArenaRecord arenaRecord = new ArenaRecord(name, world, enableRestorer, region);
 
         try {
-            plugin.getStorage().getImplementation().createArena(arena);
+            plugin.getStorage().getImplementation().createArena(arenaRecord);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Arena getArena(String name) {
+    public ArenaRecord getArena(String name) {
         try {
             return plugin.getStorage().getImplementation().getArenaByName(name);
         } catch (SQLException e) {
@@ -36,7 +36,7 @@ public class ArenaManager implements IArenaManager {
     }
 
     @Override
-    public List<Arena> getArenas() {
+    public List<ArenaRecord> getArenas() {
         try {
             return plugin.getStorage().getImplementation().getAllArenas();
         } catch (SQLException e) {

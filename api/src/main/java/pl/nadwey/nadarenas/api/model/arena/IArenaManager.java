@@ -7,8 +7,8 @@ import java.util.List;
 public interface IArenaManager {
     void createArena(String name, String world, boolean enableRestorer, Region region);
 
-    Arena getArena(String name);
-    List<Arena> getArenas();
+    ArenaRecord getArena(String name);
+    List<ArenaRecord> getArenas();
 
     boolean arenaExists(String name);
 

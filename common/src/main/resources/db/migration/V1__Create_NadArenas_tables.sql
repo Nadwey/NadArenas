@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS "${table_prefix}arenas"
 (
     id                       INTEGER      NOT NULL,
     name                     VARCHAR(127) NOT NULL UNIQUE,
+    namespace_id             INTEGER      NOT NULL,
     enable_restorer          BOOLEAN      NOT NULL,
 
     world                    TEXT         NOT NULL,
@@ -18,6 +19,15 @@ CREATE TABLE IF NOT EXISTS "${table_prefix}arenas"
     description              TEXT,
     item                     TEXT,
 
+    PRIMARY KEY (id),
+    FOREIGN KEY (namespace_id) REFERENCES "${table_prefix}namespaces"(id)
+);
+
+CREATE TABLE IF NOT EXISTS "${table_prefix}namespaces"
+(
+    id   INTEGER NOT NULL,
+    name TEXT    NOT NULL UNIQUE,
+
     PRIMARY KEY (id)
 );
 
@@ -32,5 +42,6 @@ CREATE TABLE IF NOT EXISTS "${table_prefix}spawns"
     yaw        DOUBLE  NOT NULL,
     pitch      DOUBLE  NOT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (arena_id) REFERENCES "${table_prefix}arenas"(id)
 );
